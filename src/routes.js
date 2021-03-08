@@ -5,8 +5,8 @@ const CandidateController = require("./controllers/CandidateController");
 const CandidateValidator = require("./validators/CandidateValidator");
 
 // Users
-routes.get("/candidate", CandidateValidator.getAll, CandidateController.getAll);
-routes.get("/candidate/:candidate_id", CandidateValidator.getById, CandidateController.getById);
+routes.get("/candidate", CandidateController.getAll);
+routes.get("/candidate/getById/:candidate_id", CandidateValidator.getById, CandidateController.getById);
 routes.post("/candidate", CandidateValidator.create, CandidateController.create);
 routes.put("/candidate/:candidate_id", CandidateValidator.update, CandidateController.update);
 routes.delete("/candidate/:candidate_id", CandidateValidator.delete, CandidateController.delete);

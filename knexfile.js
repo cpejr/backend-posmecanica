@@ -14,6 +14,10 @@ module.exports = {
     migrations: {
       directory: "./src/database/migrations",
     },
+    seeds: {
+      directory: './src/database/seeds'
+    },
+    useNullAsDefault: true,
     pool: {
       min: 2,
       max: 10,
@@ -29,12 +33,16 @@ module.exports = {
       database: process.env.DB_NAME,
       password: process.env.DB_PASS,
     },
+    useNullAsDefault: true,
     pool: {
       min: 2,
       max: 10,
     },
     migrations: {
       tableName: "knex_migrations",
+    },
+    seeds: {
+      directory: './src/database/seeds'
     },
   },
 };
