@@ -1,62 +1,37 @@
 exports.seed = function (knex) {
   // Deletes ALL existing entries
-  return knex('users').del()
+  return knex('candidate').del()
     .then(function () {
       // Inserts seed entries
-      return knex('users').insert([{
-        "id": "arthuzim",
-        "name": "Arthur Braga",
-        "firebase": "fEq0sRvUwzL8YC7ixnMthPMF9Vb2",
-        "email": "arthur2@gmail.com",
-        "type": "admin",
-        "cpf": "15112358439",
-        "birthdate": "2001-09-01",
-        "phonenumber": "9584578456",
-        "user_status": "approved"
-      },
-      {
-        "id": "73e68a90-1e8e-11eb-9ebb-d7958a7b8b99",
-        "name": "Vitória Régia de Carvalho Martins",
-        "firebase": "fdKN1xcxgKSJb8DR6kSdq7KiBI23",
-        "email": "vicregiac@gmail.com",
-        "type": "admin",
-        "cpf": "02660846308",
-        "birthdate": "1995-06-25",
-        "phonenumber": "62992336652",
-        "user_status": "approved"
-      },
-      {
-        "id": "73e68a90-1e8e-11eb-9ebb-d7958a7b8c48",
-        "name": "Loja Casulus",
-        "firebase": "RmEbCHthgBR3YBqXA2HefIcRpw32",
-        "email": "lojacasulus@gmail.com",
-        "type": "admin",
-        "cpf": "02660846308",
-        "birthdate": "1995-06-25",
-        "phonenumber": "62992336652",
-        "user_status": "approved"
-      },
-      {
-        "id": "giovanninha",
-        "name": "Giovanna Souza",
-        "firebase": "cAmJkGCkgsSCfogOYbUAfgZIgqF2",
-        "email": "giovanna@gmail.com",
-        "type": "retailer",
-        "cpf": "15112358439",
-        "birthdate": "2001-09-01",
-        "phonenumber": "9857467384",
-        "user_status": "pending"
-      },
-      {
-        "id": "eliasim",
-        "name": "Elias Faria Silva",
-        "firebase": "Gkol3EL3HkMzsmW4mCLjF69XJkl2",
-        "email": "98eliasfaria@gmail.com",
-        "type": "wholesaler",
-        "cpf": "07072617671",
-        "birthdate": "1998-06-28",
-        "phonenumber": "31988532806",
-        "user_status": "approved"
+      return knex('candidate').insert([
+        {
+          "candidate_id": "e5391e49-5cde-45fe-98c2-ff76168432da",
+          "candidate_name": "Gabriel",
+          "candidate_birth": "2001-11-10T02:00:00.000Z",
+          "candidate_gender": "Masculino",
+          "candidate_race": "Branco",
+          "candidate_nationality": "Brasileiro",
+          "candidate_cpf": "111.111.111-11",
+          "candidate_identity": "MG-11.111.111",
+          "candidate_expedition": "Policia",
+          "candidate_civil_state": "Solteiro",
+          "candidate_voter_title": "11112001",
+          "candidate_zone_title": 011,
+          "candidate_section_title": 110,
+          "candidate_cep": "1111111111",
+          "candidate_state": "Minas Gerais",
+          "candidate_city": "Belo Horizonte",
+          "candidate_street": "UFMG",
+          "candidate_district": "UFMG",
+          "candidate_country": "Brasil",
+          "candidate_adress_num": 111,
+          "candidate_email": "gabrielmauad@cpejr.com.br",
+          "candidate_phone_number": "999999999",
+          "candidate_university": "UFMG",
+          "candidate_graduation": "Engenharia de Controle e Automação",
+          "candidate_grade": null,
+          "candidate_grade_date_begin": null,
+          "candidate_grade_date_end": null
       }]);
     });
 };

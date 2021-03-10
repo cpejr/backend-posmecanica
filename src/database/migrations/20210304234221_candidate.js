@@ -15,10 +15,11 @@ exports.up = function (knex) {
     table.integer("candidate_section_title").notNullable();
     table.string("candidate_cep").notNullable();
     table.string("candidate_state").notNullable();
+    table.string("candidate_city").notNullable();
     table.string("candidate_street").notNullable();
     table.string("candidate_district").notNullable();
     table.string("candidate_country").notNullable();
-    table.string("candidate_adress_num").notNullable();
+    table.integer("candidate_adress_num").notNullable();
     table.string("candidate_email").notNullable();
     table.string("candidate_phone_number").notNullable();
     table.string("candidate_university").notNullable();
