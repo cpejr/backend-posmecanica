@@ -3,8 +3,6 @@ const connection = require('../database/connection')
 
 module.exports = {
   async create(administrator) {
-    const administrator_id = uuidv4()
-    administrator.adm_id = administrator_id
     const result = await connection('administrator').insert(administrator)
     return result
   },

@@ -1,9 +1,17 @@
 const AdmModel = require('../models/AdmModel')
+const firebase = require("../utils/firebase")
+const { v4: uuidv4 } = require('uuid');
 
 module.exports = {
   async create(request, response) {
     try {
       const administrator = request.body
+      const administrator_id = uuidv4()
+      administrator.adm_id = administrator_id
+      const uid = await firebase.createNewUser(administrator.adm_email, administrator.adm_password)
+      // delete administrator.adm_password
+      //Lembrar depois de apagar a senha do banco de dados
+      administrator.firebase.adm_firebase = uid
       const result = await AdmModel.create(administrator)
       return response.status(200).json(result)
     } catch (err) {
