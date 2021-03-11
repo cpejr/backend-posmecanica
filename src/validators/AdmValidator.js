@@ -1,4 +1,4 @@
-const { celebrate, Segments, Joi } = require("celebrate");
+const { celebrate, Segments, Joi } = require('celebrate')
 
 module.exports = {
   create: celebrate({
@@ -33,4 +33,4 @@ module.exports = {
       adm_id: Joi.string().required(),
     }),
   }),
-};
+}

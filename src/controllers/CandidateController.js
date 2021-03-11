@@ -1,72 +1,72 @@
-const CandidateModel = require("../models/CandidateModel");
+const CandidateModel = require('../models/CandidateModel')
 
 module.exports = {
   async create(request, response) {
     try {
-      const candidate = request.body;
-      const result = await CandidateModel.create(candidate);
-      return response.status(200).json(result);
+      const candidate = request.body
+      const result = await CandidateModel.create(candidate)
+      return response.status(200).json(result)
     } catch (err) {
-      console.log("Candidate creation failed: " + err);
+      console.log(`Candidate creation failed: ${err}`)
       return response.status(500).json({
-        notification: "Internal server error while trying to create Candidate",
-      });
+        notification: 'Internal server error while trying to create Candidate',
+      })
     }
   },
 
   async getAll(request, response) {
     try {
-      const result = await CandidateModel.getAll();
+      const result = await CandidateModel.getAll()
 
-      return response.status(200).json(result);
+      return response.status(200).json(result)
     } catch (err) {
-      console.log("Candidate getAll failed: " + err);
+      console.log(`Candidate getAll failed: ${err}`)
       return response.status(500).json({
-        notification: "Internal server error while trying to get Candidate",
-      });
+        notification: 'Internal server error while trying to get Candidate',
+      })
     }
   },
 
   async getById(request, response) {
     try {
-      const { candidate_id } = request.params;
-      const result = await CandidateModel.getById(candidate_id);
+      const { candidate_id } = request.params
+      const result = await CandidateModel.getById(candidate_id)
 
-      return response.status(200).json(result);
+      return response.status(200).json(result)
     } catch (err) {
-      console.log("Candidate getById failed: " + err);
+      console.log(`Candidate getById failed: ${err}`)
       return response.status(500).json({
-        notification: "Internal server error while trying to get Candidate",
-      });
+        notification: 'Internal server error while trying to get Candidate',
+      })
     }
   },
 
   async update(request, response) {
     try {
-      const { candidate_id } = request.params;
-      const candidate = request.body;
-      const result = await CandidateModel.updateById(candidate_id, candidate);
+      const { candidate_id } = request.params
+      const candidate = request.body
+      const result = await CandidateModel.updateById(candidate_id, candidate)
 
-      return response.status(200).json(result);
+      return response.status(200).json(result)
     } catch (err) {
-      console.log("Candidate update failed: " + err);
+      console.log(`Candidate update failed: ${err}`)
       return response.status(500).json({
-        notification: "Internal server error while trying to update Candidate",
-      });
+        notification: 'Internal server error while trying to update Candidate',
+      })
     }
   },
 
   async delete(request, response) {
     try {
-      const { candidate_id } = request.params;
+      const { candidate_id } = request.params
 
-      const result = await CandidateModel.deleteById(candidate_id);
-      return response.status(200).json(result);
+      const result = await CandidateModel.deleteById(candidate_id)
+      return response.status(200).json(result)
     } catch (err) {
-      console.log("Candidate delete failed: " + err);
+      console.log(`Candidate delete failed: ${err}`)
       return response.status(500).json({
-        notification: "Internal server error while trying to delete Candidate",
-      });
+        notification: 'Internal server error while trying to delete Candidate',
+      })
     }
   },
-};
+}
