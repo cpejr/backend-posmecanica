@@ -1,4 +1,4 @@
-const { celebrate, Segments, Joi } = require('celebrate')
+const { celebrate, Segments, Joi } = require('celebrate');
 
 module.exports = {
   create: celebrate({
@@ -36,13 +36,21 @@ module.exports = {
 
   getById: celebrate({
     [Segments.PARAMS]: Joi.object().keys({
-      candidate_id: Joi.string().required(),
+      candidate_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
     }),
   }),
 
   update: celebrate({
     [Segments.PARAMS]: Joi.object().keys({
-      candidate_id: Joi.string().required(),
+      candidate_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
     }),
     [Segments.BODY]: Joi.object().keys({
       candidate_name: Joi.string(),
@@ -78,7 +86,11 @@ module.exports = {
 
   delete: celebrate({
     [Segments.PARAMS]: Joi.object().keys({
-      candidate_id: Joi.string().required(),
+      candidate_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
     }),
   }),
-}
+};
