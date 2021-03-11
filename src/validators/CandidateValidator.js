@@ -1,7 +1,6 @@
-const { celebrate, Segments, Joi } = require("celebrate");
+const { celebrate, Segments, Joi } = require('celebrate')
 
 module.exports = {
-  
   create: celebrate({
     [Segments.BODY]: Joi.object().keys({
       candidate_name: Joi.string().required(),
@@ -27,7 +26,9 @@ module.exports = {
       candidate_phone_number: Joi.string().required(),
       candidate_university: Joi.string().required(),
       candidate_graduation: Joi.string().required(),
-      candidate_grade: Joi.string().valid('MESTRADO', 'DOUTORADO').insensitive(),
+      candidate_grade: Joi.string()
+        .valid('MESTRADO', 'DOUTORADO')
+        .insensitive(),
       candidate_grade_date_begin: Joi.date(),
       candidate_grade_date_end: Joi.date(),
     }),
@@ -67,15 +68,17 @@ module.exports = {
       candidate_phone_number: Joi.string(),
       candidate_university: Joi.string(),
       candidate_graduation: Joi.string(),
-      candidate_grade: Joi.string().valid('MESTRADO', 'DOUTORADO').insensitive(),
+      candidate_grade: Joi.string()
+        .valid('MESTRADO', 'DOUTORADO')
+        .insensitive(),
       candidate_grade_date_begin: Joi.date(),
       candidate_grade_date_end: Joi.date(),
-    }),    
+    }),
   }),
-  
+
   delete: celebrate({
     [Segments.PARAMS]: Joi.object().keys({
       candidate_id: Joi.string().required(),
     }),
   }),
-};
+}

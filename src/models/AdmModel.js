@@ -1,35 +1,35 @@
-const connection = require("../database/connection");
-const { v4: uuidv4 } = require("uuid");
+const { v4: uuidv4 } = require('uuid')
+const connection = require('../database/connection')
 
 module.exports = {
   async create(administrator) {
-    const administrator_id = uuidv4();
-    administrator.adm_id = administrator_id;
-    const result = await connection("administrator").insert(administrator);
-    return result;
+    const administrator_id = uuidv4()
+    administrator.adm_id = administrator_id
+    const result = await connection('administrator').insert(administrator)
+    return result
   },
 
   async getAll() {
-    const result = await connection("administrator").select("*");
-    return result;
+    const result = await connection('administrator').select('*')
+    return result
   },
 
   async getById(adm_id) {
-    const result = await connection("administrator")
+    const result = await connection('administrator')
       .where({ adm_id })
-      .select("*");
-    return result;
+      .select('*')
+    return result
   },
 
   async updateById(adm_id, administrator) {
-    const result = await connection("administrator")
+    const result = await connection('administrator')
       .where({ adm_id })
-      .update(administrator);
-    return result;
+      .update(administrator)
+    return result
   },
 
   async deleteById(adm_id) {
-    const result = await connection("administrator").where({ adm_id }).delete();
-    return result;
+    const result = await connection('administrator').where({ adm_id }).delete()
+    return result
   },
-};
+}
