@@ -3,8 +3,6 @@ const connection = require('../database/connection');
 
 module.exports = {
   async create(student) {
-    const student_id = uuidv4();
-    student.stud_id = student_id;
     const result = await connection('student').insert(student);
     return result;
   },
