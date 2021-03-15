@@ -13,6 +13,9 @@ const AdmValidator = require('./validators/AdmValidator');
 const StudentController = require('./controllers/StudentController');
 const StudentValidator = require('./validators/StudentValidator');
 
+const SelectiveProcessController = require('./controllers/SelectiveProcessController');
+const SelectiveProcessValidator = require('./validators/SelectiveProcessValidator');
+
 // Candidate
 routes.get('/candidates', CandidateController.getAll);
 routes.get(
@@ -64,6 +67,24 @@ routes.delete(
   '/students/:stud_id',
   StudentValidator.delete,
   StudentController.delete
+);
+
+// Selective Process
+
+routes.get(
+  '/selectiveprocess', SelectiveProcessController.getAll
+);
+routes.get(
+  '/selectiveprocess/:process_id', SelectiveProcessValidator.getById, SelectiveProcessController.getById
+);
+routes.post(
+  '/selectiveprocess', SelectiveProcessValidator.create, SelectiveProcessController.create
+);
+routes.put(
+  '/selectiveprocess/:process_id', SelectiveProcessValidator.update, SelectiveProcessController.update
+);
+routes.delete(
+  '/selectiveprocess/:process_id', SelectiveProcessValidator.delete, SelectiveProcessController.delete
 );
 
 module.exports = routes;
