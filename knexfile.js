@@ -1,5 +1,6 @@
 // Update with your config settings.
 require("dotenv").config();
+
 module.exports = {
   development: {
     client: "pg",
@@ -15,7 +16,7 @@ module.exports = {
       directory: "./src/database/migrations",
     },
     seeds: {
-      directory: './src/database/seeds'
+      directory: "./src/database/seeds",
     },
     useNullAsDefault: true,
     pool: {
@@ -42,7 +43,7 @@ module.exports = {
       tableName: "knex_migrations",
     },
     seeds: {
-      directory: './src/database/seeds'
+      directory: "./src/database/seeds",
     },
   },
 };

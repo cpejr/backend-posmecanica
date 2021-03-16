@@ -1,5 +1,6 @@
-const firebase = require('firebase/app')
-require('firebase/auth')
+const firebase = require("firebase/app");
+// const admin = require("firebase-admin/app");
+require("firebase/auth");
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_APIKEY,
@@ -9,31 +10,31 @@ const firebaseConfig = {
   messagingSenderId: process.env.FIREBASE_MESSAGINGSENDERID,
   appId: process.env.FIREBASE_APPID,
   measurementId: process.env.FIREBASE_MEASUREMENTID,
-}
+};
 
-firebase.initializeApp(firebaseConfig)
+firebase.initializeApp(firebaseConfig);
 
 module.exports = {
   async createNewUser(email, password) {
-    const result = await firebase.auth().createUserWithEmailAndPassword(email, password);
+    const result = await firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password);
 
     return result.user.uid;
   },
 
   async login(email, password) {
-    const result = await firebase.auth().signInWithEmailAndPassword(email, password)
+    const result = await firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password);
 
     return result.user.uid;
-  }
-}
-/*
-module.exports = {
-    async createNewUser(email, password){
-      try{
+  },
 
-      }catch (error)
-        const result = await firebase.auth().createUserWithEmailAndPassword(email,password);
-
-        return result.user.uid;
-    }
-} */
+  async changeUserPassword(uid, newPassword) {
+    const result = await admin.auth().updateUser(uid, {
+      password: newPassword,
+    });
+    return result.user.uid;
+  },
+};

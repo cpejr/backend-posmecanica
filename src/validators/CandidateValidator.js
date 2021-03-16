@@ -1,7 +1,14 @@
-const { celebrate, Segments, Joi } = require('celebrate');
+const { celebrate, Segments, Joi } = require("celebrate");
 
 module.exports = {
   create: celebrate({
+    [Segments.PARAMS]: Joi.object().keys({
+      candidate_process_id: Joi.string()
+        .guid({
+          version: ["uuidv4"],
+        })
+        .required(),
+    }),
     [Segments.BODY]: Joi.object().keys({
       candidate_name: Joi.string().required(),
       candidate_birth: Joi.date().required(),
@@ -27,10 +34,18 @@ module.exports = {
       candidate_university: Joi.string().required(),
       candidate_graduation: Joi.string().required(),
       candidate_grade: Joi.string()
-        .valid('MESTRADO', 'DOUTORADO')
+        .valid("MESTRADO", "DOUTORADO")
         .insensitive(),
       candidate_grade_date_begin: Joi.date(),
       candidate_grade_date_end: Joi.date(),
+      candidate_pGraduate_university: Joi.string(),
+      candidate_ufmg_active_serv: Joi.boolean(),
+      candidate_ufmg_retired_serv: Joi.boolean(),
+      candidate_date_inscrition: Joi.date().required(),
+      candidate_form_approval: Joi.boolean(),
+      candidate_test_approval: Joi.boolean(),
+      candidate_curriculum_approval: Joi.boolean(),
+      candidate_rating: Joi.number().integer(),
     }),
   }),
 
@@ -38,7 +53,7 @@ module.exports = {
     [Segments.PARAMS]: Joi.object().keys({
       candidate_id: Joi.string()
         .guid({
-          version: ['uuidv4'],
+          version: ["uuidv4"],
         })
         .required(),
     }),
@@ -48,7 +63,7 @@ module.exports = {
     [Segments.PARAMS]: Joi.object().keys({
       candidate_id: Joi.string()
         .guid({
-          version: ['uuidv4'],
+          version: ["uuidv4"],
         })
         .required(),
     }),
@@ -77,10 +92,18 @@ module.exports = {
       candidate_university: Joi.string(),
       candidate_graduation: Joi.string(),
       candidate_grade: Joi.string()
-        .valid('MESTRADO', 'DOUTORADO')
+        .valid("MESTRADO", "DOUTORADO")
         .insensitive(),
       candidate_grade_date_begin: Joi.date(),
       candidate_grade_date_end: Joi.date(),
+      candidate_pGraduate_university: Joi.string(),
+      candidate_ufmg_active_serv: Joi.boolean(),
+      candidate_ufmg_retired_serv: Joi.boolean(),
+      candidate_date_inscrition: Joi.date(),
+      candidate_form_approval: Joi.boolean(),
+      candidate_test_approval: Joi.boolean(),
+      candidate_curriculum_approval: Joi.boolean(),
+      candidate_rating: Joi.number().integer(),
     }),
   }),
 
@@ -88,7 +111,7 @@ module.exports = {
     [Segments.PARAMS]: Joi.object().keys({
       candidate_id: Joi.string()
         .guid({
-          version: ['uuidv4'],
+          version: ["uuidv4"],
         })
         .required(),
     }),

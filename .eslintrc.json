@@ -19,8 +19,6 @@
            "endOfLine":"auto"
          }],
         "camelcase": "off",
-        "rules": {
-            "no-param-reassign": [2, { "props": "ignorePropertyModificationsFor" }]
-          }
+        "no-param-reassign": "off"
     }
 }

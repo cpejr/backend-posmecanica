@@ -1,6 +1,6 @@
 exports.up = function (knex) {
-  return knex.schema.createTable("candidate", function (table) {
-    table.string("candidate_id").primary().notNullable();
+  return knex.schema.createTable("candidate", (table) => {
+    table.uuid("candidate_id").primary().notNullable();
     table.string("candidate_name").notNullable();
     table.date("candidate_birth").notNullable();
     table.string("candidate_gender").notNullable();
@@ -24,9 +24,25 @@ exports.up = function (knex) {
     table.string("candidate_phone_number").notNullable();
     table.string("candidate_university").notNullable();
     table.string("candidate_graduation").notNullable();
-    table.enu('candidate_grade', ['MESTRADO', 'DOUTORADO']);
+    table.enu("candidate_grade", ["MESTRADO", "DOUTORADO"]);
     table.date("candidate_grade_date_begin");
     table.date("candidate_grade_date_end");
+    table.string("candidate_pGraduate_university");
+    table.boolean("candidate_ufmg_active_serv");
+    table.boolean("candidate_ufmg_retired_serv");
+    table.date("candidate_date_inscrition").notNullable();
+    table.uuid("candidate_process_id").notNullable();
+    table.string("candidate_protocol").notNullable();
+    table.boolean("candidate_form_approval").defaultTo(false).notNullable();
+    table.boolean("candidate_test_approval");
+    table.boolean("candidate_curriculum_approval");
+    table.integer("candidate_rating");
+
+    table
+      .foreign("candidate_process_id")
+      .references("process_id")
+      .inTable("selective_process")
+      .onDelete("cascade");
   });
 };
 
