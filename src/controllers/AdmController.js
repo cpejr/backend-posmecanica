@@ -1,82 +1,84 @@
-const AdmModel = require('../models/AdmModel')
-const firebase = require("../utils/firebase")
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid");
+const AdmModel = require("../models/AdmModel");
+const firebase = require("../utils/firebase");
 
 module.exports = {
   async create(request, response) {
     try {
-      const administrator = request.body
-      const administrator_id = uuidv4()
-      administrator.adm_id = administrator_id
-      const uid = await firebase.createNewUser(administrator.adm_email, administrator.adm_password)
-      // delete administrator.adm_password
-      //Lembrar depois de apagar a senha do banco de dados
-      administrator.firebase.adm_firebase = uid
-      const result = await AdmModel.create(administrator)
-      return response.status(200).json(result)
+      const administrator = request.body;
+      const administrator_id = uuidv4();
+      const uid = await firebase.createNewUser(
+        administrator.adm_email,
+        administrator.adm_password
+      );
+      delete administrator.adm_password;
+      administrator.adm_id = administrator_id;
+      administrator.firebase.adm_firebase = uid;
+      const result = await AdmModel.create(administrator);
+      return response.status(200).json(result);
     } catch (err) {
-      console.log(`Administrator creation failed: ${err}`)
+      console.log(`Administrator creation failed: ${err}`);
       return response.status(500).json({
         notification:
-          'Internal server error while trying to create administrator',
-      })
+          "Internal server error while trying to create administrator",
+      });
     }
   },
 
   async getAll(request, response) {
     try {
-      const result = await AdmModel.getAll()
+      const result = await AdmModel.getAll();
 
-      return response.status(200).json(result)
+      return response.status(200).json(result);
     } catch (err) {
-      console.log(`Administrator getAll failed: ${err}`)
+      console.log(`Administrator getAll failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get administrator',
-      })
+        notification: "Internal server error while trying to get administrator",
+      });
     }
   },
 
   async getById(request, response) {
     try {
-      const { adm_id } = request.params
-      const result = await AdmModel.getById(adm_id)
-      return response.status(200).json(result)
+      const { adm_id } = request.params;
+      const result = await AdmModel.getById(adm_id);
+      return response.status(200).json(result);
     } catch (err) {
-      console.log(`Administrator getById failed: ${err}`)
+      console.log(`Administrator getById failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get administrator',
-      })
+        notification: "Internal server error while trying to get administrator",
+      });
     }
   },
 
   async update(request, response) {
     try {
-      const { adm_id } = request.params
-      const administrator = request.body
-      const result = await AdmModel.updateById(adm_id, administrator)
+      const { adm_id } = request.params;
+      const administrator = request.body;
+      const result = await AdmModel.updateById(adm_id, administrator);
 
-      return response.status(200).json(result)
+      return response.status(200).json(result);
     } catch (err) {
-      console.log(`Administrator update failed: ${err}`)
+      console.log(`Administrator update failed: ${err}`);
       return response.status(500).json({
         notification:
-          'Internal server error while trying to update administrator',
-      })
+          "Internal server error while trying to update administrator",
+      });
     }
   },
 
   async delete(request, response) {
     try {
-      const { adm_id } = request.params
+      const { adm_id } = request.params;
 
-      const result = await AdmModel.deleteById(adm_id)
-      return response.status(200).json(result)
+      const result = await AdmModel.deleteById(adm_id);
+      return response.status(200).json(result);
     } catch (err) {
-      console.log(`Administrator delete failed: ${err}`)
+      console.log(`Administrator delete failed: ${err}`);
       return response.status(500).json({
         notification:
-          'Internal server error while trying to delete Administrator',
-      })
+          "Internal server error while trying to delete Administrator",
+      });
     }
   },
-}
+};

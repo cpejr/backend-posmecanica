@@ -1,25 +1,33 @@
-const StudentModel = require('../models/StudentModel');
-const firebase = require("../utils/firebase")
-const { v4: uuidv4 } = require('uuid');
+const crypto = require("crypto");
+const { v4: uuidv4 } = require("uuid");
+const StudentModel = require("../models/StudentModel");
+const CandidateModel = require("../models/CandidateModel");
+const firebase = require("../utils/firebase");
 
 module.exports = {
   async create(request, response) {
     try {
       const student = request.body;
       const student_id = uuidv4();
+      const { stud_process_id, stud_candidate_id } = request.params;
+      const infos = await CandidateModel.getById(stud_candidate_id);
+      const defaultPassword = crypto.randomBytes(8).toString("Hex");
+      const uid = await firebase.createNewUser(
+        infos.candidate_email,
+        defaultPassword
+      );
       student.stud_id = student_id;
-      const { stud_process_id } = request.params;
       student.stud_process_id = stud_process_id;
-      const uid = await firebase.createNewUser(student.stud_email, student.stud_password)
-      // delete student.stud_password
-      //Lembrar depois de apagar a senha do banco de dados
-      student.firebase.student_firebase = uid
+      student.stud_candidate_id = stud_candidate_id;
+      student.stud_firebase = uid;
+      student.stud_default_password = defaultPassword;
+      delete student.stud_password;
       const result = await StudentModel.create(student);
       return response.status(200).json(result);
     } catch (err) {
       console.log(`Student creation failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to create Student',
+        notification: "Internal server error while trying to create Student",
       });
     }
   },
@@ -32,7 +40,7 @@ module.exports = {
     } catch (err) {
       console.log(`Student getAll failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get Student',
+        notification: "Internal server error while trying to get Student",
       });
     }
   },
@@ -46,7 +54,7 @@ module.exports = {
     } catch (err) {
       console.log(`Student getById failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get Student',
+        notification: "Internal server error while trying to get Student",
       });
     }
   },
@@ -61,7 +69,7 @@ module.exports = {
     } catch (err) {
       console.log(`Student update failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to update Student',
+        notification: "Internal server error while trying to update Student",
       });
     }
   },
@@ -75,7 +83,7 @@ module.exports = {
     } catch (err) {
       console.log(`Student delete failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to delete Student',
+        notification: "Internal server error while trying to delete Student",
       });
     }
   },

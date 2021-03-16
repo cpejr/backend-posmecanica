@@ -1,16 +1,16 @@
-const SelectiveProcessModel = require('../models/SelectiveProcessModel');
+const SelectiveProcessModel = require("../models/SelectiveProcessModel");
 
 module.exports = {
   async create(request, response) {
     try {
-      const process = request.body;
-      await SelectiveProcessModel.create(process);
-      return response.status(200).json({ id: process.process_id });
+      const selective_process = request.body;
+      await SelectiveProcessModel.create(selective_process);
+      return response.status(200).json({ id: selective_process.process_id });
     } catch (err) {
       console.error(err);
       return response.status(500).json({
         notification:
-          'Internal server error while trying to create a selective process',
+          "Internal server error while trying to create a selective process",
       });
     }
   },
@@ -23,7 +23,7 @@ module.exports = {
       console.error(err);
       return response.status(500).json({
         notification:
-          'Internal server error while trying to get all selective process',
+          "Internal server error while trying to get all selective process",
       });
     }
   },
@@ -37,7 +37,7 @@ module.exports = {
       console.error(err);
       return response.status(500).json({
         notification:
-          'Internal server error while trying to get a selective process by id',
+          "Internal server error while trying to get a selective process by id",
       });
     }
   },
@@ -45,17 +45,17 @@ module.exports = {
   async update(request, response) {
     try {
       const { process_id } = request.params;
-      const process = request.body;
+      const selective_process = request.body;
       const result = await SelectiveProcessModel.updateById(
         process_id,
-        process
+        selective_process
       );
       return response.status(200).json(result);
     } catch (err) {
       console.error(err);
       return response.status(500).json({
         notification:
-          'Internal server error while trying to update a selective process by id',
+          "Internal server error while trying to update a selective process by id",
       });
     }
   },
@@ -69,7 +69,7 @@ module.exports = {
       console.error(err);
       return response.status(500).json({
         notification:
-          'Internal server error while trying to delete a selective process',
+          "Internal server error while trying to delete a selective process",
       });
     }
   },
