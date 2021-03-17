@@ -1,11 +1,11 @@
-const { celebrate, Segments, Joi } = require("celebrate");
+const { celebrate, Segments, Joi } = require('celebrate');
 
 module.exports = {
   create: celebrate({
     [Segments.BODY]: Joi.object().keys({
       adm_name: Joi.string().required(),
       adm_password: Joi.string().min(8).max(20).required(),
-      adm_email: Joi.string().required(),
+      adm_email: Joi.string().email().required(),
     }),
   }),
 
@@ -13,7 +13,7 @@ module.exports = {
     [Segments.PARAMS]: Joi.object().keys({
       adm_id: Joi.string()
         .guid({
-          version: ["uuidv4"],
+          version: ['uuidv4'],
         })
         .required(),
     }),
@@ -23,7 +23,7 @@ module.exports = {
     [Segments.PARAMS]: Joi.object().keys({
       adm_id: Joi.string()
         .guid({
-          version: ["uuidv4"],
+          version: ['uuidv4'],
         })
         .required(),
     }),
@@ -38,7 +38,7 @@ module.exports = {
     [Segments.PARAMS]: Joi.object().keys({
       adm_id: Joi.string()
         .guid({
-          version: ["uuidv4"],
+          version: ['uuidv4'],
         })
         .required(),
     }),
