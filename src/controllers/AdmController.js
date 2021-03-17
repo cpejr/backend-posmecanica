@@ -1,6 +1,6 @@
-const { v4: uuidv4 } = require("uuid");
-const AdmModel = require("../models/AdmModel");
-const firebase = require("../utils/firebase");
+const { v4: uuidv4 } = require('uuid');
+const AdmModel = require('../models/AdmModel');
+const firebase = require('../utils/firebase');
 
 module.exports = {
   async create(request, response) {
@@ -20,7 +20,7 @@ module.exports = {
       console.log(`Administrator creation failed: ${err}`);
       return response.status(500).json({
         notification:
-          "Internal server error while trying to create administrator",
+          'Internal server error while trying to create administrator',
       });
     }
   },
@@ -33,7 +33,7 @@ module.exports = {
     } catch (err) {
       console.log(`Administrator getAll failed: ${err}`);
       return response.status(500).json({
-        notification: "Internal server error while trying to get administrator",
+        notification: 'Internal server error while trying to get administrator',
       });
     }
   },
@@ -46,7 +46,7 @@ module.exports = {
     } catch (err) {
       console.log(`Administrator getById failed: ${err}`);
       return response.status(500).json({
-        notification: "Internal server error while trying to get administrator",
+        notification: 'Internal server error while trying to get administrator',
       });
     }
   },
@@ -62,7 +62,7 @@ module.exports = {
       console.log(`Administrator update failed: ${err}`);
       return response.status(500).json({
         notification:
-          "Internal server error while trying to update administrator",
+          'Internal server error while trying to update administrator',
       });
     }
   },
@@ -77,7 +77,7 @@ module.exports = {
       console.log(`Administrator delete failed: ${err}`);
       return response.status(500).json({
         notification:
-          "Internal server error while trying to delete Administrator",
+          'Internal server error while trying to delete Administrator',
       });
     }
   },
