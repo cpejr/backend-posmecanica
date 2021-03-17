@@ -1,17 +1,16 @@
 exports.up = function (knex) {
-  return knex.schema.createTable('defense', function (table) {
+  return knex.schema.createTable('defense', (table) => {
+    table.uuid('defense_id').primary().notNullable();
     table.uuid('defense_stud_id').notNullable();
     table.uuid('defense_bank_id').notNullable();
     table.uuid('defense_sArea_id').notNullable();
-    table.string('defense_id').primary().notNullable();
     table.enu('defense_type', ['DISSERTAÇÃO', 'TESE']);
     table.string('defense_title').notNullable();
-    table.string('defense_content').notNullable();
+    table.text('defense_content', 'longtext').notNullable();
     table.integer('defense_number').notNullable();
     table.string('defense_place').notNullable();
-    table.date('defense_date').notNullable();
-    table.string('defense_time').notNullable();
-    table.boolean('defense_approved').notNullable();
+    table.datetime('defense_date').notNullable();
+    table.boolean('defense_approved').defaultTo(false).notNullable();
 
     table
       .foreign('defense_stud_id')

@@ -3,8 +3,8 @@ exports.up = function (knex) {
     table.uuid('process_id').primary().notNullable();
     table.enu('process_type', ['MESTRADO', 'DOUTORADO', 'ISOLADA']);
     table.string('process_name').notNullable();
-    table.date('process_date_begin').notNullable();
-    table.date('process_date_end').notNullable();
+    table.datetime('process_date_begin').notNullable();
+    table.datetime('process_date_end').notNullable();
   });
 };
 

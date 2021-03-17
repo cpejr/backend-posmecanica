@@ -1,5 +1,5 @@
 exports.up = function (knex) {
-  return knex.schema.createTable('search_area', function (table) {
+  return knex.schema.createTable('search_area', (table) => {
     table.uuid('search_area_id').primary().notNullable();
     table.string('search_area_name').notNullable();
   });

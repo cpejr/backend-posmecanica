@@ -3,7 +3,15 @@ exports.up = function (knex) {
     table.uuid('candidate_id').primary().notNullable();
     table.string('candidate_name').notNullable();
     table.date('candidate_birth').notNullable();
-    table.string('candidate_gender').notNullable();
+    table.enu('candidate_gender', [
+      'mulher cis',
+      'mulher trans',
+      'homem cis',
+      'homem trans',
+      'nao-binario',
+      'agenero',
+      'outro',
+    ]);
     table.string('candidate_race').notNullable();
     table.string('candidate_nationality').notNullable();
     table.string('candidate_cpf').notNullable();
