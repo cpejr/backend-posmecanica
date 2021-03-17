@@ -5,7 +5,7 @@ module.exports = {
     try {
       const bank = request.body;
       await BankModel.create(bank);
-      return response.status(200).json(result);
+      return response.status(200).json({id: bank.bank_id});
     } catch (err) {
       console.error(err);
       return response.status(500).json({
