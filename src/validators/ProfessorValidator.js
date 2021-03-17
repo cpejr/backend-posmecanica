@@ -27,7 +27,7 @@ module.exports = {
         .insensitive()
         .required(),
       prof_title: Joi.string().valid('Doutor', 'Mestre').insensitive(),
-      prof_title_year: Joi.integer().required(),
+      prof_title_year: Joi.number().integer().required(),
       prof_university: Joi.string().required(),
       prof_city: Joi.string().required(),
       prof_state: Joi.string().required(),
@@ -79,7 +79,7 @@ module.exports = {
         .valid('mestrado', 'doutorado', 'colaborador', 'visitante')
         .insensitive(),
       prof_title: Joi.string().valid('Doutor', 'Mestre').insensitive(),
-      prof_title_year: Joi.integer(),
+      prof_title_year: Joi.number().integer(),
       prof_university: Joi.string(),
       prof_city: Joi.string(),
       prof_state: Joi.string(),
