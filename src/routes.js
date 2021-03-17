@@ -16,6 +16,15 @@ const StudentValidator = require("./validators/StudentValidator");
 const SelectiveProcessController = require("./controllers/SelectiveProcessController");
 const SelectiveProcessValidator = require("./validators/SelectiveProcessValidator");
 
+const SearchAreaController = require("./controllers/SearchAreaController");
+const SearchAreaValidator = require("./validators/SearchAreaValidator");
+
+const BankController = require("./controllers/BankController");
+const BankValidator = require("./validators/BankValidator");
+
+const DefenseController = require("./controllers/DefenseController");
+const DefenseValidator = require("./validators/DefenseValidator");
+
 // Candidate
 routes.get("/candidates", CandidateController.getAll);
 routes.get(
@@ -93,4 +102,75 @@ routes.delete(
   SelectiveProcessController.delete
 );
 
+// Search Area
+
+routes.get("/searchAreas", SearchAreaController.getAll);
+routes.get(
+  "/searchAreas/:search_area_id",
+  SearchAreaValidator.getById,
+  SearchAreaController.getById
+);
+routes.post(
+  "/searchAreas",
+  SearchAreaValidator.create,
+  SearchAreaController.create
+);
+routes.put(
+  "/searchAreas/:search_area_id",
+  SearchAreaValidator.update,
+  SearchAreaController.update
+);
+routes.delete(
+  "/searchAreas/:search_area_id",
+  SearchAreaValidator.delete,
+  SearchAreaController.delete
+);
+
+// Banks
+
+routes.get("/banks", BankController.getAll);
+routes.get(
+  "/banks/:bank_id",
+  BankValidator.getById,
+  BankController.getById
+);
+routes.post(
+  "/banks",
+  BankValidator.create,
+  BankController.create
+);
+routes.put(
+  "/banks/:search_area_id",
+  BankValidator.update,
+  BankController.update
+);
+routes.delete(
+  "/banks/:search_area_id",
+  BankValidator.delete,
+  BankController.delete
+);
+
+// Defense
+
+routes.get("/defenses", DefenseController.getAll);
+routes.get(
+  "/defenses/:defense_id",
+  DefenseValidator.getById,
+  DefenseController.getById
+);
+routes.post(
+  "/defenses",
+  DefenseValidator.create,
+  DefenseController.create
+);
+routes.put(
+  "/defenses/:defense_id",
+  DefenseValidator.update,
+  DefenseController.update
+);
+routes.delete(
+  "/defenses/:defense_id",
+  DefenseValidator.delete,
+  DefenseController.delete
+);
 module.exports = routes;
