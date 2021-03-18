@@ -1,5 +1,5 @@
 const firebase = require("firebase/app");
-// const admin = require("firebase-admin/app");
+const admin = require("firebase-admin");
 require("firebase/auth");
 
 const firebaseConfig = {
