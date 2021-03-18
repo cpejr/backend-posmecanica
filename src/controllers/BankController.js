@@ -4,8 +4,8 @@ module.exports = {
   async create(request, response) {
     try {
       const bank = request.body;
-      const result = await BankModel.create(bank);
-      return response.status(200).json(result);
+      await BankModel.create(bank);
+      return response.status(200).json({ id: bank.bank_id });
     } catch (err) {
       console.error(err);
       return response.status(500).json({
