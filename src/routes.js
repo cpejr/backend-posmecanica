@@ -28,6 +28,9 @@ const DefenseValidator = require('./validators/DefenseValidator');
 const ProfessorController = require('./controllers/ProfessorController');
 const ProfessorValidator = require('./validators/ProfessorValidator');
 
+const QualificationController = require('./controllers/QualificationController');
+const QualificationValidator = require('./validators/QualificationValidator');
+
 // Candidate
 routes.get('/candidates', CandidateController.getAll);
 routes.get(
@@ -82,7 +85,6 @@ routes.delete(
 );
 
 // Selective Process
-
 routes.get('/selectiveProcesses', SelectiveProcessController.getAll);
 routes.get(
   '/selectiveProcesses/:process_id',
@@ -106,7 +108,6 @@ routes.delete(
 );
 
 // Search Area
-
 routes.get('/searchAreas', SearchAreaController.getAll);
 routes.get(
   '/searchAreas/:search_area_id',
@@ -130,23 +131,13 @@ routes.delete(
 );
 
 // Banks
-
 routes.get('/banks', BankController.getAll);
 routes.get('/banks/:bank_id', BankValidator.getById, BankController.getById);
 routes.post('/banks', BankValidator.create, BankController.create);
-routes.put(
-  '/banks/:search_area_id',
-  BankValidator.update,
-  BankController.update
-);
-routes.delete(
-  '/banks/:search_area_id',
-  BankValidator.delete,
-  BankController.delete
-);
+routes.put('/banks/:bank_id', BankValidator.update, BankController.update);
+routes.delete('/banks/:bank_id', BankValidator.delete, BankController.delete);
 
 // Defense
-
 routes.get('/defenses', DefenseController.getAll);
 routes.get(
   '/defenses/:defense_id',
@@ -186,6 +177,29 @@ routes.delete(
   '/professors/:prof_id',
   ProfessorValidator.delete,
   ProfessorController.delete
+);
+
+// Qualificação
+routes.get('/qualifications', QualificationController.getAll);
+routes.get(
+  '/qualifications/:quali_id',
+  QualificationValidator.getById,
+  QualificationController.getById
+);
+routes.post(
+  '/qualifications/:quali_stud_id/:quali_bank_id/:quali_sArea_id',
+  QualificationValidator.create,
+  QualificationController.create
+);
+routes.put(
+  '/qualifications/:quali_id',
+  QualificationValidator.update,
+  QualificationController.update
+);
+routes.delete(
+  '/qualifications/:quali_id',
+  QualificationValidator.delete,
+  QualificationController.delete
 );
 
 module.exports = routes;

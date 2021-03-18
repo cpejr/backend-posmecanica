@@ -5,7 +5,6 @@ module.exports = {
     [Segments.BODY]: Joi.object().keys({
       prof_name: Joi.string().required(),
       prof_email: Joi.string().email().required(),
-      prof_password: Joi.string().min(8).max(20).required(),
       prof_birth: Joi.date().required(),
       prof_gender: Joi.string()
         .valid(
@@ -59,7 +58,7 @@ module.exports = {
     [Segments.BODY]: Joi.object().keys({
       prof_name: Joi.string(),
       prof_email: Joi.string().email(),
-      prof_password: Joi.string().min(8).max(20),
+      prof_defaultPassword: Joi.string().min(8).max(20),
       prof_birth: Joi.date(),
       prof_gender: Joi.string()
         .valid(

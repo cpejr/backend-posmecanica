@@ -4,7 +4,6 @@ module.exports = {
   create: celebrate({
     [Segments.BODY]: Joi.object().keys({
       adm_name: Joi.string().required(),
-      adm_password: Joi.string().min(8).max(20).required(),
       adm_email: Joi.string().email().required(),
     }),
   }),
@@ -30,7 +29,7 @@ module.exports = {
     [Segments.BODY]: Joi.object().keys({
       adm_name: Joi.string(),
       adm_password: Joi.string().min(8).max(20),
-      adm_email: Joi.string(),
+      adm_email: Joi.string().email(),
     }),
   }),
 

@@ -3,6 +3,7 @@ exports.up = function (knex) {
     table.uuid('prof_id').primary().notNullable();
     table.string('prof_name').notNullable();
     table.string('prof_email').notNullable();
+    table.string('prof_firebase').notNullable();
     table.enu('prof_gender', [
       'mulher cis',
       'mulher trans',
@@ -31,6 +32,7 @@ exports.up = function (knex) {
     table.string('prof_course').notNullable();
     table.string('prof_treatment').notNullable();
     table.string('prof_workplace').notNullable();
+    table.string('prof_defaultPassword').notNullable();
   });
 };
 
