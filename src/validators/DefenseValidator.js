@@ -21,7 +21,7 @@ module.exports = {
     }),
     [Segments.BODY]: Joi.object().keys({
       defense_type: Joi.string()
-        .valid('DISSERTAÇÃO', 'TESE')
+        .valid('DISSERTACAO', 'TESE')
         .insensitive()
         .required(),
       defense_title: Joi.string().required(),
@@ -29,7 +29,6 @@ module.exports = {
       defense_number: Joi.number().integer().required(),
       defense_place: Joi.string().required(),
       defense_date: Joi.date().required(),
-      defense_time: Joi.string().required(),
       defense_approved: Joi.boolean().required(),
     }),
   }),
@@ -53,13 +52,12 @@ module.exports = {
         .required(),
     }),
     [Segments.BODY]: Joi.object().keys({
-      defense_type: Joi.string().valid('DISSERTAÇÃO', 'TESE').insensitive(),
+      defense_type: Joi.string().valid('DISSERTACAO', 'TESE').insensitive(),
       defense_title: Joi.string(),
       defense_content: Joi.string(),
       defense_number: Joi.number().integer(),
       defense_place: Joi.string(),
       defense_date: Joi.date(),
-      defense_time: Joi.string(),
       defense_approved: Joi.boolean(),
     }),
   }),

@@ -1,10 +1,10 @@
-const { celebrate, Segments, Joi } = require("celebrate");
+const { celebrate, Segments, Joi } = require('celebrate');
 
 module.exports = {
   create: celebrate({
     [Segments.BODY]: Joi.object().keys({
       process_type: Joi.string()
-        .valid("MESTRADO", "DOUTORADO", "ISOLADA")
+        .valid('MESTRADO', 'DOUTORADO', 'ISOLADA')
         .insensitive()
         .required(),
       process_name: Joi.string().required(),
@@ -17,7 +17,7 @@ module.exports = {
     [Segments.PARAMS]: Joi.object().keys({
       process_id: Joi.string()
         .guid({
-          version: ["uuidv4"],
+          version: ['uuidv4'],
         })
         .required(),
     }),
@@ -27,13 +27,13 @@ module.exports = {
     [Segments.PARAMS]: Joi.object().keys({
       process_id: Joi.string()
         .guid({
-          version: ["uuidv4"],
+          version: ['uuidv4'],
         })
         .required(),
     }),
     [Segments.BODY]: Joi.object().keys({
       process_type: Joi.string()
-        .valid("MESTRADO", "DOUTORADO", "ISOLADA")
+        .valid('MESTRADO', 'DOUTORADO', 'ISOLADA')
         .insensitive(),
       process_name: Joi.string(),
       process_date_begin: Joi.date(),
@@ -45,7 +45,7 @@ module.exports = {
     [Segments.PARAMS]: Joi.object().keys({
       process_id: Joi.string()
         .guid({
-          version: ["uuidv4"],
+          version: ['uuidv4'],
         })
         .required(),
     }),

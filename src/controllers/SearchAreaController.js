@@ -4,7 +4,7 @@ module.exports = {
   async create(request, response) {
     try {
       const searchArea = request.body;
-      await SearchAreaModel.create(searchArea);
+      const result = await SearchAreaModel.create(searchArea);
       return response.status(200).json(result);
     } catch (err) {
       console.error(err);

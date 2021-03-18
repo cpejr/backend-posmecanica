@@ -4,7 +4,7 @@ exports.up = function (knex) {
     table.uuid('quali_stud_id').notNullable();
     table.uuid('quali_bank_id').notNullable();
     table.uuid('quali_sArea_id').notNullable();
-    table.uuid('quali_defense_id').notNullable();
+    table.uuid('quali_defense_id');
     table.string('quali_title').notNullable();
     table.text('quali_content', 'longtext').notNullable();
     table.integer('quali_number').notNullable();

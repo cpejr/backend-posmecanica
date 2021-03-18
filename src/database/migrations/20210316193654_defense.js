@@ -4,7 +4,7 @@ exports.up = function (knex) {
     table.uuid('defense_stud_id').notNullable();
     table.uuid('defense_bank_id').notNullable();
     table.uuid('defense_sArea_id').notNullable();
-    table.enu('defense_type', ['DISSERTAÇÃO', 'TESE']);
+    table.enu('defense_type', ['DISSERTACAO', 'TESE']);
     table.string('defense_title').notNullable();
     table.text('defense_content', 'longtext').notNullable();
     table.integer('defense_number').notNullable();

@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
 const AdmModel = require('../models/AdmModel');
 const firebase = require('../utils/firebase');
@@ -7,13 +8,14 @@ module.exports = {
     try {
       const administrator = request.body;
       const administrator_id = uuidv4();
+      const defaultPassword = crypto.randomBytes(8).toString('Hex');
       const uid = await firebase.createNewUser(
         administrator.adm_email,
-        administrator.adm_password
+        defaultPassword
       );
-      delete administrator.adm_password;
       administrator.adm_id = administrator_id;
-      administrator.firebase.adm_firebase = uid;
+      administrator.adm_defaultPassword = defaultPassword;
+      administrator.adm_firebase = uid;
       const result = await AdmModel.create(administrator);
       return response.status(200).json(result);
     } catch (err) {

@@ -4,13 +4,12 @@ module.exports = {
   async create(request, response) {
     try {
       const bank = request.body;
-      await BankModel.create(bank);
+      const result = await BankModel.create(bank);
       return response.status(200).json(result);
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to create a bank',
+        notification: 'Internal server error while trying to create a bank',
       });
     }
   },
@@ -22,8 +21,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to get all bank',
+        notification: 'Internal server error while trying to get all bank',
       });
     }
   },
@@ -36,8 +34,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to get a bank by id',
+        notification: 'Internal server error while trying to get a bank by id',
       });
     }
   },
@@ -46,10 +43,7 @@ module.exports = {
     try {
       const { bank_id } = request.params;
       const bank = request.body;
-      const result = await BankModel.updateById(
-        bank_id,
-        bank
-      );
+      const result = await BankModel.updateById(bank_id, bank);
       return response.status(200).json(result);
     } catch (err) {
       console.error(err);
@@ -68,8 +62,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to delete a bank',
+        notification: 'Internal server error while trying to delete a bank',
       });
     }
   },

@@ -5,7 +5,6 @@ module.exports = {
     [Segments.BODY]: Joi.object().keys({
       prof_name: Joi.string().required(),
       prof_email: Joi.string().email().required(),
-      prof_password: Joi.string().min(8).max(20).required(),
       prof_birth: Joi.date().required(),
       prof_gender: Joi.string()
         .valid(
@@ -27,7 +26,7 @@ module.exports = {
         .insensitive()
         .required(),
       prof_title: Joi.string().valid('Doutor', 'Mestre').insensitive(),
-      prof_title_year: Joi.integer().required(),
+      prof_title_year: Joi.number().integer().required(),
       prof_university: Joi.string().required(),
       prof_city: Joi.string().required(),
       prof_state: Joi.string().required(),
@@ -59,7 +58,7 @@ module.exports = {
     [Segments.BODY]: Joi.object().keys({
       prof_name: Joi.string(),
       prof_email: Joi.string().email(),
-      prof_password: Joi.string().min(8).max(20),
+      prof_defaultPassword: Joi.string().min(8).max(20),
       prof_birth: Joi.date(),
       prof_gender: Joi.string()
         .valid(
@@ -79,7 +78,7 @@ module.exports = {
         .valid('mestrado', 'doutorado', 'colaborador', 'visitante')
         .insensitive(),
       prof_title: Joi.string().valid('Doutor', 'Mestre').insensitive(),
-      prof_title_year: Joi.integer(),
+      prof_title_year: Joi.number().integer(),
       prof_university: Joi.string(),
       prof_city: Joi.string(),
       prof_state: Joi.string(),

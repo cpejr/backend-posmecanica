@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
 const ProfessorModel = require('../models/ProfessorModel');
 const firebase = require('../utils/firebase');
@@ -7,13 +8,14 @@ module.exports = {
     try {
       const professor = request.body;
       const professor_id = uuidv4();
+      const defaultPassword = crypto.randomBytes(8).toString('Hex');
       const uid = await firebase.createNewUser(
         professor.prof_email,
-        professor.prof_password
+        defaultPassword
       );
-      delete professor.prof_password;
       professor.prof_id = professor_id;
-      professor.firebase.prof_firebase = uid;
+      professor.prof_defaultPassword = defaultPassword;
+      professor.prof_firebase = uid;
       const result = await ProfessorModel.create(professor);
       return response.status(200).json(result);
     } catch (err) {
