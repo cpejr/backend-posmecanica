@@ -2,7 +2,7 @@ const express = require('express');
 
 const routes = express.Router();
 
-// const auth = require('./middlewares/authentication')
+const auth = require('./middlewares/authentication')
 
 const CandidateController = require('./controllers/CandidateController');
 const CandidateValidator = require('./validators/CandidateValidator');
@@ -55,8 +55,8 @@ routes.delete(
 );
 
 // Administrador
-routes.get('/adms', AdmController.getAll);
-routes.get('/adms/:adm_id', AdmValidator.getById, AdmController.getById);
+routes.get('/adms',AdmController.getAll);
+routes.get('/adms/:adm_id', AdmValidator.getById,AdmController.getById);
 routes.post('/adms', AdmValidator.create, AdmController.create);
 routes.put('/adms/:adm_id', AdmValidator.update, AdmController.update);
 routes.delete('/adms/:adm_id', AdmValidator.delete, AdmController.delete);
@@ -144,7 +144,7 @@ routes.get(
   DefenseValidator.getById,
   DefenseController.getById
 );
-routes.post('/defenses', DefenseValidator.create, DefenseController.create);
+routes.post('/defenses/:defense_stud_id/:defense_bank_id/:defense_sArea_id', DefenseValidator.create, DefenseController.create);
 routes.put(
   '/defenses/:defense_id',
   DefenseValidator.update,
