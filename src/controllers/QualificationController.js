@@ -11,8 +11,8 @@ module.exports = {
       qualification.quali_stud_id = quali_stud_id;
       qualification.quali_bank_id = quali_bank_id;
       qualification.quali_sArea_id = quali_sArea_id;
-      const result = await QualificationModel.create(qualification);
-      return response.status(200).json(result);
+      await QualificationModel.create(qualification);
+      return response.status(200).json({ id: qualification.quali_id });
     } catch (err) {
       console.log(`Qualification creation failed: ${err}`);
       return response.status(500).json({

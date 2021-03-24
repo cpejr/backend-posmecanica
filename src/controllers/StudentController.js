@@ -22,8 +22,8 @@ module.exports = {
       student.stud_firebase = uid;
       student.stud_default_password = defaultPassword;
       delete student.stud_password;
-      const result = await StudentModel.create(student);
-      return response.status(200).json(result);
+      await StudentModel.create(student);
+      return response.status(200).json({ id: student.student_id });
     } catch (err) {
       console.log(`Student creation failed: ${err}`);
       return response.status(500).json({

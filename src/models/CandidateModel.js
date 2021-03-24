@@ -1,10 +1,7 @@
-const { v4: uuidv4 } = require('uuid');
 const connection = require('../database/connection');
 
 module.exports = {
   async create(candidate) {
-    const candidate_id = uuidv4();
-    candidate.candidate_id = candidate_id;
     const result = await connection('candidate').insert(candidate);
     return result;
   },

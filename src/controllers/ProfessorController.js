@@ -16,8 +16,8 @@ module.exports = {
       professor.prof_id = professor_id;
       professor.prof_defaultPassword = defaultPassword;
       professor.prof_firebase = uid;
-      const result = await ProfessorModel.create(professor);
-      return response.status(200).json(result);
+      await ProfessorModel.create(professor);
+      return response.status(200).json({ id: professor.professor_id });
     } catch (err) {
       console.log(`Professor creation failed: ${err}`);
       return response.status(500).json({

@@ -6,18 +6,21 @@ module.exports = {
     try {
       const defense = request.body;
       const defense_id = uuidv4();
-      const { defense_stud_id, defense_bank_id, defense_sArea_id} = request.params;
+      const {
+        defense_stud_id,
+        defense_bank_id,
+        defense_sArea_id,
+      } = request.params;
       defense.defense_id = defense_id;
       defense.defense_stud_id = defense_stud_id;
       defense.defense_bank_id = defense_bank_id;
       defense.defense_sArea_id = defense_sArea_id;
-      const result = await DefenseModel.create(defense);
-      return response.status(200).json(result);
+      await DefenseModel.create(defense);
+      return response.status(200).json({ id: defense.defense_id });
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to create a defense',
+        notification: 'Internal server error while trying to create a defense',
       });
     }
   },
@@ -29,8 +32,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to get all defense',
+        notification: 'Internal server error while trying to get all defense',
       });
     }
   },
@@ -53,10 +55,7 @@ module.exports = {
     try {
       const { defense_id } = request.params;
       const defense = request.body;
-      const result = await DefenseModel.updateById(
-        defense_id,
-        defense
-      );
+      const result = await DefenseModel.updateById(defense_id, defense);
       return response.status(200).json(result);
     } catch (err) {
       console.error(err);
@@ -75,8 +74,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to delete a defense',
+        notification: 'Internal server error while trying to delete a defense',
       });
     }
   },
