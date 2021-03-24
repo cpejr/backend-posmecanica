@@ -1,19 +1,22 @@
-const CandidateModel = require("../models/CandidateModel");
+const { v4: uuidv4 } = require('uuid');
+const CandidateModel = require('../models/CandidateModel');
 
 module.exports = {
   async create(request, response) {
     try {
       const candidate = request.body;
+      const candidate_id = uuidv4();
       const { candidate_process_id } = request.params;
       const protocol = parseInt(Math.random() * 1000000000, 10);
+      candidate.candidate_id = candidate_id;
       candidate.candidate_protocol = protocol;
       candidate.candidate_process_id = candidate_process_id;
-      const result = await CandidateModel.create(candidate);
-      return response.status(200).json(result);
+      await CandidateModel.create(candidate);
+      return response.status(200).json({ id: candidate.candidate_id });
     } catch (err) {
       console.log(`Candidate creation failed: ${err}`);
       return response.status(500).json({
-        notification: "Internal server error while trying to create Candidate",
+        notification: 'Internal server error while trying to create Candidate',
       });
     }
   },
@@ -26,7 +29,7 @@ module.exports = {
     } catch (err) {
       console.log(`Candidate getAll failed: ${err}`);
       return response.status(500).json({
-        notification: "Internal server error while trying to get Candidate",
+        notification: 'Internal server error while trying to get Candidate',
       });
     }
   },
@@ -40,7 +43,7 @@ module.exports = {
     } catch (err) {
       console.log(`Candidate getById failed: ${err}`);
       return response.status(500).json({
-        notification: "Internal server error while trying to get Candidate",
+        notification: 'Internal server error while trying to get Candidate',
       });
     }
   },
@@ -55,7 +58,7 @@ module.exports = {
     } catch (err) {
       console.log(`Candidate update failed: ${err}`);
       return response.status(500).json({
-        notification: "Internal server error while trying to update Candidate",
+        notification: 'Internal server error while trying to update Candidate',
       });
     }
   },
@@ -69,7 +72,7 @@ module.exports = {
     } catch (err) {
       console.log(`Candidate delete failed: ${err}`);
       return response.status(500).json({
-        notification: "Internal server error while trying to delete Candidate",
+        notification: 'Internal server error while trying to delete Candidate',
       });
     }
   },
