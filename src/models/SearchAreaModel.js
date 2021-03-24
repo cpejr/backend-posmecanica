@@ -9,8 +9,12 @@ module.exports = {
     return result;
   },
 
-  async getAll() {
-    const result = await connection('search_area').select('*');
+  async getAll(times) {
+    const limit = 50;
+    const result = await connection('search_area')
+      .select('*')
+      .limit(limit)
+      .offset(limit * times);
     return result;
   },
 

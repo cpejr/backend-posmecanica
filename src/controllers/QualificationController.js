@@ -24,7 +24,7 @@ module.exports = {
 
   async getAll(request, response) {
     try {
-      const result = await QualificationModel.getAll();
+      const result = await QualificationModel.getAll(request.query.times);
       return response.status(200).json(result);
     } catch (err) {
       console.log(`Qualification getAll failed: ${err}`);

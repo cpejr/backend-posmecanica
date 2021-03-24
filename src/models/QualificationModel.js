@@ -6,8 +6,12 @@ module.exports = {
     return result;
   },
 
-  async getAll() {
-    const qualification = await connection('qualification').select('*');
+  async getAll(times) {
+    const limit = 50;
+    const qualification = await connection('qualification')
+      .select('*')
+      .limit(limit)
+      .offset(limit * times);
     const student = await connection('student').select(
       'stud_id',
       'stud_candidate_id'

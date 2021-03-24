@@ -32,7 +32,11 @@ const QualificationController = require('./controllers/QualificationController')
 const QualificationValidator = require('./validators/QualificationValidator');
 
 // Candidate
-routes.get('/candidates', CandidateController.getAll);
+routes.get(
+  '/candidates',
+  CandidateValidator.getAll,
+  CandidateController.getAll
+);
 routes.get(
   '/candidates/:candidate_id',
   CandidateValidator.getById,
@@ -62,7 +66,7 @@ routes.put('/adms/:adm_id', AdmValidator.update, AdmController.update);
 routes.delete('/adms/:adm_id', AdmValidator.delete, AdmController.delete);
 
 // Student
-routes.get('/students', StudentController.getAll);
+routes.get('/students', StudentValidator.getAll, StudentController.getAll);
 routes.get(
   '/students/:stud_id',
   StudentValidator.getById,
@@ -85,7 +89,11 @@ routes.delete(
 );
 
 // Selective Process
-routes.get('/selectiveProcesses', SelectiveProcessController.getAll);
+routes.get(
+  '/selectiveProcesses',
+  SelectiveProcessValidator.getAll,
+  SelectiveProcessController.getAll
+);
 routes.get(
   '/selectiveProcesses/:process_id',
   SelectiveProcessValidator.getById,
@@ -108,7 +116,11 @@ routes.delete(
 );
 
 // Search Area
-routes.get('/searchAreas', SearchAreaController.getAll);
+routes.get(
+  '/searchAreas',
+  SearchAreaValidator.getAll,
+  SearchAreaController.getAll
+);
 routes.get(
   '/searchAreas/:search_area_id',
   SearchAreaValidator.getById,
@@ -131,14 +143,14 @@ routes.delete(
 );
 
 // Banks
-routes.get('/banks', BankController.getAll);
+routes.get('/banks', BankValidator.getAll, BankController.getAll);
 routes.get('/banks/:bank_id', BankValidator.getById, BankController.getById);
 routes.post('/banks', BankValidator.create, BankController.create);
 routes.put('/banks/:bank_id', BankValidator.update, BankController.update);
 routes.delete('/banks/:bank_id', BankValidator.delete, BankController.delete);
 
 // Defense
-routes.get('/defenses', DefenseController.getAll);
+routes.get('/defenses', DefenseValidator.getAll, DefenseController.getAll);
 routes.get(
   '/defenses/:defense_id',
   DefenseValidator.getById,
@@ -161,7 +173,11 @@ routes.delete(
 );
 
 // Professor
-routes.get('/professors', ProfessorController.getAll);
+routes.get(
+  '/professors',
+  ProfessorValidator.getAll,
+  ProfessorController.getAll
+);
 routes.get(
   '/professors/:prof_id',
   ProfessorValidator.getById,
@@ -184,7 +200,11 @@ routes.delete(
 );
 
 // Qualificação
-routes.get('/qualifications', QualificationController.getAll);
+routes.get(
+  '/qualifications',
+  QualificationValidator.getAll,
+  QualificationController.getAll
+);
 routes.get(
   '/qualifications/:quali_id',
   QualificationValidator.getById,

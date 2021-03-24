@@ -27,7 +27,7 @@ module.exports = {
 
   async getAll(request, response) {
     try {
-      const result = await DefenseModel.getAll();
+      const result = await DefenseModel.getAll(request.query.times);
       return response.status(200).json(result);
     } catch (err) {
       console.error(err);

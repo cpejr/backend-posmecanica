@@ -7,6 +7,12 @@ module.exports = {
     }),
   }),
 
+  getAll: celebrate({
+    [Segments.QUERY]: Joi.object().keys({
+      times: Joi.number().integer().required(),
+    }),
+  }),
+
   getById: celebrate({
     [Segments.PARAMS]: Joi.object().keys({
       search_area_id: Joi.string()

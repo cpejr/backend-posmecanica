@@ -17,7 +17,7 @@ module.exports = {
 
   async getAll(request, response) {
     try {
-      const result = await SearchAreaModel.getAll();
+      const result = await SearchAreaModel.getAll(request.query.times);
       return response.status(200).json(result);
     } catch (err) {
       console.error(err);
