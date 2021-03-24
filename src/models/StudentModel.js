@@ -6,8 +6,12 @@ module.exports = {
     return result;
   },
 
-  async getAll() {
-    const student = await connection('student').select('*');
+  async getAll(times) {
+    const limit = 50;
+    const student = await connection('student')
+      .select('*')
+      .limit(limit)
+      .offset(limit * times);
     const candidate = await connection('candidate').select('*');
     student.forEach((item) => {
       const filteredCandidate = candidate.filter(

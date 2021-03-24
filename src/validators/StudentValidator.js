@@ -18,6 +18,13 @@ module.exports = {
       stud_scholarship: Joi.boolean().required(),
     }),
   }),
+
+  getAll: celebrate({
+    [Segments.QUERY]: Joi.object().keys({
+      times: Joi.number().integer().required(),
+    }),
+  }),
+
   getById: celebrate({
     [Segments.PARAMS]: Joi.object().keys({
       stud_id: Joi.string()

@@ -11,8 +11,12 @@ module.exports = {
     return result;
   },
 
-  async getAll() {
-    const selective_process = await connection('selective_process').select('*');
+  async getAll(times) {
+    const limit = 50;
+    const selective_process = await connection('selective_process')
+      .select('*')
+      .limit(limit)
+      .offset(limit * times);
     const candidate = await connection('candidate').select(
       'candidate_id',
       'candidate_name',

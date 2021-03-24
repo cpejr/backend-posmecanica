@@ -6,8 +6,12 @@ module.exports = {
     return result;
   },
 
-  async getAll() {
-    const result = await connection('professor').select('*');
+  async getAll(times) {
+    const limit = 50;
+    const result = await connection('professor')
+      .select('*')
+      .limit(limit)
+      .offset(limit * times);
     return result;
   },
 

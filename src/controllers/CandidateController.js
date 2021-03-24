@@ -23,7 +23,7 @@ module.exports = {
 
   async getAll(request, response) {
     try {
-      const result = await CandidateModel.getAll();
+      const result = await CandidateModel.getAll(request.query.times);
 
       return response.status(200).json(result);
     } catch (err) {
