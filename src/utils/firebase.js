@@ -1,6 +1,6 @@
-const firebase = require("firebase/app");
-const admin = require("firebase-admin");
-require("firebase/auth");
+const firebase = require('firebase/app');
+const admin = require('firebase-admin');
+require('firebase/auth');
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_APIKEY,

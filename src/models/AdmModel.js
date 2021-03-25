@@ -29,4 +29,12 @@ module.exports = {
     const result = await connection('administrator').where({ adm_id }).delete();
     return result;
   },
+
+  async getByFields(fields) {
+    const result = await connection('administrator')
+      .where(fields)
+      .select('*')
+      .first();
+    return result;
+  },
 };

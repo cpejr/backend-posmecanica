@@ -31,4 +31,12 @@ module.exports = {
     const result = await connection('professor').where({ prof_id }).delete();
     return result;
   },
+
+  async getByFields(fields) {
+    const result = await connection('professor')
+      .where(fields)
+      .select('*')
+      .first();
+    return result;
+  },
 };

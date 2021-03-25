@@ -60,4 +60,12 @@ module.exports = {
     const result = await connection('student').where({ stud_id }).delete();
     return result;
   },
+
+  async getByFields(fields) {
+    const result = await connection('student')
+      .where(fields)
+      .select('*')
+      .first();
+    return result;
+  },
 };
