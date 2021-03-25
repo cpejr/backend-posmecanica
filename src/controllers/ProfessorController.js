@@ -64,6 +64,7 @@ module.exports = {
             firebase_id,
             professor.prof_defaultPassword
           );
+          //delete professor.prof_defaultPassword;
         } catch (err) {
           console.log(`Professor password update failed: ${err}`);
           return response.status(500).json({
@@ -71,7 +72,6 @@ module.exports = {
               'Internal server error while trying to update password',
           });
         }
-        delete professor.prof_defaultPassword;
       }
       const result = await ProfessorModel.updateById(prof_id, professor);
 

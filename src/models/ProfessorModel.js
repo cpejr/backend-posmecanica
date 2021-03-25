@@ -25,7 +25,7 @@ module.exports = {
 
   async updateById(prof_id, professor) {
     const result = await connection('professor')
-      .where({ prof_id })
+      .where({ prof_id }) 
       .update(professor);
     return result;
   },
