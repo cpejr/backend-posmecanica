@@ -16,7 +16,10 @@ module.exports = {
   },
 
   async getById(prof_id) {
-    const result = await connection('professor').where({ prof_id }).select('*');
+    const result = await connection('professor')
+      .where({ prof_id })
+      .select('*')
+      .first();
     return result;
   },
 

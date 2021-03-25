@@ -57,7 +57,8 @@ module.exports = {
       const { prof_id } = request.params;
       const professor = request.body;
       if (professor.prof_defaultPassword) {
-        const firebase_id = await ProfessorModel.getById(prof_id).prof_firebase;
+        const profInfos = await ProfessorModel.getById(prof_id);
+        const firebase_id = profInfos.prof_firebase;
         try {
           await firebase.changeUserPassword(
             firebase_id,

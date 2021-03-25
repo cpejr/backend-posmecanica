@@ -255,13 +255,13 @@ routes.delete(
 routes.get(
   '/professors',
   ProfessorValidator.getAll,
-  Authorization.authenticateToken,
+  // Authorization.authenticateToken,
   ProfessorController.getAll
 );
 routes.get(
   '/professors/:prof_id',
   ProfessorValidator.getById,
-  Authorization.authenticateToken,
+  // Authorization.authenticateToken,
   ProfessorController.getById
 );
 routes.post(
@@ -279,7 +279,7 @@ routes.put(
 routes.delete(
   '/professors/:prof_id',
   ProfessorValidator.delete,
-  Authorization.authenticateToken,
+  // Authorization.authenticateToken,
   ProfessorController.delete
 );
 

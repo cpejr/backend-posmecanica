@@ -1,5 +1,6 @@
 const firebase = require('firebase/app');
 const admin = require('firebase-admin');
+
 require('firebase/auth');
 
 const firebaseConfig = {
@@ -13,6 +14,7 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+admin.initializeApp();
 
 module.exports = {
   async createNewUser(email, password) {
