@@ -8,9 +8,27 @@ module.exports = {
       })
       .unknown(),
     [Segments.BODY]: Joi.object().keys({
-      adm_name: Joi.string().required(),
-      adm_email: Joi.string().email().required(),
+      discipline_code: Joi.string().required(),
+      discipline_content: Joi.string().required(),
+      discipline_name: Joi.string().required(),
+      discipline_is_isolated: Joi.boolean().required(),
+      discipline_semester: Joi.string()
+        .valid('PRIMEIRO', 'SEGUNDO', 'PRIMEIRO_SEGUNDO, NAO_OFERTADO')
+        .insensitive()
+        .required(),
+      discipline_type: Joi.string()
+        .valid('MESTRADO', 'DOUTORADO')
+        .insensitive()
+        .required(),
     }),
+  }),
+
+  getAll: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
   }),
 
   getById: celebrate({
@@ -20,7 +38,7 @@ module.exports = {
       })
       .unknown(),
     [Segments.PARAMS]: Joi.object().keys({
-      adm_id: Joi.string()
+      discipline_id: Joi.string()
         .guid({
           version: ['uuidv4'],
         })
@@ -35,16 +53,23 @@ module.exports = {
       })
       .unknown(),
     [Segments.PARAMS]: Joi.object().keys({
-      adm_id: Joi.string()
+      discipline_id: Joi.string()
         .guid({
           version: ['uuidv4'],
         })
         .required(),
     }),
     [Segments.BODY]: Joi.object().keys({
-      adm_name: Joi.string(),
-      adm_defaultPassword: Joi.string().min(8).max(20),
-      adm_email: Joi.string().email(),
+      discipline_code: Joi.string(),
+      discipline_content: Joi.string(),
+      discipline_name: Joi.string(),
+      discipline_is_isolated: Joi.boolean(),
+      discipline_semester: Joi.string()
+        .valid('PRIMEIRO', 'SEGUNDO', 'PRIMEIRO_SEGUNDO, NAO_OFERTADO')
+        .insensitive(),
+      discipline_type: Joi.string()
+        .valid('MESTRADO', 'DOUTORADO')
+        .insensitive(),
     }),
   }),
 
@@ -55,7 +80,7 @@ module.exports = {
       })
       .unknown(),
     [Segments.PARAMS]: Joi.object().keys({
-      adm_id: Joi.string()
+      discipline_id: Joi.string()
         .guid({
           version: ['uuidv4'],
         })

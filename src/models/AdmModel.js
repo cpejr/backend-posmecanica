@@ -14,7 +14,8 @@ module.exports = {
   async getById(adm_id) {
     const result = await connection('administrator')
       .where({ adm_id })
-      .select('*');
+      .select('*')
+      .first();
     return result;
   },
 
