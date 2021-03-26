@@ -2,6 +2,11 @@ const { celebrate, Segments, Joi } = require('celebrate');
 
 module.exports = {
   create: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
     [Segments.BODY]: Joi.object().keys({
       prof_name: Joi.string().required(),
       prof_email: Joi.string().email().required(),
@@ -38,12 +43,22 @@ module.exports = {
   }),
 
   getAll: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
     [Segments.QUERY]: Joi.object().keys({
       times: Joi.number().integer().required(),
     }),
   }),
 
   getById: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
     [Segments.PARAMS]: Joi.object().keys({
       prof_id: Joi.string()
         .guid({
@@ -54,6 +69,11 @@ module.exports = {
   }),
 
   update: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
     [Segments.PARAMS]: Joi.object().keys({
       prof_id: Joi.string()
         .guid({
@@ -96,6 +116,11 @@ module.exports = {
   }),
 
   delete: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
     [Segments.PARAMS]: Joi.object().keys({
       prof_id: Joi.string()
         .guid({

@@ -56,8 +56,28 @@ module.exports = {
     try {
       const { prof_id } = request.params;
       const professor = request.body;
-      const result = await ProfessorModel.updateById(prof_id, professor);
-
+      let result;
+      if (professor.prof_defaultPassword) {
+        const profInfos = await ProfessorModel.getById(prof_id);
+        const firebase_id = profInfos.prof_firebase;
+        try {
+          const update = await firebase.changeUserPassword(
+            firebase_id,
+            professor.prof_defaultPassword
+          );
+          result = update.uid;
+          delete professor.prof_defaultPassword;
+        } catch (err) {
+          console.log(`Professor password update failed: ${err}`);
+          return response.status(500).json({
+            notification:
+              'Internal server error while trying to update password',
+          });
+        }
+      }
+      if (professor.length > 0) {
+        result = await ProfessorModel.updateById(prof_id, professor);
+      }
       return response.status(200).json(result);
     } catch (err) {
       console.log(`Professor update failed: ${err}`);

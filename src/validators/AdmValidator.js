@@ -2,6 +2,11 @@ const { celebrate, Segments, Joi } = require('celebrate');
 
 module.exports = {
   create: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
     [Segments.BODY]: Joi.object().keys({
       adm_name: Joi.string().required(),
       adm_email: Joi.string().email().required(),
@@ -9,6 +14,11 @@ module.exports = {
   }),
 
   getById: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
     [Segments.PARAMS]: Joi.object().keys({
       adm_id: Joi.string()
         .guid({
@@ -19,6 +29,11 @@ module.exports = {
   }),
 
   update: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
     [Segments.PARAMS]: Joi.object().keys({
       adm_id: Joi.string()
         .guid({
@@ -34,6 +49,11 @@ module.exports = {
   }),
 
   delete: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
     [Segments.PARAMS]: Joi.object().keys({
       adm_id: Joi.string()
         .guid({
