@@ -57,8 +57,28 @@ module.exports = {
     try {
       const { adm_id } = request.params;
       const administrator = request.body;
-      const result = await AdmModel.updateById(adm_id, administrator);
-
+      let result;
+      if (administrator.adm_defaultPassword) {
+        const admInfos = await AdmModel.getById(adm_id);
+        const firebase_id = admInfos.adm_firebase;
+        try {
+          const update = await firebase.changeUserPassword(
+            firebase_id,
+            administrator.adm_defaultPassword
+          );
+          result = update.uid;
+          delete administrator.adm_defaultPassword;
+        } catch (err) {
+          console.log(`Administrator password update failed: ${err}`);
+          return response.status(500).json({
+            notification:
+              'Internal server error while trying to update password',
+          });
+        }
+      }
+      if (administrator.length > 0) {
+        result = await AdmModel.updateById(adm_id, administrator);
+      }
       return response.status(200).json(result);
     } catch (err) {
       console.log(`Administrator update failed: ${err}`);

@@ -24,7 +24,7 @@ const DefenseController = require('./controllers/DefenseController');
 const DefenseValidator = require('./validators/DefenseValidator');
 
 const DisciplineController = require('./controllers/DisciplineController');
-// const DisciplineValidator = require('./validators/DisciplineValidator');
+const DisciplineValidator = require('./validators/DisciplineValidator');
 
 const ProfessorController = require('./controllers/ProfessorController');
 const ProfessorValidator = require('./validators/ProfessorValidator');
@@ -34,6 +34,12 @@ const QualificationValidator = require('./validators/QualificationValidator');
 
 const SessionController = require('./controllers/SessionController');
 const SessionValidator = require('./validators/SessionValidator');
+
+const SearchArea_ProfessorController = require('./controllers/SearchArea_ProfessorController');
+const SearchArea_ProfessorValidator = require('./validators/SearchArea_ProfessorValidator');
+
+const Bank_ProfessorController = require('./controllers/Bank_ProfessorController');
+const Bank_ProfessorValidator = require('./validators/Bank_ProfessorValidator');
 
 const Authorization = require('./middlewares/authentication');
 
@@ -160,10 +166,30 @@ routes.delete(
 
 // Discipline
 routes.get('/discipline', DisciplineController.getAll);
-routes.get('/discipline/:discipline_id', DisciplineController.getById);
-routes.post('/discipline/:discipline_id', DisciplineController.create);
-routes.put('/discipline/:discipline_id', DisciplineController.update);
-routes.delete('/discipline/:discipline_id', DisciplineController.delete);
+routes.get(
+  '/discipline/:discipline_id',
+  DisciplineValidator.getById,
+  Authorization.authenticateToken,
+  DisciplineController.getById
+);
+routes.post(
+  '/discipline/:discipline_id',
+  DisciplineValidator.create,
+  Authorization.authenticateToken,
+  DisciplineController.create
+);
+routes.put(
+  '/discipline/:discipline_id',
+  DisciplineValidator.update,
+  Authorization.authenticateToken,
+  DisciplineController.update
+);
+routes.delete(
+  '/discipline/:discipline_id',
+  DisciplineValidator.delete,
+  Authorization.authenticateToken,
+  DisciplineController.delete
+);
 
 // Professor
 routes.get(
@@ -326,6 +352,34 @@ routes.delete(
   StudentValidator.delete,
   Authorization.authenticateToken,
   StudentController.delete
+);
+
+// SearchArea_Professor
+routes.post(
+  '/connect/searchArea_professor/:sp_professor_id',
+  SearchArea_ProfessorValidator.connect,
+  Authorization.authenticateToken,
+  SearchArea_ProfessorController.connect
+);
+routes.delete(
+  '/disconnect/searchArea_professor/:searchArea_professor_id',
+  SearchArea_ProfessorValidator.disconnect,
+  Authorization.authenticateToken,
+  SearchArea_ProfessorController.disconnect
+);
+
+// Bank_Professor
+routes.post(
+  '/connect/bank_professor/:bp_bank_id',
+  Bank_ProfessorValidator.connect,
+  Authorization.authenticateToken,
+  Bank_ProfessorController.connect
+);
+routes.delete(
+  '/disconnect/bank_professor/:bank_professor_id',
+  Bank_ProfessorValidator.disconnect,
+  Authorization.authenticateToken,
+  Bank_ProfessorController.disconnect
 );
 
 module.exports = routes;

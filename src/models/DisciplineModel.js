@@ -12,7 +12,9 @@ module.exports = {
   },
 
   async getById(discipline_id) {
-    const result = await connection('discipline').where({ discipline_id }).select('*');
+    const result = await connection('discipline')
+      .where({ discipline_id })
+      .select('*');
     return result;
   },
 
@@ -24,7 +26,9 @@ module.exports = {
   },
 
   async deleteById(discipline_id) {
-    const result = await connection('discipline').where({ discipline_id }).delete();
+    const result = await connection('discipline')
+      .where({ discipline_id })
+      .delete();
     return result;
   },
 };
