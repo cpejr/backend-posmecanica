@@ -31,6 +31,9 @@ const ProfessorValidator = require('./validators/ProfessorValidator');
 const QualificationController = require('./controllers/QualificationController');
 const QualificationValidator = require('./validators/QualificationValidator');
 
+const DisciplineController = require('./controllers/DisciplineController');
+//const DisciplineValidator = require('./validators/QualificationValidator');
+
 // Candidate
 routes.get('/candidates', CandidateController.getAll);
 routes.get(
@@ -200,6 +203,29 @@ routes.delete(
   '/qualifications/:quali_id',
   QualificationValidator.delete,
   QualificationController.delete
+);
+
+// Discipline
+routes.get('/discipline', DisciplineController.getAll);
+routes.get(
+  '/discipline/:discipline_id',
+  DisciplineController.getById,
+  DisciplineController.getById
+);
+routes.post(
+  '/discipline/:discipline_id',
+  DisciplineController.create,
+  DisciplineController.create
+);
+routes.put(
+  '/discipline/:discipline_id',
+  DisciplineController.update,
+  DisciplineController.update
+);
+routes.delete(
+  '/discipline/:discipline_id',
+  DisciplineController.delete,
+  DisciplineController.delete
 );
 
 module.exports = routes;
