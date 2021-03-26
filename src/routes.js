@@ -23,6 +23,9 @@ const BankValidator = require('./validators/BankValidator');
 const DefenseController = require('./controllers/DefenseController');
 const DefenseValidator = require('./validators/DefenseValidator');
 
+const DisciplineController = require('./controllers/DisciplineController');
+// const DisciplineValidator = require('./validators/DisciplineValidator');
+
 const ProfessorController = require('./controllers/ProfessorController');
 const ProfessorValidator = require('./validators/ProfessorValidator');
 
@@ -154,6 +157,13 @@ routes.delete(
   Authorization.authenticateToken,
   DefenseController.delete
 );
+
+// Discipline
+routes.get('/discipline', DisciplineController.getAll);
+routes.get('/discipline/:discipline_id', DisciplineController.getById);
+routes.post('/discipline/:discipline_id', DisciplineController.create);
+routes.put('/discipline/:discipline_id', DisciplineController.update);
+routes.delete('/discipline/:discipline_id', DisciplineController.delete);
 
 // Professor
 routes.get(
