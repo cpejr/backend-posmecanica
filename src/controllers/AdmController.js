@@ -16,7 +16,7 @@ module.exports = {
       administrator.adm_id = administrator_id;
       administrator.adm_defaultPassword = defaultPassword;
       administrator.adm_firebase = uid;
-      const result = await AdmModel.create(administrator);
+      await AdmModel.create(administrator);
       return response.status(200).json({ id: administrator.adm_id });
     } catch (err) {
       console.log(`Administrator creation failed: ${err}`);

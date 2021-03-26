@@ -1,9 +1,12 @@
+const { v4: uuidv4 } = require('uuid');
 const BankModel = require('../models/BankModel');
 
 module.exports = {
   async create(request, response) {
     try {
       const bank = request.body;
+      const bank_id = uuidv4();
+      bank.bank_id = bank_id;
       await BankModel.create(bank);
       return response.status(200).json({ id: bank.bank_id });
     } catch (err) {
@@ -16,7 +19,7 @@ module.exports = {
 
   async getAll(request, response) {
     try {
-      const result = await BankModel.getAll();
+      const result = await BankModel.getAll(request.query.times);
       return response.status(200).json(result);
     } catch (err) {
       console.error(err);

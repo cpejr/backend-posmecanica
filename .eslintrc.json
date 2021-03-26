@@ -19,6 +19,7 @@
            "endOfLine":"auto"
          }],
         "camelcase": "off",
-        "no-param-reassign": "off"
+        "no-param-reassign": "off",
+        "prefer-destructuring": ["error", {"object": true, "array": false}]
     }
 }

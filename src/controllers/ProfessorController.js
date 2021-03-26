@@ -16,8 +16,8 @@ module.exports = {
       professor.prof_id = professor_id;
       professor.prof_defaultPassword = defaultPassword;
       professor.prof_firebase = uid;
-      const result = await ProfessorModel.create(professor);
-      return response.status(200).json(result);
+      await ProfessorModel.create(professor);
+      return response.status(200).json({ id: professor.prof_id });
     } catch (err) {
       console.log(`Professor creation failed: ${err}`);
       return response.status(500).json({
@@ -28,7 +28,7 @@ module.exports = {
 
   async getAll(request, response) {
     try {
-      const result = await ProfessorModel.getAll();
+      const result = await ProfessorModel.getAll(request.query.times);
 
       return response.status(200).json(result);
     } catch (err) {
@@ -56,8 +56,28 @@ module.exports = {
     try {
       const { prof_id } = request.params;
       const professor = request.body;
-      const result = await ProfessorModel.updateById(prof_id, professor);
-
+      let result;
+      if (professor.prof_defaultPassword) {
+        const profInfos = await ProfessorModel.getById(prof_id);
+        const firebase_id = profInfos.prof_firebase;
+        try {
+          const update = await firebase.changeUserPassword(
+            firebase_id,
+            professor.prof_defaultPassword
+          );
+          result = update.uid;
+          delete professor.prof_defaultPassword;
+        } catch (err) {
+          console.log(`Professor password update failed: ${err}`);
+          return response.status(500).json({
+            notification:
+              'Internal server error while trying to update password',
+          });
+        }
+      }
+      if (professor.length > 0) {
+        result = await ProfessorModel.updateById(prof_id, professor);
+      }
       return response.status(200).json(result);
     } catch (err) {
       console.log(`Professor update failed: ${err}`);

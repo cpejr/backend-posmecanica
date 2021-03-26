@@ -11,8 +11,12 @@ module.exports = {
     return result;
   },
 
-  async getAll() {
-    const selective_process = await connection('selective_process').select('*');
+  async getAll(times) {
+    const limit = 50;
+    const selective_process = await connection('selective_process')
+      .select('*')
+      .limit(limit)
+      .offset(limit * times);
     const candidate = await connection('candidate').select(
       'candidate_id',
       'candidate_name',
@@ -22,7 +26,7 @@ module.exports = {
       item.candidate = candidate.filter(
         (campo) => campo.candidate_process_id === item.process_id
       );
-      item.candidate.forEach((item) => delete item.candidate_process_id);
+      item.candidate.forEach((campo) => delete campo.candidate_process_id);
     });
     const result = selective_process;
     return result;

@@ -1,4 +1,4 @@
-const SelectiveProcessModel = require("../models/SelectiveProcessModel");
+const SelectiveProcessModel = require('../models/SelectiveProcessModel');
 
 module.exports = {
   async create(request, response) {
@@ -10,20 +10,20 @@ module.exports = {
       console.error(err);
       return response.status(500).json({
         notification:
-          "Internal server error while trying to create a selective process",
+          'Internal server error while trying to create a selective process',
       });
     }
   },
 
   async getAll(request, response) {
     try {
-      const result = await SelectiveProcessModel.getAll();
+      const result = await SelectiveProcessModel.getAll(request.query.times);
       return response.status(200).json(result);
     } catch (err) {
       console.error(err);
       return response.status(500).json({
         notification:
-          "Internal server error while trying to get all selective process",
+          'Internal server error while trying to get all selective process',
       });
     }
   },
@@ -37,7 +37,7 @@ module.exports = {
       console.error(err);
       return response.status(500).json({
         notification:
-          "Internal server error while trying to get a selective process by id",
+          'Internal server error while trying to get a selective process by id',
       });
     }
   },
@@ -55,7 +55,7 @@ module.exports = {
       console.error(err);
       return response.status(500).json({
         notification:
-          "Internal server error while trying to update a selective process by id",
+          'Internal server error while trying to update a selective process by id',
       });
     }
   },
@@ -69,7 +69,7 @@ module.exports = {
       console.error(err);
       return response.status(500).json({
         notification:
-          "Internal server error while trying to delete a selective process",
+          'Internal server error while trying to delete a selective process',
       });
     }
   },

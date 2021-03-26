@@ -1,6 +1,9 @@
-const firebase = require("firebase/app");
-const admin = require("firebase-admin");
-require("firebase/auth");
+const firebase = require('firebase/app');
+const admin = require('firebase-admin');
+
+require('firebase/auth');
+
+const serviceAccount = require('../../serviceAccountKey.json');
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_APIKEY,
@@ -13,6 +16,10 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  database: 'https://pos-mecanica-ufmg-default-rtdb.firebaseio.com/',
+});
 
 module.exports = {
   async createNewUser(email, password) {
@@ -35,6 +42,6 @@ module.exports = {
     const result = await admin.auth().updateUser(uid, {
       password: newPassword,
     });
-    return result.user.uid;
+    return result;
   },
 };

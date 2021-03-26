@@ -1,16 +1,17 @@
-const { v4: uuidv4 } = require('uuid');
 const connection = require('../database/connection');
 
 module.exports = {
   async create(bank) {
-    const bank_id = uuidv4();
-    bank.bank_id = bank_id;
     const result = await connection('bank').insert(bank);
     return result;
   },
 
-  async getAll() {
-    const result = await connection('bank').select('*');
+  async getAll(times) {
+    const limit = 50;
+    const result = await connection('bank')
+      .select('*')
+      .limit(limit)
+      .offset(limit * times);
     return result;
   },
 
