@@ -18,7 +18,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  database: "https://pos-mecanica-ufmg-default-rtdb.firebaseio.com/"
+  database: 'https://pos-mecanica-ufmg-default-rtdb.firebaseio.com/',
 });
 
 module.exports = {
