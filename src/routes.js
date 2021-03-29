@@ -41,6 +41,9 @@ const SearchArea_ProfessorValidator = require('./validators/SearchArea_Professor
 const Bank_ProfessorController = require('./controllers/Bank_ProfessorController');
 const Bank_ProfessorValidator = require('./validators/Bank_ProfessorValidator');
 
+const Student_DisciplineController = require('./controllers/Student_DisciplineController');
+const Student_DisciplineValidator = require('./validators/Student_DisciplineValidator');
+
 const Authorization = require('./middlewares/authentication');
 
 // Administrador
@@ -165,27 +168,27 @@ routes.delete(
 );
 
 // Discipline
-routes.get('/discipline', DisciplineController.getAll);
+routes.get('/disciplines', DisciplineController.getAll);
 routes.get(
-  '/discipline/:discipline_id',
+  '/disciplines/:discipline_id',
   DisciplineValidator.getById,
   Authorization.authenticateToken,
   DisciplineController.getById
 );
 routes.post(
-  '/discipline/:discipline_id',
+  '/disciplines',
   DisciplineValidator.create,
   Authorization.authenticateToken,
   DisciplineController.create
 );
 routes.put(
-  '/discipline/:discipline_id',
+  '/disciplines/:discipline_id',
   DisciplineValidator.update,
   Authorization.authenticateToken,
   DisciplineController.update
 );
 routes.delete(
-  '/discipline/:discipline_id',
+  '/disciplines/:discipline_id',
   DisciplineValidator.delete,
   Authorization.authenticateToken,
   DisciplineController.delete
@@ -380,6 +383,20 @@ routes.delete(
   Bank_ProfessorValidator.disconnect,
   Authorization.authenticateToken,
   Bank_ProfessorController.disconnect
+);
+
+// Student_Discipline
+routes.post(
+  '/connect/student_dis/:sd_student_id',
+  Student_DisciplineValidator.connect,
+  Authorization.authenticateToken,
+  Student_DisciplineController.connect
+);
+routes.delete(
+  '/disconnect/student_dis/:student_dis_id',
+  Student_DisciplineValidator.disconnect,
+  Authorization.authenticateToken,
+  Student_DisciplineController.disconnect
 );
 
 module.exports = routes;

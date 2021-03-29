@@ -2,7 +2,7 @@ exports.up = function (knex) {
   return knex.schema.createTable('student', (table) => {
     table.uuid('stud_id').primary().notNullable();
     table.string('stud_firebase').notNullable();
-    table.string('stud_default_password').notNullable();
+    table.string('stud_defaultPassword').notNullable();
     table.string('stud_registration');
     table.boolean('stud_scholarship').defaultTo(false).notNullable();
     table.string('stud_prof_advisor');

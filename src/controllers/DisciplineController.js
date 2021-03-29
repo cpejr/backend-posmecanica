@@ -1,7 +1,5 @@
-const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
-const ProfessorModel = require('../models/DisciplineModel');
-
+const DisciplineModel = require('../models/DisciplineModel');
 
 module.exports = {
   async create(request, response) {
@@ -9,8 +7,8 @@ module.exports = {
       const discipline = request.body;
       const discipline_id = uuidv4();
       discipline.discipline_id = discipline_id;
-      const result = await DisciplineModel.create(discipline);
-      return response.status(200).json(result);
+      await DisciplineModel.create(discipline);
+      return response.status(200).json({ id: discipline_id });
     } catch (err) {
       console.log(`Discipline creation failed: ${err}`);
       return response.status(500).json({
@@ -21,7 +19,7 @@ module.exports = {
 
   async getAll(request, response) {
     try {
-      const result = await DisciplineModel.getAll();
+      const result = await DisciplineModel.getAll(request.query.times);
 
       return response.status(200).json(result);
     } catch (err) {
@@ -35,7 +33,7 @@ module.exports = {
   async getById(request, response) {
     try {
       const { discipline_id } = request.params;
-      const result = await DisciplineModel.getById(prof_id);
+      const result = await DisciplineModel.getById(discipline_id);
       return response.status(200).json(result);
     } catch (err) {
       console.log(`Discipline getById failed: ${err}`);
@@ -48,8 +46,11 @@ module.exports = {
   async update(request, response) {
     try {
       const { discipline_id } = request.params;
-      const discipline= request.body;
-      const result = await DisciplineModel.updateById(discipline_id, discipline);
+      const discipline = request.body;
+      const result = await DisciplineModel.updateById(
+        discipline_id,
+        discipline
+      );
 
       return response.status(200).json(result);
     } catch (err) {
