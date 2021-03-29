@@ -384,6 +384,12 @@ routes.delete(
   Authorization.authenticateToken,
   Bank_ProfessorController.disconnect
 );
+routes.get(
+  '/getAll/bank_professor',
+  Bank_ProfessorValidator.getAll,
+  Authorization.authenticateToken,
+  Bank_ProfessorController.getAll
+);
 
 // Student_Discipline
 routes.post(
