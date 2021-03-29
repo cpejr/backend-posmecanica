@@ -18,7 +18,8 @@ module.exports = {
   async getById(defense_id) {
     const result = await connection('defense')
       .where({ defense_id })
-      .select('*');
+      .select('*')
+      .first();
     return result;
   },
 

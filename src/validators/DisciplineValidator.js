@@ -29,6 +29,9 @@ module.exports = {
         authorization: Joi.string().required(),
       })
       .unknown(),
+    [Segments.QUERY]: Joi.object().keys({
+      times: Joi.number().integer().required(),
+    }),
   }),
 
   getById: celebrate({

@@ -6,15 +6,20 @@ module.exports = {
     return result;
   },
 
-  async getAll() {
-    const result = await connection('discipline').select('*');
+  async getAll(times) {
+    const limit = 50;
+    const result = await connection('discipline')
+      .select('*')
+      .limit(limit)
+      .offset(limit * times);
     return result;
   },
 
   async getById(discipline_id) {
     const result = await connection('discipline')
       .where({ discipline_id })
-      .select('*');
+      .select('*')
+      .first();
     return result;
   },
 

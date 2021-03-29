@@ -20,7 +20,7 @@ module.exports = {
       student.stud_process_id = stud_process_id;
       student.stud_candidate_id = stud_candidate_id;
       student.stud_firebase = uid;
-      student.stud_default_password = defaultPassword;
+      student.stud_defaultPassword = defaultPassword;
       delete student.stud_password;
       await StudentModel.create(student);
       return response.status(200).json({ id: student.stud_id });
@@ -63,8 +63,28 @@ module.exports = {
     try {
       const { stud_id } = request.params;
       const student = request.body;
-      const result = await StudentModel.updateById(stud_id, student);
-
+      let result;
+      if (student.stud_defaultPassword) {
+        const studInfos = await StudentModel.getById(stud_id);
+        const firebase_id = studInfos.stud_firebase;
+        try {
+          const update = await firebase.changeUserPassword(
+            firebase_id,
+            student.stud_defaultPassword
+          );
+          result = update.uid;
+          delete student.stud_defaultPassword;
+        } catch (err) {
+          console.log(`Student password update failed: ${err}`);
+          return response.status(500).json({
+            notification:
+              'Internal server error while trying to update password',
+          });
+        }
+      }
+      if (student.length > 0) {
+        result = await StudentModel.updateById(stud_id, student);
+      }
       return response.status(200).json(result);
     } catch (err) {
       console.log(`Student update failed: ${err}`);
