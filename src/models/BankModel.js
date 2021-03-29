@@ -8,15 +8,57 @@ module.exports = {
 
   async getAll(times) {
     const limit = 50;
-    const result = await connection('bank')
+    const bankTable = await connection('bank')
       .select('*')
       .limit(limit)
       .offset(limit * times);
+    const profTable = await connection('professor').select(
+      'prof_id',
+      'prof_name',
+      'prof_email'
+    );
+    const bank_profTable = await connection('bank_professor');
+    bankTable.forEach((bank) => {
+      const relation = [];
+      const profRelation = bank_profTable.filter(
+        (elements) => elements.bp_bank_id === bank.bank_id
+      );
+      profRelation.forEach((ids) => {
+        relation.push(
+          profTable.find((element) => element.prof_id === ids.bp_professor_id)
+        );
+      });
+      bank.professors = relation;
+    });
+    const result = bankTable;
     return result;
   },
 
   async getById(bank_id) {
-    const result = await connection('bank').where({ bank_id }).select('*');
+    const relation = [];
+    const professorTable = await connection('professor').select(
+      'prof_id',
+      'prof_name',
+      'prof_email'
+    );
+    const bankObject = await connection('bank')
+      .where({ bank_id })
+      .select('*')
+      .first();
+    const professorRelation = await connection('bank_professor')
+      .where({
+        bp_bank_id: bank_id,
+      })
+      .select('bp_professor_id');
+    professorRelation.forEach((ids) => {
+      relation.push(
+        professorTable.find(
+          (element) => element.prof_id === ids.bp_professor_id
+        )
+      );
+    });
+    const result = bankObject;
+    result.professors = relation;
     return result;
   },
 

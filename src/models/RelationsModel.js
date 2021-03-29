@@ -20,4 +20,11 @@ module.exports = {
       .delete();
     return result;
   },
+  async getAll(table, times) {
+    const limit = 50;
+    const result = await connection(table)
+      .limit(limit)
+      .offset(limit * times);
+    return result;
+  },
 };
