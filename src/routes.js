@@ -295,6 +295,7 @@ routes.get(
   '/selectiveProcesses',
   SelectiveProcessValidator.getAll,
   Authorization.authenticateToken,
+  Authorization.checksUserIsAdmin,
   SelectiveProcessController.getAll
 );
 routes.get(

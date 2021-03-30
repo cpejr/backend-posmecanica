@@ -23,4 +23,13 @@ module.exports = {
       next();
     });
   },
+  async checksUserIsAdmin(request, response, next) {
+    //console.log(request.session.user);
+    if (request.session.user.type !== 'administrator') {
+      response.status(403).json({ error: "access denied. The user is not an administrator" });
+    }
+    else {
+      next();
+    }
+  },
 };
