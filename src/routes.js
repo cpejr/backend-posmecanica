@@ -295,7 +295,6 @@ routes.get(
   '/selectiveProcesses',
   SelectiveProcessValidator.getAll,
   Authorization.authenticateToken,
-  Authorization.checksUserIsAdmin,
   SelectiveProcessController.getAll
 );
 routes.get(
@@ -308,18 +307,21 @@ routes.post(
   '/selectiveProcesses',
   SelectiveProcessValidator.create,
   Authorization.authenticateToken,
+  Authorization.checksUserIsAdmin,
   SelectiveProcessController.create
 );
 routes.put(
   '/selectiveProcesses/:process_id',
   SelectiveProcessValidator.update,
   Authorization.authenticateToken,
+  Authorization.checksUserIsAdmin,
   SelectiveProcessController.update
 );
 routes.delete(
   '/selectiveProcesses/:process_id',
   SelectiveProcessValidator.delete,
   Authorization.authenticateToken,
+  Authorization.checksUserIsAdmin,
   SelectiveProcessController.delete
 );
 

@@ -24,12 +24,12 @@ module.exports = {
     });
   },
   async checksUserIsAdmin(request, response, next) {
-    //console.log(request.session.user);
-    if (request.session.user.type !== 'administrator') {
-      response.status(403).json({ error: "access denied. The user is not an administrator" });
+    /* Verificar se o usuario logado na sessão é do tipo administrator */
+    if (request.session.user.type === 'administrator'){
+      next();
     }
     else {
-      next();
+      response.status(403).json({ error: "Access denied. The user is not an administrator" });
     }
   },
 };
