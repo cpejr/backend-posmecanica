@@ -35,6 +35,9 @@ const QualificationValidator = require('./validators/QualificationValidator');
 const SessionController = require('./controllers/SessionController');
 const SessionValidator = require('./validators/SessionValidator');
 
+const SearchArea_DisciplineController = require('./controllers/SearchArea_DisciplineController');
+const SearchArea_DisciplineValidator = require('./validators/SearchArea_DisciplineValidator');
+
 const SearchArea_ProfessorController = require('./controllers/SearchArea_ProfessorController');
 const SearchArea_ProfessorValidator = require('./validators/SearchArea_ProfessorValidator');
 
@@ -360,21 +363,8 @@ routes.delete(
   StudentController.delete
 );
 
-// SearchArea_Professor
-routes.post(
-  '/connect/searchArea_professor/:sp_professor_id',
-  SearchArea_ProfessorValidator.connect,
-  Authorization.authenticateToken,
-  SearchArea_ProfessorController.connect
-);
-routes.delete(
-  '/disconnect/searchArea_professor/:searchArea_professor_id',
-  SearchArea_ProfessorValidator.disconnect,
-  Authorization.authenticateToken,
-  SearchArea_ProfessorController.disconnect
-);
-
 // Bank_Professor
+
 routes.post(
   '/connect/bank_professor/:bp_bank_id',
   Bank_ProfessorValidator.connect,
@@ -392,6 +382,34 @@ routes.get(
   Bank_ProfessorValidator.getAll,
   Authorization.authenticateToken,
   Bank_ProfessorController.getAll
+);
+
+// SearchArea_Discipline
+routes.post(
+  '/connect/search_area_discipline/:sAd_dis_id',
+  SearchArea_DisciplineValidator.connect,
+  Authorization.authenticateToken,
+  SearchArea_DisciplineController.connect
+);
+routes.delete(
+  '/disconnect/search_area_discipline/:search_dis_id',
+  SearchArea_DisciplineValidator.disconnect,
+  Authorization.authenticateToken,
+  SearchArea_DisciplineController.disconnect
+);
+
+// SearchArea_Professor
+routes.post(
+  '/connect/searchArea_professor/:sp_professor_id',
+  SearchArea_ProfessorValidator.connect,
+  Authorization.authenticateToken,
+  SearchArea_ProfessorController.connect
+);
+routes.delete(
+  '/disconnect/searchArea_professor/:searchArea_professor_id',
+  SearchArea_ProfessorValidator.disconnect,
+  Authorization.authenticateToken,
+  SearchArea_ProfessorController.disconnect
 );
 
 // Student_Discipline
