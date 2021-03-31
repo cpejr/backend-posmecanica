@@ -22,13 +22,13 @@ module.exports = {
       let user;
       if (type === 'professor') {
         user = await ProfessorModel.getByFields({ prof_firebase: firebaseId });
-        user.type = "professor";
+        user.type = 'professor';
       } else if (type === 'administrator') {
         user = await AdmModel.getByFields({ adm_firebase: firebaseId });
-        user.type = "administrator";
+        user.type = 'administrator';
       } else {
         user = await StudentModel.getByFields({ stud_firebase: firebaseId });
-        user.type = "student";
+        user.type = 'student';
       }
       const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: '1h',
