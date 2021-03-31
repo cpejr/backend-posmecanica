@@ -385,6 +385,12 @@ routes.get(
 );
 
 // SearchArea_Discipline
+routes.get(
+  '/getAll/search_area_discipline',
+  SearchArea_DisciplineValidator.getAll,
+  Authorization.authenticateToken,
+  SearchArea_DisciplineController.getAll
+);
 routes.post(
   '/connect/search_area_discipline/:sAd_dis_id',
   SearchArea_DisciplineValidator.connect,
