@@ -35,4 +35,14 @@ module.exports = {
         search_dis_id: Joi.number().integer().required(),
     }),
   }),
+  getAll: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
+    [Segments.QUERY]: Joi.object().keys({
+      times: Joi.number().integer().required(),
+    }),
+  }),
 };
