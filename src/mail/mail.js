@@ -17,14 +17,14 @@ const transporter = nodemailer.createTransport({
 });
 
 module.exports = {
-  async sendMail(destinatarioEmail,titulo,texto) {
+  async sendMail(destinatarioEmail, titulo, texto) {
     const config = {
       from: 'Pós Mecânica UFMG <posmecanica.ufmg@gmail.com>',
       to: destinatarioEmail,
       subject: titulo,
       text: texto,
     };
-    const mailSent = await transporter.sendMail(config, (err, info) => {
+    const mailSent = await transporter.sendMail(config, (err) => {
       if (err) {
         console.log('Error: ', err);
       } else {
