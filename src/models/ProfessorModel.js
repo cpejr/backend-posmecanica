@@ -6,12 +6,22 @@ module.exports = {
     return result;
   },
 
-  async getAll(times) {
+  async getAll(times, field, filter) {
     const limit = 50;
-    const profTable = await connection('professor')
-      .select('*')
-      .limit(limit)
-      .offset(limit * times);
+    let profTable;
+
+    if (field && filter) {
+      profTable = await connection('professor')
+        .where(field, 'ilike', `%${filter}%`)
+        .select('*')
+        .limit(limit)
+        .offset(limit * times);
+    } else {
+      profTable = await connection('professor')
+        .select('*')
+        .limit(limit)
+        .offset(limit * times);
+    }
     const bankTable = await connection('bank').select('*');
     const bank_profTable = await connection('bank_professor');
     profTable.forEach((professor) => {
