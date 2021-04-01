@@ -6,12 +6,31 @@ module.exports = {
     return result;
   },
 
-  async getAll(times) {
+  async getAll(times, field, filter) {
     const limit = 50;
-    const result = await connection('candidate')
-      .select('*')
-      .limit(limit)
-      .offset(limit * times);
+    let candidateTable;
+    if (field && filter) {
+      candidateTable = await connection('candidate')
+        .where(field, 'ilike', `%${filter}%`)
+        .select('*')
+        .limit(limit)
+        .offset(limit * times);
+    } else {
+      candidateTable = await connection('candidate')
+        .select('*')
+        .limit(limit)
+        .offset(limit * times);
+    }
+    const processTable = await connection('selective_process').select('*');
+
+    candidateTable.forEach((candidate) => {
+      const relation = processTable.find(
+        (element) => element.process_id === candidate.candidate_process_id
+      );
+
+      candidate.selective_process = relation;
+    });
+    const result = candidateTable;
     return result;
   },
 

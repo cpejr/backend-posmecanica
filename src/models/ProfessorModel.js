@@ -6,13 +6,13 @@ module.exports = {
     return result;
   },
 
-  async getAll(times, fields, filter) {
+  async getAll(times, field, filter) {
     const limit = 50;
     let profTable;
 
-    if (fields && filter) {
+    if (field && filter) {
       profTable = await connection('professor')
-        .where(fields, 'ilike', `%${filter}%`)
+        .where(field, 'ilike', `%${filter}%`)
         .select('*')
         .limit(limit)
         .offset(limit * times);
