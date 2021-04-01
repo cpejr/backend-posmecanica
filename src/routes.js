@@ -2,23 +2,19 @@ const express = require('express');
 
 const routes = express.Router();
 
-const CandidateController = require('./controllers/CandidateController');
-const CandidateValidator = require('./validators/CandidateValidator');
-
 const AdmController = require('./controllers/AdmController');
 const AdmValidator = require('./validators/AdmValidator');
 
-const StudentController = require('./controllers/StudentController');
-const StudentValidator = require('./validators/StudentValidator');
-
-const SelectiveProcessController = require('./controllers/SelectiveProcessController');
-const SelectiveProcessValidator = require('./validators/SelectiveProcessValidator');
-
-const SearchAreaController = require('./controllers/SearchAreaController');
-const SearchAreaValidator = require('./validators/SearchAreaValidator');
+const Authorization = require('./middlewares/authentication');
 
 const BankController = require('./controllers/BankController');
 const BankValidator = require('./validators/BankValidator');
+
+const Bank_ProfessorController = require('./controllers/Bank_ProfessorController');
+const Bank_ProfessorValidator = require('./validators/Bank_ProfessorValidator');
+
+const CandidateController = require('./controllers/CandidateController');
+const CandidateValidator = require('./validators/CandidateValidator');
 
 const DefenseController = require('./controllers/DefenseController');
 const DefenseValidator = require('./validators/DefenseValidator');
@@ -29,11 +25,14 @@ const DisciplineValidator = require('./validators/DisciplineValidator');
 const ProfessorController = require('./controllers/ProfessorController');
 const ProfessorValidator = require('./validators/ProfessorValidator');
 
+const Professor_DisciplineController = require('./controllers/Professor_DisciplineController');
+const Professor_DisciplineValidator = require('./validators/Professor_DisciplineValidator');
+
 const QualificationController = require('./controllers/QualificationController');
 const QualificationValidator = require('./validators/QualificationValidator');
 
-const SessionController = require('./controllers/SessionController');
-const SessionValidator = require('./validators/SessionValidator');
+const SearchAreaController = require('./controllers/SearchAreaController');
+const SearchAreaValidator = require('./validators/SearchAreaValidator');
 
 const SearchArea_DisciplineController = require('./controllers/SearchArea_DisciplineController');
 const SearchArea_DisciplineValidator = require('./validators/SearchArea_DisciplineValidator');
@@ -41,13 +40,17 @@ const SearchArea_DisciplineValidator = require('./validators/SearchArea_Discipli
 const SearchArea_ProfessorController = require('./controllers/SearchArea_ProfessorController');
 const SearchArea_ProfessorValidator = require('./validators/SearchArea_ProfessorValidator');
 
-const Bank_ProfessorController = require('./controllers/Bank_ProfessorController');
-const Bank_ProfessorValidator = require('./validators/Bank_ProfessorValidator');
+const SelectiveProcessController = require('./controllers/SelectiveProcessController');
+const SelectiveProcessValidator = require('./validators/SelectiveProcessValidator');
+
+const SessionController = require('./controllers/SessionController');
+const SessionValidator = require('./validators/SessionValidator');
+
+const StudentController = require('./controllers/StudentController');
+const StudentValidator = require('./validators/StudentValidator');
 
 const Student_DisciplineController = require('./controllers/Student_DisciplineController');
 const Student_DisciplineValidator = require('./validators/Student_DisciplineValidator');
-
-const Authorization = require('./middlewares/authentication');
 
 // Administrador
 routes.get('/adms', Authorization.authenticateToken, AdmController.getAll);
@@ -382,6 +385,19 @@ routes.get(
   Bank_ProfessorValidator.getAll,
   Authorization.authenticateToken,
   Bank_ProfessorController.getAll
+);
+// Professor_Discipline
+routes.post(
+  '/connect/professor_discipline/:pd_professor_id',
+  Professor_DisciplineValidator.connect,
+  Authorization.authenticateToken,
+  Professor_DisciplineController.connect
+);
+routes.delete(
+  '/disconnect/professor_discipline/:professor_dis_id',
+  Professor_DisciplineValidator.disconnect,
+  Authorization.authenticateToken,
+  Professor_DisciplineController.disconnect
 );
 
 // SearchArea_Discipline
