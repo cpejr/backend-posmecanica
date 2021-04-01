@@ -11,12 +11,21 @@ module.exports = {
     return result;
   },
 
-  async getAll(times) {
+  async getAll(times, field, filter) {
     const limit = 50;
-    const selective_process = await connection('selective_process')
-      .select('*')
-      .limit(limit)
-      .offset(limit * times);
+    let selective_process;
+    if (field && filter) {
+      selective_process = await connection('selective_process')
+        .where(field, 'ilike', `%${filter}%`)
+        .select('*')
+        .limit(limit)
+        .offset(limit * times);
+    } else {
+      selective_process = await connection('selective_process')
+        .select('*')
+        .limit(limit)
+        .offset(limit * times);
+    }
     const candidate = await connection('candidate').select(
       'candidate_id',
       'candidate_name',

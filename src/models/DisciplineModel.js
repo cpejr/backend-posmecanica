@@ -6,12 +6,22 @@ module.exports = {
     return result;
   },
 
-  async getAll(times) {
+  async getAll(times, field, filter) {
     const limit = 50;
-    const result = await connection('discipline')
-      .select('*')
-      .limit(limit)
-      .offset(limit * times);
+    let result;
+    if (field && filter) {
+      result = await connection('discipline')
+        .where(field, 'ilike', `%${filter}%`)
+        .select('*')
+        .limit(limit)
+        .offset(limit * times);
+    } else {
+      result = await connection('discipline')
+        .select('*')
+        .limit(limit)
+        .offset(limit * times);
+    }
+
     return result;
   },
 

@@ -6,12 +6,22 @@ module.exports = {
     return result;
   },
 
-  async getAll(times) {
+  async getAll(times, field, filter) {
     const limit = 50;
-    const qualification = await connection('qualification')
-      .select('*')
-      .limit(limit)
-      .offset(limit * times);
+    let qualification;
+
+    if (field && filter) {
+      qualification = await connection('qualification')
+        .where(field, 'ilike', `%${filter}%`)
+        .select('*')
+        .limit(limit)
+        .offset(limit * times);
+    } else {
+      qualification = await connection('qualification')
+        .select('*')
+        .limit(limit)
+        .offset(limit * times);
+    }
     const student = await connection('student').select(
       'stud_id',
       'stud_candidate_id'
