@@ -13,13 +13,24 @@
     },
     "plugins": [
         "prettier"
-      ],
+    ],
     "rules": {
-        "prettier/prettier": ["error", {
-           "endOfLine":"auto"
-         }],
+        "prettier/prettier": [
+            "error",
+            {
+                "endOfLine": "auto"
+            }
+        ],
+        "no-console": "off",
+        "func-names": 0,
         "camelcase": "off",
         "no-param-reassign": "off",
-        "prefer-destructuring": ["error", {"object": true, "array": false}]
+        "prefer-destructuring": [
+            "error",
+            {
+                "object": true,
+                "array": false
+            }
+        ]
     }
 }
