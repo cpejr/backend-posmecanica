@@ -36,6 +36,25 @@ module.exports = {
       });
       professor.banks = relation;
     });
+
+    const disciplineTable = await connection('discipline').select('*');
+    const prof_discTable = await connection('professor_discipline');
+
+    profTable.forEach((professor) => {
+      const relation = [];
+      const bankRelation = prof_discTable.filter(
+        (elements) => elements.pd_professor_id === professor.prof_id
+      );
+      bankRelation.forEach((ids) => {
+        relation.push(
+          disciplineTable.find(
+            (element) => element.discipline_id === ids.pd_dis_id
+          )
+        );
+      });
+      professor.disciplines = relation;
+    });
+
     const result = profTable;
     return result;
   },

@@ -399,7 +399,12 @@ routes.delete(
   Authorization.authenticateToken,
   Professor_DisciplineController.disconnect
 );
-
+routes.get(
+  '/getAll/professor_discipline',
+  Professor_DisciplineValidator.getAll,
+  Authorization.authenticateToken,
+  Professor_DisciplineController.getAll
+);
 // SearchArea_Discipline
 routes.get(
   '/getAll/search_area_discipline',
