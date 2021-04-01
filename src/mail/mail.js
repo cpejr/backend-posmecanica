@@ -16,20 +16,34 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-module.exports = {
-  async sendMail(destinatarioEmail, titulo, texto) {
+class Email {
+  static sendEmail(request, response, data) {
     const config = {
-      from: 'Pós Mecânica UFMG <posmecanica.ufmg@gmail.com>',
-      to: destinatarioEmail,
-      subject: titulo,
-      text: texto,
+      from: `${process.env.EMAIL_LOGIN}`,
+      ...data
+    }
+    try {
+      transporter.sendMail(config);
+      response.status(200).json({ notification: "Email sent successfully" });
+    } catch (error) {
+      return console.error(error);
+    }
+    response.status(200).json();
+  };
+}
+
+module.exports = {
+  static ConfirmateAccessAndChangePassword(to, firstname, password) {
+    console.log("Usuário cadastrado e email enviado para redefinição de senha")
+    //MUDAR AINDA O CONTENT
+    const content = `Prezado ${firstname}, sua inscrição foi feita, sua senha gerada automaticamente é ${password}.`
+    const subject = "Pós-Mecânica: Inscrição no sistema realizada"
+
+    const emailContent = {
+      to: to,
+      subject: subject,
+      text: content
     };
-    const mailSent = await transporter.sendMail(config, (err) => {
-      if (err) {
-        console.log('Error: ', err);
-      } else {
-        console.log('Email sent!');
-      }
-    });
-  },
-};
+    return Email.sendEmail(emailContent)
+  }
+}

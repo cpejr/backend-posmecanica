@@ -23,6 +23,7 @@
         ],
         "no-console": "off",
         "func-names": 0,
+        "no-reserved-keys": "on",
         "camelcase": "off",
         "no-param-reassign": "off",
         "prefer-destructuring": [
