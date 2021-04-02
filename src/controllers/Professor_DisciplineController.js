@@ -29,6 +29,7 @@ module.exports = {
         table,
         field
       );
+
       return response.status(200).json(result);
     } catch (err) {
       console.log(`Professor_Discipline delete failed: ${err}`);

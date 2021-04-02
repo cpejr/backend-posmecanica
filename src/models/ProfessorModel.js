@@ -42,10 +42,10 @@ module.exports = {
 
     profTable.forEach((professor) => {
       const relation = [];
-      const bankRelation = prof_discTable.filter(
+      const discRelation = prof_discTable.filter(
         (elements) => elements.pd_professor_id === professor.prof_id
       );
-      bankRelation.forEach((ids) => {
+      discRelation.forEach((ids) => {
         relation.push(
           disciplineTable.find(
             (element) => element.discipline_id === ids.pd_dis_id
@@ -60,7 +60,7 @@ module.exports = {
   },
 
   async getById(prof_id) {
-    const relation = [];
+    const relationBp = [];
     const bankTable = await connection('bank').select('*');
     const profObject = await connection('professor')
       .where({ prof_id })
@@ -72,12 +72,27 @@ module.exports = {
       })
       .select('bp_bank_id');
     bankRelation.forEach((ids) => {
-      relation.push(
+      relationBp.push(
         bankTable.find((element) => element.bank_id === ids.bp_bank_id)
       );
     });
+    profObject.banks = relationBp;
+
+    const disciplineTable = await connection('discipline').select('*');
+    const prof_discTable = await connection('professor_discipline');
+    const relationPd = [];
+    const discRelation = prof_discTable.filter(
+      (elements) => elements.pd_professor_id === profObject.prof_id
+    );
+    discRelation.forEach((ids) => {
+      relationPd.push(
+        disciplineTable.find(
+          (element) => element.discipline_id === ids.pd_dis_id
+        )
+      );
+    });
+    profObject.disciplines = relationPd;
     const result = profObject;
-    result.banks = relation;
     return result;
   },
 
