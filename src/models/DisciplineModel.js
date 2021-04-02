@@ -60,6 +60,25 @@ module.exports = {
       });
       discipline.students = relation;
     });
+    
+    const searchAreaTable = await connection('search_area').select('*');
+    const searchArea_discTable = await connection('search_area_discipline');
+
+    disciplineTable.forEach((discipline) => {
+      const relation = [];
+      const searchAreaRelation = searchArea_discTable.filter(
+        (elements) => elements.sAd_dis_id === discipline.discipline_id
+      );
+      searchAreaRelation.forEach((ids) => {
+        relation.push(
+          searchAreaTable.find(
+            (search_area) => search_area.search_area_id === ids.sAd_research_id
+          )
+        );
+      });
+      discipline.searchAreas = relation;
+    });
+    
     const result = disciplineTable;
     return result;
   },
