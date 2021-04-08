@@ -23,20 +23,18 @@ class Email {
       ...data
     }
     try {
+      console.log(config);
       transporter.sendMail(config);
-      response.status(200).json({ notification: "Email sent successfully" });
     } catch (error) {
       return console.error(error);
     }
-    response.status(200).json();
   };
 }
 
 module.exports = {
-  static ConfirmateAccessAndChangePassword(to, firstname, password) {
-    console.log("Usuário cadastrado e email enviado para redefinição de senha")
+  ConfirmateAccessAndChangePassword(to, firstname, password) {
     //MUDAR AINDA O CONTENT
-    const content = `Prezado ${firstname}, sua inscrição foi feita, sua senha gerada automaticamente é ${password}.`
+    const content = `Prezado ${firstname}, sua inscrição foi feita, sua senha foi atualizada para: ${password}.`
     const subject = "Pós-Mecânica: Inscrição no sistema realizada"
 
     const emailContent = {
