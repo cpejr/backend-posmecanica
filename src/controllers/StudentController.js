@@ -12,9 +12,14 @@ module.exports = {
       const { stud_process_id, stud_candidate_id } = request.params;
       const infos = await CandidateModel.getById(stud_candidate_id);
       const defaultPassword = crypto.randomBytes(8).toString('Hex');
+      console.log('student');
+      console.log(student);
+      console.log('infos');
+      console.log(infos);
       const uid = await firebase.createNewUser(
         infos.candidate_email,
-        defaultPassword
+        defaultPassword,
+        infos.candidate_name
       );
       student.stud_id = student_id;
       student.stud_process_id = stud_process_id;

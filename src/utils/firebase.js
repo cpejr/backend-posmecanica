@@ -23,11 +23,13 @@ admin.initializeApp({
 });
 
 module.exports = {
-  async createNewUser(email, password) {
+  async createNewUser(email, password, name) {
     const result = await firebase
       .auth()
       .createUserWithEmailAndPassword(email, password);
-
+    if (result.user.uid) {
+      Mail.ConfirmateCreateUser(email, name, password);
+    }
     return result.user.uid;
   },
 
@@ -43,8 +45,8 @@ module.exports = {
     const result = await admin.auth().updateUser(uid, {
       password: newPassword,
     });
-    if(result.uid){
-      Mail.ConfirmateAccessAndChangePassword(result.email, name, newPassword); 
+    if (result.uid) {
+      Mail.ConfirmateAccessAndChangePassword(result.email, name, newPassword);
     }
     return result;
   },

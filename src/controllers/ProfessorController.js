@@ -11,7 +11,8 @@ module.exports = {
       const defaultPassword = crypto.randomBytes(8).toString('Hex');
       const uid = await firebase.createNewUser(
         professor.prof_email,
-        defaultPassword
+        defaultPassword,
+        professor.prof_name
       );
       professor.prof_id = professor_id;
       professor.prof_defaultPassword = defaultPassword;

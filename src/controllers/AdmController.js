@@ -11,7 +11,8 @@ module.exports = {
       const defaultPassword = crypto.randomBytes(8).toString('Hex');
       const uid = await firebase.createNewUser(
         administrator.adm_email,
-        defaultPassword
+        defaultPassword,
+        administrator.adm_name
       );
       administrator.adm_id = administrator_id;
       administrator.adm_defaultPassword = defaultPassword;
@@ -62,7 +63,6 @@ module.exports = {
         const admInfos = await AdmModel.getById(adm_id);
         const firebase_id = admInfos.adm_firebase;
         const name = admInfos.adm_name;
-        console.log(admInfos);
         try {
           const update = await firebase.changeUserPassword(
             firebase_id,

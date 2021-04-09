@@ -32,9 +32,19 @@ class Email {
 
 module.exports = {
   ConfirmateAccessAndChangePassword(to, firstname, password) {
-    const content = `Prezado ${firstname}, sua inscrição foi feita, sua senha foi atualizada para: ${password}.`;
+    const content = `Prezado ${firstname}, sua inscrição foi feita. Sua senha foi atualizada para: ${password}.`;
     const subject = 'Pós-Mecânica: Inscrição no sistema realizada';
 
+    const emailContent = {
+      to,
+      subject,
+      text: content,
+    };
+    return Email.sendEmail(emailContent);
+  },
+  ConfirmateCreateUser(to, firstname, password) {
+    const content = `Olá ${firstname}! Sua conta foi criada com sucesso. A sua senha é ${password}`;
+    const subject = 'Pós-Mecânica: Inscrição no sistema realizada';
     const emailContent = {
       to,
       subject,
