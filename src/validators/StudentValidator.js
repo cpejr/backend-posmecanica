@@ -68,7 +68,7 @@ module.exports = {
     [Segments.BODY]: Joi.object().keys({
       stud_name: Joi.string(),
       stud_registration: Joi.string(),
-      stud_password: Joi.string().min(8).max(20),
+      stud_defaultPassword: Joi.string().min(8).max(20),
       stud_email: Joi.string().email(),
       stud_scholarship: Joi.boolean(),
       stud_prof_advisor: Joi.string(),

@@ -20,10 +20,9 @@ class Email {
   static sendEmail(request, response, data) {
     const config = {
       from: `${process.env.EMAIL_LOGIN}`,
-      ...data
+      ...request
     }
     try {
-      console.log(config);
       transporter.sendMail(config);
     } catch (error) {
       return console.error(error);

@@ -71,10 +71,12 @@ module.exports = {
       if (student.stud_defaultPassword) {
         const studInfos = await StudentModel.getById(stud_id);
         const firebase_id = studInfos.stud_firebase;
+        const name = studInfos.stud_candidate_name;
         try {
           const update = await firebase.changeUserPassword(
             firebase_id,
-            student.stud_defaultPassword
+            student.stud_defaultPassword,
+            name
           );
           result = update.uid;
           delete student.stud_defaultPassword;
