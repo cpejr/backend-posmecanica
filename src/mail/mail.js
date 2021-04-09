@@ -17,30 +17,29 @@ const transporter = nodemailer.createTransport({
 });
 
 class Email {
-  static sendEmail(request, response, data) {
+  static sendEmail(request) {
     const config = {
       from: `${process.env.EMAIL_LOGIN}`,
-      ...request
-    }
+      ...request,
+    };
     try {
       transporter.sendMail(config);
     } catch (error) {
       return console.error(error);
     }
-  };
+  }
 }
 
 module.exports = {
   ConfirmateAccessAndChangePassword(to, firstname, password) {
-    //MUDAR AINDA O CONTENT
-    const content = `Prezado ${firstname}, sua inscrição foi feita, sua senha foi atualizada para: ${password}.`
-    const subject = "Pós-Mecânica: Inscrição no sistema realizada"
+    const content = `Prezado ${firstname}, sua inscrição foi feita, sua senha foi atualizada para: ${password}.`;
+    const subject = 'Pós-Mecânica: Inscrição no sistema realizada';
 
     const emailContent = {
-      to: to,
-      subject: subject,
-      text: content
+      to,
+      subject,
+      text: content,
     };
-    return Email.sendEmail(emailContent)
-  }
-}
+    return Email.sendEmail(emailContent);
+  },
+};
