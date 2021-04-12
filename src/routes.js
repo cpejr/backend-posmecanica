@@ -426,6 +426,12 @@ routes.delete(
 );
 
 // SearchArea_Professor
+routes.get(
+  '/getAll/search_area_professor',
+  SearchArea_ProfessorValidator.getAll,
+  Authorization.authenticateToken,
+  SearchArea_ProfessorController.getAll
+);
 routes.post(
   '/connect/searchArea_professor/:sp_professor_id',
   SearchArea_ProfessorValidator.connect,

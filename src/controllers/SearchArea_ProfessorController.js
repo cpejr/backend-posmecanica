@@ -43,4 +43,21 @@ module.exports = {
       });
     }
   },
+
+  async getAll(request, response) {
+    try {
+      const url = request.route.path.split('/');
+      const table = url[2];
+      const { times } = request.query;
+
+      const result = await RelationsModel.getAll(table, times);
+      return response.status(200).json(result);
+    } catch (err) {
+      console.log(`SearchArea_Professor getAll failed: ${err}`);
+      return response.status(500).json({
+        notification:
+          'Internal server error while trying to GET search area and professor',
+      });
+    }
+  },
 };
