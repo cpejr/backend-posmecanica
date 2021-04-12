@@ -11,13 +11,13 @@ const student_disciplineRouter = require('./student_discipline');
 
 const routes = express.Router();
 
-routes.use('/candidate', candidateRouter);
+routes.use('/candidates', candidateRouter);
 routes.use('/discipline', disciplineRouter);
 routes.use('/searchArea', searchAreaRouter);
 routes.use('/selectiveProcess', selectiveProcessRouter);
-routes.use('/session', sessionRouter);
-routes.use('/bank_professor', bank_professorRouter);
-routes.use('/searchArea_discipline', searchArea_disciplineRouter);
-routes.use('/student_discipline', student_disciplineRouter);
+routes.use('/', sessionRouter);
+routes.use('/', bank_professorRouter);
+routes.use('/', searchArea_disciplineRouter);
+routes.use('/', student_disciplineRouter);
 
 module.exports = routes;

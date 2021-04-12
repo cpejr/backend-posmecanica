@@ -20,9 +20,7 @@ student_disciplineRouter.delete(
 );
 student_disciplineRouter.get(
   '/getAll/bank_professor',
-  Student_DisciplineValidator.getAll,
-  authenticateToken,
-  Student_DisciplineController.getAll
+  authenticateToken
 );
 
 module.exports = student_disciplineRouter;
