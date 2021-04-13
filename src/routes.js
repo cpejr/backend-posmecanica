@@ -446,6 +446,12 @@ routes.delete(
 );
 
 // Student_Discipline
+routes.get(
+  '/getAll/student_dis',
+  Student_DisciplineValidator.getAll,
+  Authorization.authenticateToken,
+  Student_DisciplineController.getAll
+);
 routes.post(
   '/connect/student_dis/:sd_student_id',
   Student_DisciplineValidator.connect,
