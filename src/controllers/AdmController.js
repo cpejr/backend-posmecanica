@@ -3,23 +3,44 @@ const { v4: uuidv4 } = require('uuid');
 const AdmModel = require('../models/AdmModel');
 const firebase = require('../utils/firebase');
 
+const buildAdministratorObject = (administrator, defaultPassword, uid) => {
+  administrator.adm_id = uuidv4();
+  administrator.adm_defaultPassword = defaultPassword;
+  administrator.adm_firebase = uid;
+};
+
+async function updatePassword(administrator, adm_id) {
+  const admInfos = await AdmModel.getById(adm_id);
+  const firebase_id = admInfos.adm_firebase;
+  let result;
+  try {
+    const update = await firebase.changeUserPassword(
+      firebase_id,
+      administrator.adm_defaultPassword
+    );
+    result = update.uid;
+    delete administrator.adm_defaultPassword;
+  } catch (err) {
+    console.error(`Administrator password update failed: ${err}`);
+    return 'ERROR';
+  }
+  return result;
+}
+
 module.exports = {
   async create(request, response) {
     try {
       const administrator = request.body;
-      const administrator_id = uuidv4();
       const defaultPassword = crypto.randomBytes(8).toString('Hex');
       const uid = await firebase.createNewUser(
         administrator.adm_email,
         defaultPassword
       );
-      administrator.adm_id = administrator_id;
-      administrator.adm_defaultPassword = defaultPassword;
-      administrator.adm_firebase = uid;
+      buildAdministratorObject(administrator, defaultPassword, uid);
       await AdmModel.create(administrator);
       return response.status(200).json({ id: administrator.adm_id });
     } catch (err) {
-      console.log(`Administrator creation failed: ${err}`);
+      console.error(`Administrator creation failed: ${err}`);
       return response.status(500).json({
         notification:
           'Internal server error while trying to create administrator',
@@ -33,7 +54,7 @@ module.exports = {
 
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Administrator getAll failed: ${err}`);
+      console.error(`Administrator getAll failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to get administrator',
       });
@@ -46,7 +67,7 @@ module.exports = {
       const result = await AdmModel.getById(adm_id);
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Administrator getById failed: ${err}`);
+      console.error(`Administrator getById failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to get administrator',
       });
@@ -55,33 +76,24 @@ module.exports = {
 
   async update(request, response) {
     try {
+      let result;
       const { adm_id } = request.params;
       const administrator = request.body;
-      let result;
       if (administrator.adm_defaultPassword) {
-        const admInfos = await AdmModel.getById(adm_id);
-        const firebase_id = admInfos.adm_firebase;
-        try {
-          const update = await firebase.changeUserPassword(
-            firebase_id,
-            administrator.adm_defaultPassword
+        result = await updatePassword(administrator, adm_id);
+        if (result === 'ERROR') {
+          throw new Error(
+            'Internal server error while trying to update password'
           );
-          result = update.uid;
-          delete administrator.adm_defaultPassword;
-        } catch (err) {
-          console.log(`Administrator password update failed: ${err}`);
-          return response.status(500).json({
-            notification:
-              'Internal server error while trying to update password',
-          });
         }
       }
-      if (administrator.length > 0) {
+      const stillExistFieldsToUpdate = administrator.length > 0;
+      if (stillExistFieldsToUpdate) {
         result = await AdmModel.updateById(adm_id, administrator);
       }
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Administrator update failed: ${err}`);
+      console.error(`Administrator update failed: ${err}`);
       return response.status(500).json({
         notification:
           'Internal server error while trying to update administrator',
@@ -96,7 +108,7 @@ module.exports = {
       const result = await AdmModel.deleteById(adm_id);
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Administrator delete failed: ${err}`);
+      console.error(`Administrator delete failed: ${err}`);
       return response.status(500).json({
         notification:
           'Internal server error while trying to delete Administrator',

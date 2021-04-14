@@ -426,6 +426,12 @@ routes.delete(
 );
 
 // SearchArea_Professor
+routes.get(
+  '/getAll/searchArea_professor',
+  SearchArea_ProfessorValidator.getAll,
+  Authorization.authenticateToken,
+  SearchArea_ProfessorController.getAll
+);
 routes.post(
   '/connect/searchArea_professor/:sp_professor_id',
   SearchArea_ProfessorValidator.connect,
@@ -440,6 +446,12 @@ routes.delete(
 );
 
 // Student_Discipline
+routes.get(
+  '/getAll/student_dis',
+  Student_DisciplineValidator.getAll,
+  Authorization.authenticateToken,
+  Student_DisciplineController.getAll
+);
 routes.post(
   '/connect/student_dis/:sd_student_id',
   Student_DisciplineValidator.connect,
