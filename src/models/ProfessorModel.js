@@ -111,9 +111,9 @@ module.exports = {
     });
     profObject.disciplines = relationPD;
 
+    const relationPSA = [];
     const search_areaTable = await connection('search_area').select('*');
     const searchArea_profTable = await connection('searchArea_Professor');
-    const relationPSA = [];
     const searchAreaRelation = searchArea_profTable.filter(
       (elements) => elements.sp_professor_id === profObject.prof_id
     );
