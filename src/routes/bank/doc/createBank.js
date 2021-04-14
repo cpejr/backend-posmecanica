@@ -1,14 +1,14 @@
 /**
 * @swagger
-*  /adms:
+*  /banks:
 *    post:
-*      summary: Criar administradores
+*      summary: Criar bancas
 *      requestBody: 
 *         required: true
 *         content: 
 *          application/json:
 *            schema:
-*              $ref: '#/components/schemas/Administrador'
+*              $ref: '#/components/schemas/Banca'
 *      parameters: 
 *       - in: header
 *         name: Authorization Bearer Token
@@ -17,18 +17,14 @@
 *         required: true
 *         description: Autorização básica 
 *       - in: body
-*         name: adm_name
+*         name: bank_type
 *         required: true
-*         description: Nome do administrador
-*       - in: body
-*         name: adm_email
-*         required: true
-*         description: E-mail do administrador
-*      tags: [Adms]
-*      description: Criar administrador
+*         description: Tipo da Banca
+*      tags: [Banca]
+*      description: Criar banca
 *      responses: 
 *       '200':
-*        description: Administrador criado
+*        description: Banca criada
 *       '500':
 *        description: Erro do servidor
 *

@@ -16,7 +16,7 @@
 *          type: string
 *         required: true
 *         description: Id do administrador a ser atualizado
-*      tags: [Adms]
+*      tags: [Administrador]
 *      description: Busca administradores expecificamente pelo ID. Somente administradores podem executar tal operação.
 *      responses: 
 *       '200':

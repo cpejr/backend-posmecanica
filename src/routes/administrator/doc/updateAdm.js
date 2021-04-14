@@ -24,7 +24,7 @@
 *           adm_name: Matheus
 *         required: true
 *         description: Campos a ser atualizados
-*      tags: [Adms]
+*      tags: [Administrador]
 *      description: Atualizar administrador pelo ID.
 *      responses: 
 *       '200':

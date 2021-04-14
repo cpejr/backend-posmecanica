@@ -16,7 +16,7 @@
 *          type: string
 *         required: true
 *         description: Id do administrador a ser deletado
-*      tags: [Adms]
+*      tags: [Administrador]
 *      description: Deletar usuário do tipo Administrador.
 *      responses: 
 *       '200':

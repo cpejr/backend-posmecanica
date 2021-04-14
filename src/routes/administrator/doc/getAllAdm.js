@@ -10,7 +10,7 @@
 *          type: string
 *         required: true
 *         description: Autorização básica
-*      tags: [Adms]
+*      tags: [Administrador]
 *      description: Busca todos os administradores do sistema e listá-os. Somente administradores podem executar tal operação.
 *      responses: 
 *       '200':

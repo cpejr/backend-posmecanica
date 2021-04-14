@@ -28,7 +28,7 @@
     "knex": "^0.21.17",
     "nodemailer": "^6.5.0",
     "pg": "^8.5.1",
-    "swagger-jsdoc": "^7.0.0-rc.6",
+    "swagger-jsdoc": "4.0.0",
     "swagger-ui-express": "^4.1.6",
     "uuid": "^8.3.2",
     "yarn": "^1.22.10"
