@@ -42,14 +42,64 @@ module.exports = {
       search.discipline = relation;
     });
 
+    const professorTable = await connection('professor').select('*');
+    const searchArea_professorTable = await connection('searchArea_Professor');
+
+    searchTable.forEach((search) => {
+      const relation = [];
+      const profRelation = searchArea_professorTable.filter(
+        (elements) => search.search_area_id === elements.sp_searchArea_id
+      );
+      profRelation.forEach((ids) => {
+        relation.push(
+          professorTable.find(
+            (element) => element.prof_id === ids.sp_professor_id
+          )
+        );
+      });
+      search.professors = relation;
+    });
+
     const result = searchTable;
     return result;
   },
 
   async getById(search_area_id) {
-    const result = await connection('search_area')
+    const relationDSA = [];
+    const search_areaObject = await connection('search_area')
       .where({ search_area_id })
-      .select('*');
+      .select('*')
+      .first();
+    const disciplineTable = await connection('discipline').select("*")
+    const searchArea_discTable = await connection('search_area_discipline')
+    const disciplineRelation = searchArea_discTable.filter(
+      elements => elements.sAd_search_id === search_areaObject.search_area_id
+    )
+    disciplineRelation.forEach((ids) => {
+      relationDSA.push(
+        disciplineTable.find(
+          element => element.discipline_id === ids.sAd_dis_id
+        )
+      );
+    });
+    search_areaObject.disciplines = relationDSA;
+
+    const relationPSA = [];
+    const professorTable = await connection('professor').select("*")
+    const searchArea_profTable = await connection('searchArea_Professor')
+    const professorRelation = searchArea_profTable.filter(
+      elements => elements.sp_searchArea_id === search_areaObject.search_area_id
+    )
+    professorRelation.forEach((ids) => {
+      relationPSA.push(
+        professorTable.find(
+          element => element.professor_id === ids.sp_professor_id
+        )
+      );
+    });
+    search_areaObject.professors = relationPSA;
+
+    const result = search_areaObject;
     return result;
   },
 

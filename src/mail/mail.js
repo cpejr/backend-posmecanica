@@ -17,33 +17,39 @@ const transporter = nodemailer.createTransport({
 });
 
 class Email {
-  static sendEmail(request, response, data) {
+  static sendEmail(request) {
     const config = {
       from: `${process.env.EMAIL_LOGIN}`,
-      ...data
-    }
+      ...request,
+    };
     try {
       transporter.sendMail(config);
-      response.status(200).json({ notification: "Email sent successfully" });
     } catch (error) {
       return console.error(error);
     }
-    response.status(200).json();
-  };
+  }
 }
 
 module.exports = {
-  static ConfirmateAccessAndChangePassword(to, firstname, password) {
-    console.log("Usuário cadastrado e email enviado para redefinição de senha")
-    //MUDAR AINDA O CONTENT
-    const content = `Prezado ${firstname}, sua inscrição foi feita, sua senha gerada automaticamente é ${password}.`
-    const subject = "Pós-Mecânica: Inscrição no sistema realizada"
+  ConfirmateAccessAndChangePassword(to, firstname, password) {
+    const content = `Prezado ${firstname}, sua inscrição foi feita. Sua senha foi atualizada para: ${password}.`;
+    const subject = 'Pós-Mecânica: Inscrição no sistema realizada';
 
     const emailContent = {
-      to: to,
-      subject: subject,
-      text: content
+      to,
+      subject,
+      text: content,
     };
-    return Email.sendEmail(emailContent)
-  }
-}
+    return Email.sendEmail(emailContent);
+  },
+  ConfirmateCreateUser(to, firstname, password) {
+    const content = `Olá ${firstname}! Sua conta foi criada com sucesso. A sua senha é ${password}`;
+    const subject = 'Pós-Mecânica: Inscrição no sistema realizada';
+    const emailContent = {
+      to,
+      subject,
+      text: content,
+    };
+    return Email.sendEmail(emailContent);
+  },
+};

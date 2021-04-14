@@ -60,7 +60,7 @@ module.exports = {
       });
       discipline.students = relation;
     });
-    
+
     const searchAreaTable = await connection('search_area').select('*');
     const searchArea_discTable = await connection('search_area_discipline');
 
@@ -78,43 +78,71 @@ module.exports = {
       });
       discipline.searchAreas = relation;
     });
-    
+
     const result = disciplineTable;
     return result;
   },
 
   async getById(discipline_id) {
+    const relationSD = [];
+    const studentTable = await connection("student").select('*');
     const disciplineObject = await connection('discipline')
       .where({ discipline_id })
       .select('*')
       .first();
-    const studentTable = await connection("student").select('*');
     const stud_discTable = await connection("student_dis")
       .where({ sd_dis_id: discipline_id })
       .select("*")
-    const relations = [];
 
-    const profRelation = prof_discTable.filter(
-      (elements) => elements.pd_dis_id === disciplineObject.discipline_id
+    const studentRelation = stud_discTable.filter(
+      (elements) => elements.sd_dis_id === disciplineObject.discipline_id
     );
-    profRelation.forEach((ids) => {
-      relations.push(
-        professorTable.find(
-          (element) => element.prof_id === ids.pd_professor_id
+    studentRelation.forEach((ids) => {
+      relationSD.push(
+        studentTable.find(
+          (element) => element.stud_id === ids.sd_student_id
         )
       );
     });
-    disciplineObject.professors = relations;
+    disciplineObject.students = relationSD;
 
-    const relacoes = [];
-    stud_discTable.forEach((ids) => {
-      relacoes.push(
-        studentTable.find(
-          (element) => { element.stud.id === ids.sd_student_id })
-      )
-    })
+    const relationPD = [];
+    const professorTable = await connection("professor").select('*');
+    const prof_discTable = await connection("professor_discipline")
+      .where({ pd_dis_id: discipline_id })
+      .select("*")
+
+    const professorRelation = prof_discTable.filter(
+      (elements) => elements.pd_dis_id === disciplineObject.discipline_id
+    );
+    professorRelation.forEach((ids) => {
+      relationPD.push(
+        professorTable.find(
+          element => element.prof_id === ids.pd_professor_id
+        )
+      );
+    });
+    disciplineObject.professors = relationPD;
+
+    const relationSAD = [];
+    const search_areaTable = await connection("search_area").select('*');
+    const searchArea_discTable = await connection("search_area_discipline")
+      .where({ pd_dis_id: discipline_id })
+      .select("*")
+
+    const search_areaRelation = searchArea_discTable.filter(
+      (elements) => elements.sAd_dis_id === disciplineObject.discipline_id
+    );
+    search_areaRelation.forEach((ids) => {
+      relationSAD.push(
+        search_areaTable.find(
+          element => element.search_area_id === ids.sAd_search_id
+        )
+      );
+    });
+    disciplineObject.searchAreas = relationSAD;
+
     const result = disciplineObject;
-    result.students = relacoes;
     return result;
   },
 

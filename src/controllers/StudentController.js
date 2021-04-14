@@ -22,11 +22,13 @@ const buildStudentObject = (
 async function updatePassword(student, stud_id) {
   const studInfos = await StudentModel.getById(stud_id);
   const firebase_id = studInfos.stud_firebase;
+  const name = studInfos.stud_candidate_name;
   let result;
   try {
     const update = await firebase.changeUserPassword(
       firebase_id,
-      student.stud_defaultPassword
+      student.stud_defaultPassword,
+      name
     );
     result = update.uid;
     delete student.stud_defaultPassword;
@@ -44,9 +46,14 @@ module.exports = {
       const { stud_process_id, stud_candidate_id } = request.params;
       const infos = await CandidateModel.getById(stud_candidate_id);
       const defaultPassword = crypto.randomBytes(8).toString('Hex');
+      console.log('student');
+      console.log(student);
+      console.log('infos');
+      console.log(infos);
       const uid = await firebase.createNewUser(
         infos.candidate_email,
-        defaultPassword
+        defaultPassword,
+        infos.candidate_name
       );
       buildStudentObject(
         student,

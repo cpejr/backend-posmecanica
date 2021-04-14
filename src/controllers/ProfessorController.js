@@ -12,11 +12,13 @@ const buildProfessorObject = (professor, defaultPassword, uid) => {
 async function updatePassword(professor, prof_id) {
   const profInfos = await ProfessorModel.getById(prof_id);
   const firebase_id = profInfos.prof_firebase;
+  const name = profInfos.prof_name;
   let result;
   try {
     const update = await firebase.changeUserPassword(
       firebase_id,
-      professor.prof_defaultPassword
+      professor.prof_defaultPassword,
+      name
     );
     result = update.uid;
     delete professor.prof_defaultPassword;
@@ -34,7 +36,8 @@ module.exports = {
       const defaultPassword = crypto.randomBytes(8).toString('Hex');
       const uid = await firebase.createNewUser(
         professor.prof_email,
-        defaultPassword
+        defaultPassword,
+        professor.prof_name
       );
       buildProfessorObject(professor, defaultPassword, uid);
       await ProfessorModel.create(professor);
@@ -86,7 +89,7 @@ module.exports = {
         result = await updatePassword(professor, prof_id);
         if (result === 'ERROR') {
           throw new Error(
-            'Internal server error while trying to update password'
+            'Internal server error while trying to update password'       
           );
         }
       }

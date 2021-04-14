@@ -12,11 +12,13 @@ const buildAdministratorObject = (administrator, defaultPassword, uid) => {
 async function updatePassword(administrator, adm_id) {
   const admInfos = await AdmModel.getById(adm_id);
   const firebase_id = admInfos.adm_firebase;
+  const name = admInfos.adm_name;
   let result;
   try {
     const update = await firebase.changeUserPassword(
       firebase_id,
-      administrator.adm_defaultPassword
+      administrator.adm_defaultPassword,
+      name
     );
     result = update.uid;
     delete administrator.adm_defaultPassword;
@@ -34,7 +36,8 @@ module.exports = {
       const defaultPassword = crypto.randomBytes(8).toString('Hex');
       const uid = await firebase.createNewUser(
         administrator.adm_email,
-        defaultPassword
+        defaultPassword,
+        administrator.adm_name
       );
       buildAdministratorObject(administrator, defaultPassword, uid);
       await AdmModel.create(administrator);

@@ -1,5 +1,6 @@
 const firebase = require('firebase/app');
 const admin = require('firebase-admin');
+const Mail = require('../mail/mail');
 
 require('firebase/auth');
 
@@ -22,11 +23,13 @@ admin.initializeApp({
 });
 
 module.exports = {
-  async createNewUser(email, password) {
+  async createNewUser(email, password, name) {
     const result = await firebase
       .auth()
       .createUserWithEmailAndPassword(email, password);
-
+    if (result.user.uid) {
+      Mail.ConfirmateCreateUser(email, name, password);
+    }
     return result.user.uid;
   },
 
@@ -38,10 +41,13 @@ module.exports = {
     return result.user.uid;
   },
 
-  async changeUserPassword(uid, newPassword) {
+  async changeUserPassword(uid, newPassword, name) {
     const result = await admin.auth().updateUser(uid, {
       password: newPassword,
     });
+    if (result.uid) {
+      Mail.ConfirmateAccessAndChangePassword(result.email, name, newPassword);
+    }
     return result;
   },
 };
