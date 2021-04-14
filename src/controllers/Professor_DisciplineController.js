@@ -11,7 +11,7 @@ module.exports = {
       await RelationsModel.connect(pd_dis_ids, pd_professor_id, table, field);
       return response.status(200).json('OK');
     } catch (err) {
-      console.log(`Professor_Discipline creation failed: ${err}`);
+      console.error(`Professor_Discipline creation failed: ${err}`);
       return response.status(500).json({
         notification:
           'Internal server error while trying to connect professor and discipline',
@@ -32,7 +32,7 @@ module.exports = {
 
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Professor_Discipline delete failed: ${err}`);
+      console.error(`Professor_Discipline delete failed: ${err}`);
       return response.status(500).json({
         notification:
           'Internal server error while trying to disconnect professor area and discipline',
@@ -48,7 +48,7 @@ module.exports = {
       const result = await RelationsModel.getAll(table, times);
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Professor_discipline getAll failed: ${err}`);
+      console.error(`Professor_discipline getAll failed: ${err}`);
       return response.status(500).json({
         notification:
           'Internal server error while trying to GET professor and discipline',

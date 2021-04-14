@@ -16,7 +16,7 @@ module.exports = {
       );
       return response.status(200).json('OK');
     } catch (err) {
-      console.log(`SearchArea_Professor creation failed: ${err}`);
+      console.error(`SearchArea_Professor creation failed: ${err}`);
       return response.status(500).json({
         notification:
           'Internal server error while trying to connect search area and professor',
@@ -36,14 +36,14 @@ module.exports = {
       );
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`SearchArea_Professor delete failed: ${err}`);
+      console.error(`SearchArea_Professor delete failed: ${err}`);
       return response.status(500).json({
         notification:
           'Internal server error while trying to disconnect search area and professor',
       });
     }
   },
-
+  
   async getAll(request, response) {
     try {
       const url = request.route.path.split('/');
@@ -53,7 +53,7 @@ module.exports = {
       const result = await RelationsModel.getAll(table, times);
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`SearchArea_Professor getAll failed: ${err}`);
+      console.error(`SearchArea_Professor getAll failed: ${err}`);
       return response.status(500).json({
         notification:
           'Internal server error while trying to GET search area and professor',

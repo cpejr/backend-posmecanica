@@ -427,7 +427,7 @@ routes.delete(
 
 // SearchArea_Professor
 routes.get(
-  '/getAll/search_area_professor',
+  '/getAll/searchArea_professor',
   SearchArea_ProfessorValidator.getAll,
   Authorization.authenticateToken,
   SearchArea_ProfessorController.getAll

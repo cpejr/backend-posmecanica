@@ -1,20 +1,33 @@
 const { v4: uuidv4 } = require('uuid');
 const QualificationModel = require('../models/QualificationModel');
 
+const buildQualificationObject = (
+  qualification,
+  quali_stud_id,
+  quali_bank_id,
+  quali_sArea_id
+) => {
+  qualification.quali_id = uuidv4();
+  qualification.quali_stud_id = quali_stud_id;
+  qualification.quali_bank_id = quali_bank_id;
+  qualification.quali_sArea_id = quali_sArea_id;
+};
+
 module.exports = {
   async create(request, response) {
     try {
       const qualification = request.body;
-      const quali_id = uuidv4();
       const { quali_stud_id, quali_bank_id, quali_sArea_id } = request.params;
-      qualification.quali_id = quali_id;
-      qualification.quali_stud_id = quali_stud_id;
-      qualification.quali_bank_id = quali_bank_id;
-      qualification.quali_sArea_id = quali_sArea_id;
+      buildQualificationObject(
+        qualification,
+        quali_stud_id,
+        quali_bank_id,
+        quali_sArea_id
+      );
       await QualificationModel.create(qualification);
       return response.status(200).json({ id: qualification.quali_id });
     } catch (err) {
-      console.log(`Qualification creation failed: ${err}`);
+      console.error(`Qualification creation failed: ${err}`);
       return response.status(500).json({
         notification:
           'Internal server error while trying to create Qualification',
@@ -31,7 +44,7 @@ module.exports = {
       );
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Qualification getAll failed: ${err}`);
+      console.error(`Qualification getAll failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to get Qualification',
       });
@@ -44,7 +57,7 @@ module.exports = {
       const result = await QualificationModel.getById(quali_id);
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Qualification getById failed: ${err}`);
+      console.error(`Qualification getById failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to get Qualification',
       });
@@ -62,7 +75,7 @@ module.exports = {
 
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Qualification update failed: ${err}`);
+      console.error(`Qualification update failed: ${err}`);
       return response.status(500).json({
         notification:
           'Internal server error while trying to update Qualification',
@@ -76,7 +89,7 @@ module.exports = {
       const result = await QualificationModel.deleteById(quali_id);
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Qualification delete failed: ${err}`);
+      console.error(`Qualification delete failed: ${err}`);
       return response.status(500).json({
         notification:
           'Internal server error while trying to delete Qualification',

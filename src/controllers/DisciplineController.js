@@ -10,7 +10,7 @@ module.exports = {
       await DisciplineModel.create(discipline);
       return response.status(200).json({ id: discipline_id });
     } catch (err) {
-      console.log(`Discipline creation failed: ${err}`);
+      console.error(`Discipline creation failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to create discipline',
       });
@@ -27,7 +27,7 @@ module.exports = {
 
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Discipline getAll failed: ${err}`);
+      console.error(`Discipline getAll failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to get discipline',
       });
@@ -40,7 +40,7 @@ module.exports = {
       const result = await DisciplineModel.getById(discipline_id);
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Discipline getById failed: ${err}`);
+      console.error(`Discipline getById failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to get discipline',
       });
@@ -58,7 +58,7 @@ module.exports = {
 
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Discipline update failed: ${err}`);
+      console.error(`Discipline update failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to update discipline',
       });
@@ -72,7 +72,7 @@ module.exports = {
       const result = await DisciplineModel.deleteById(discipline_id);
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Discipline delete failed: ${err}`);
+      console.error(`Discipline delete failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to delete Discipline',
       });

@@ -1,20 +1,27 @@
 const { v4: uuidv4 } = require('uuid');
 const CandidateModel = require('../models/CandidateModel');
 
+const buildCandidateObject = (
+  candidate,
+  candidate_id,
+  candidate_process_id
+) => {
+  const protocol = parseInt(Math.random() * 1000000000, 10);
+  candidate.candidate_id = uuidv4();
+  candidate.candidate_protocol = protocol;
+  candidate.candidate_process_id = candidate_process_id;
+};
+
 module.exports = {
   async create(request, response) {
     try {
       const candidate = request.body;
-      const candidate_id = uuidv4();
       const { candidate_process_id } = request.params;
-      const protocol = parseInt(Math.random() * 1000000000, 10);
-      candidate.candidate_id = candidate_id;
-      candidate.candidate_protocol = protocol;
-      candidate.candidate_process_id = candidate_process_id;
+      buildCandidateObject(candidate, candidate_process_id);
       await CandidateModel.create(candidate);
       return response.status(200).json({ id: candidate.candidate_id });
     } catch (err) {
-      console.log(`Candidate creation failed: ${err}`);
+      console.error(`Candidate creation failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to create Candidate',
       });
@@ -31,7 +38,7 @@ module.exports = {
 
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Candidate getAll failed: ${err}`);
+      console.error(`Candidate getAll failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to get Candidate',
       });
@@ -45,7 +52,7 @@ module.exports = {
 
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Candidate getById failed: ${err}`);
+      console.error(`Candidate getById failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to get Candidate',
       });
@@ -60,7 +67,7 @@ module.exports = {
 
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Candidate update failed: ${err}`);
+      console.error(`Candidate update failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to update Candidate',
       });
@@ -74,7 +81,7 @@ module.exports = {
       const result = await CandidateModel.deleteById(candidate_id);
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Candidate delete failed: ${err}`);
+      console.error(`Candidate delete failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to delete Candidate',
       });

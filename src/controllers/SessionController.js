@@ -8,7 +8,6 @@ module.exports = {
   async signIn(request, response) {
     try {
       const { email, password, type } = request.body;
-
       let firebaseId;
       try {
         firebaseId = await Firebase.login(email, password);
@@ -18,17 +17,19 @@ module.exports = {
           .status(403)
           .json({ notification: 'Invalid Credentials' });
       }
-
       let user;
-      if (type === 'professor') {
-        user = await ProfessorModel.getByFields({ prof_firebase: firebaseId });
-        user.type = 'professor';
-      } else if (type === 'administrator') {
-        user = await AdmModel.getByFields({ adm_firebase: firebaseId });
-        user.type = 'administrator';
-      } else {
-        user = await StudentModel.getByFields({ stud_firebase: firebaseId });
-        user.type = 'student';
+      user.type = type;
+      switch (type) {
+        case 'professor':
+          user = await ProfessorModel.getByFields({
+            prof_firebase: firebaseId,
+          });
+          break;
+        case 'administrator':
+          user = await AdmModel.getByFields({ adm_firebase: firebaseId });
+          break;
+        default:
+          user = await StudentModel.getByFields({ stud_firebase: firebaseId });
       }
       const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: '1h',

@@ -11,7 +11,7 @@ module.exports = {
       await RelationsModel.connect(bp_professor_ids, bp_bank_id, table, field);
       return response.status(200).json('OK');
     } catch (err) {
-      console.log(`Bank_Professor creation failed: ${err}`);
+      console.error(`Bank_Professor creation failed: ${err}`);
       return response.status(500).json({
         notification:
           'Internal server error while trying to connect bank and professor',
@@ -32,7 +32,7 @@ module.exports = {
       );
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Bank_Professor delete failed: ${err}`);
+      console.error(`Bank_Professor delete failed: ${err}`);
       return response.status(500).json({
         notification:
           'Internal server error while trying to disconnect bank and professor',
@@ -48,7 +48,7 @@ module.exports = {
       const result = await RelationsModel.getAll(table, times);
       return response.status(200).json(result);
     } catch (err) {
-      console.log(`Bank_Professor getAll failed: ${err}`);
+      console.error(`Bank_Professor getAll failed: ${err}`);
       return response.status(500).json({
         notification:
           'Internal server error while trying to GET bank and professor',
