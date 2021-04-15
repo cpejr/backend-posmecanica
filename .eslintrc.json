@@ -15,10 +15,10 @@
         "prettier"
     ],
     "rules": {
-        "import/no-unresolved": [
-            2,
-            {"caseSensitive:": false}
-        ],
+        // "import/no-unresolved": [
+        //     2,
+        //     {"caseSensitive:": false}
+        // ],
         "prettier/prettier": [
             "error",
             {

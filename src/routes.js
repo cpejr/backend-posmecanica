@@ -63,13 +63,13 @@ routes.get(
 routes.post(
   '/adms',
   AdmValidator.create,
-  Authorization.authenticateToken,
+  // Authorization.authenticateToken,
   AdmController.create
 );
 routes.put(
   '/adms/:adm_id',
   AdmValidator.update,
-  Authorization.authenticateToken,
+  // Authorization.authenticateToken,
   AdmController.update
 );
 routes.delete(
