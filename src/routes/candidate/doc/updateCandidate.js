@@ -2,7 +2,7 @@
 * @swagger
 *  /candidates/{candidate_id}:
 *    put:
-*      summary: Atualiza informações da banca pelo ID
+*      summary: Atualiza informações do candidato pelo ID
 *      parameters: 
 *       - in: header
 *         name: Authorization Bearer Token

@@ -1,7 +1,7 @@
 /**
 * @swagger
 * tags:
-*   name: Administrator
+*   name: Administrador
 *   description: Administrador
 */
 
