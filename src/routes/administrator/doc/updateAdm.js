@@ -11,9 +11,9 @@
 *         required: true
 *         description: Autorização básica
 *       - in: params
-*         name: adm_id
+*         name: defense_id
 *         schema: 
-*          type: string
+*          type: uuid
 *         required: true
 *         description: Id do administrador a ser atualizado
 *       - in: body

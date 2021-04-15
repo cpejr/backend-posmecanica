@@ -18,10 +18,14 @@
 *         description: Autorização básica 
 *       - in: body
 *         name: adm_name
+*         schema:
+*           type: string
 *         required: true
 *         description: Nome do administrador
 *       - in: body
 *         name: adm_email
+*         schema:
+*           type: string
 *         required: true
 *         description: E-mail do administrador
 *      tags: [Administrador]

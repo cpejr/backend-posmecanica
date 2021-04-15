@@ -9,7 +9,7 @@
 * @swagger
 * components:
 *  schemas:
-*    Administrator:
+*    Administrador:
 *      type: object
 *      required:
 *        - adm_id
