@@ -246,7 +246,7 @@ routes.get(
   QualificationController.getById
 );
 routes.post(
-  '/qualifications/:quali_stud_id/:quali_bank_id/:quali_sArea_id',
+  '/qualifications/:quali_stud_id/:quali_bank_id/:quali_sArea_id/:quali_defense_id',
   QualificationValidator.create,
   Authorization.authenticateToken,
   QualificationController.create
