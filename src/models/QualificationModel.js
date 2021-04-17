@@ -31,6 +31,7 @@ module.exports = {
       'search_area_id',
       'search_area_name'
     );
+    const defense = await connection('defense').select('defense_id');
     qualification.forEach((item) => {
       item.student = student.filter(
         (campo) => campo.stud_id === item.quali_stud_id
@@ -41,9 +42,13 @@ module.exports = {
       item.search_area = search_area.filter(
         (campo) => campo.search_area_id === item.quali_sArea_id
       )[0];
+      item.defense = defense.filter(
+        (campo) => campo.defense_id === item.quali_defense_id
+      )[0];
       delete item.quali_stud_id;
       delete item.quali_bank_id;
       delete item.quali_sArea_id;
+      delete item.quali_defense_id;
     });
     const result = qualification;
     return result;
@@ -68,9 +73,16 @@ module.exports = {
       .select('search_area_id', 'search_area_name')
       .first();
     qualification.search_area = search_area;
+    const defense = await connection('defense')
+      .where({ defense_id: qualification.quali_defense_id })
+      .select('defense_id', 'defense_title')
+      .first();
+    qualification.search_area = search_area;
     delete qualification.quali_stud_id;
     delete qualification.quali_bank_id;
     delete qualification.quali_sArea_id;
+    delete qualification.quali_defense_id;
+    
     const result = qualification;
     return result;
   },
