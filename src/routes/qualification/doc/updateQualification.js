@@ -1,8 +1,8 @@
 /**
 * @swagger
-*  /defenses/{defense_id}:
+*  /qualifications/{quali_id}:
 *    put:
-*      summary: Atualiza informações da defesa que tem como o id o passado no parâmetro
+*      summary: Atualiza informações da qualificação que tem como o id o passado no parâmetro
 *      parameters: 
 *       - in: header
 *         name: Authorization Bearer Token
@@ -11,25 +11,25 @@
 *         required: true
 *         description: Autorização básica.
 *       - in: params
-*         name: defense_id
+*         name: quali_id
 *         schema: 
 *          type: string
 *         required: true
-*         description: Id da defesa a ser atualizada.
+*         description: Id da qualifacação a ser atualizada.
 *       - in: body
 *         name: Body
 *         schema:
 *          type: object
 *          example:
-*           defense_title: Síntese e Caracterização Elétrica do Composto Ferroelétrico
-*           defense_place: DCC
+*           quali_number: 514
+*           quali_place: ICEX
 *         required: true
 *         description: Campos a serem atualizados.
-*      tags: [Defesa]
-*      description: Atualizar defesa pelo ID.
+*      tags: [Qualificação]
+*      description: Atualizar qualificação pelo ID.
 *      responses: 
 *       '200':
-*        description: Defesa atualizada.
+*        description: Qualificação atualizada.
 *       '500':
 *        description: Erro do servidor.
 *
