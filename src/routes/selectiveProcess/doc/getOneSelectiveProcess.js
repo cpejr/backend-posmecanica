@@ -16,7 +16,7 @@
 *          type: uuid
 *         required: true
 *         description: Id do processo seletivo a ser buscado.
-*      tags: [ProcessoSeletivo]
+*      tags: [Processo Seletivo]
 *      description: Busca um processo seletivo especificamente pelo ID.
 *      responses: 
 *       '200':

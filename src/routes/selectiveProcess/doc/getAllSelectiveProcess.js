@@ -10,7 +10,7 @@
 *          type: string
 *         required: true
 *         description: Autorização básica.
-*      tags: [ProcessoSeletivo]
+*      tags: [Processo Seletivo]
 *      description: Busca todos os  processos seletivos do sistema e as lista.
 *      responses: 
 *       '200':

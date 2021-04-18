@@ -7,19 +7,19 @@ const SearchArea_DisciplineValidator = require('../../validators/SearchArea_Disc
 const { authenticateToken } = require('../../middlewares/authentication');
 
 searchArea_disciplineRouter.post(
-  '/connect/bank_professor/:bp_bank_id',
+  '/connect/searchArea_discipline/:sAd_dis_id',
   SearchArea_DisciplineValidator.connect,
   authenticateToken,
   SearchArea_DisciplineController.connect
 );
 searchArea_disciplineRouter.delete(
-  '/disconnect/bank_professor/:bank_professor_id',
+  '/disconnect/searchArea_discipline/:search_dis_id',
   SearchArea_DisciplineValidator.disconnect,
   authenticateToken,
   SearchArea_DisciplineController.disconnect
 );
 searchArea_disciplineRouter.get(
-  '/getAll/bank_professor',
+  '/getAll/searchArea_discipline',
   SearchArea_DisciplineValidator.getAll,
   authenticateToken,
   SearchArea_DisciplineController.getAll

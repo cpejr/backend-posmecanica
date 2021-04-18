@@ -1,7 +1,7 @@
 /**
 * @swagger
 * tags:
-*   name: ProcessoSeletivo
+*   name: Processo Seletivo
 *   description: Processo Seletivo para a entrada no programa de pós-graduação.
 */
 

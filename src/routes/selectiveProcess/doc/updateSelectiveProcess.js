@@ -2,7 +2,7 @@
 * @swagger
 *  /selectiveProcess/{process_id}:
 *    put:
-*      summary: Atualiza informações do candidato pelo ID
+*      summary: Atualiza informações do processo seletivo pelo ID
 *      parameters: 
 *       - in: header
 *         name: Authorization Bearer Token
@@ -35,11 +35,11 @@
 *           type: date
 *         required: false
 *         description: Data de encerramento das inscrições para o processo seletivo que será atualizado.
-*      tags: [Candidato]
-*      description: Atualizar candidato pelo ID.
+*      tags: [Processo Seletivo]
+*      description: Atualizar processo seletivo pelo ID.
 *      responses: 
 *       '200':
-*        description: Candidato atualizado.
+*        description: Processo seletivo atualizado.
 *       '500':
 *        description: Erro do servidor.
 *

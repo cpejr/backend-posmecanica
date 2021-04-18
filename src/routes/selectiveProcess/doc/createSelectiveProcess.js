@@ -35,7 +35,7 @@
 *           type: date
 *         required: true
 *         description: Data de encerramento das inscrições para o processo seletivo que será criado.
-*      tags: [ProcessoSeletivo]
+*      tags: [Processo Seletivo]
 *      description: Criar processo seletivo.
 *      responses: 
 *       '200':

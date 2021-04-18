@@ -7,19 +7,19 @@ const Student_DisciplineValidator = require('../../validators/Student_Discipline
 const { authenticateToken } = require('../../middlewares/authentication');
 
 student_disciplineRouter.post(
-  '/connect/bank_professor/:bp_bank_id',
+  '/connect/student_dis/:sd_student_id',
   Student_DisciplineValidator.connect,
   authenticateToken,
   Student_DisciplineController.connect
 );
 student_disciplineRouter.delete(
-  '/disconnect/bank_professor/:bank_professor_id',
+  '/disconnect/student_dis/:student_dis_id',
   Student_DisciplineValidator.disconnect,
   authenticateToken,
   Student_DisciplineController.disconnect
 );
 student_disciplineRouter.get(
-  '/getAll/bank_professor',
+  '/getAll/student_dis',
   authenticateToken
 );
 

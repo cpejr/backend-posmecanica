@@ -16,7 +16,7 @@
 *          type: uuid
 *         required: true
 *         description: Id do processo seletivo a ser deletado.
-*      tags: [ProcessoSeletivo]
+*      tags: [Processo Seletivo]
 *      description: Deletar processo seletivo.
 *      responses: 
 *       '200':
