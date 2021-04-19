@@ -44,6 +44,7 @@ app.use(
   "/api-docs",
   swaggerUi.serve,
   swaggerUi.setup(specs, { explorer: true })
+  // http://localhost:3333/api-docs/#/ (URL para acessar documentação)
 );
 
 app.listen(port, () => {
