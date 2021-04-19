@@ -18,5 +18,12 @@ searchArea_professorRouter.delete(
     authenticateToken,
     SearchArea_ProfessorController.disconnect
 );
+searchArea_professorRouter.get(
+    '/getAll/searchArea_Professor',
+    SearchArea_ProfessorValidator.getAll,
+    authenticateToken,
+    SearchArea_ProfessorController.getAll
+);
+
 
 module.exports = searchArea_professorRouter;

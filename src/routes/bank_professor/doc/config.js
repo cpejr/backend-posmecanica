@@ -2,7 +2,7 @@
 * @swagger
 * tags:
 *   name: Banca_Professor
-*   description: Tabela que relaciona professoras e bancas 
+*   description: Tabela que relaciona professores e bancas
 */
 
 /**
