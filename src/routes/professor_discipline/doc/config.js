@@ -1,7 +1,7 @@
 /**
 * @swagger
 * tags:
-*   name: Professor_Discipline
+*   name: Professor_Disciplina
 *   description: Tabela que relaciona professores e disciplinas
 */
 
