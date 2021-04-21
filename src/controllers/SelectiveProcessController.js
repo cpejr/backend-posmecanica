@@ -1,9 +1,12 @@
+const { v4: uuidv4 } = require('uuid');
 const SelectiveProcessModel = require('../models/SelectiveProcessModel');
 
 module.exports = {
   async create(request, response) {
     try {
       const selective_process = request.body;
+      const process_id = uuidv4();
+      selective_process.process_id = process_id;
       await SelectiveProcessModel.create(selective_process);
       return response.status(200).json({ id: selective_process.process_id });
     } catch (err) {

@@ -367,7 +367,6 @@ routes.delete(
 );
 
 // Bank_Professor
-
 routes.post(
   '/connect/bank_professor/:bp_bank_id',
   Bank_ProfessorValidator.connect,
@@ -386,6 +385,7 @@ routes.get(
   Authorization.authenticateToken,
   Bank_ProfessorController.getAll
 );
+
 // Professor_Discipline
 routes.post(
   '/connect/professor_discipline/:pd_professor_id',
@@ -405,6 +405,7 @@ routes.get(
   Authorization.authenticateToken,
   Professor_DisciplineController.getAll
 );
+
 // SearchArea_Discipline
 routes.get(
   '/getAll/search_area_discipline',

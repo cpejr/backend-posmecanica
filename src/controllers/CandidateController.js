@@ -1,11 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const CandidateModel = require('../models/CandidateModel');
 
-const buildCandidateObject = (
-  candidate,
-  candidate_id,
-  candidate_process_id
-) => {
+const buildCandidateObject = (candidate, candidate_process_id) => {
   const protocol = parseInt(Math.random() * 1000000000, 10);
   candidate.candidate_id = uuidv4();
   candidate.candidate_protocol = protocol;

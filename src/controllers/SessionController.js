@@ -8,17 +8,8 @@ module.exports = {
   async signIn(request, response) {
     try {
       const { email, password, type } = request.body;
-      let firebaseId;
-      try {
-        firebaseId = await Firebase.login(email, password);
-      } catch (error) {
-        console.warn(error);
-        return response
-          .status(403)
-          .json({ notification: 'Invalid Credentials' });
-      }
+      const firebaseId = await Firebase.login(email, password);
       let user;
-      user.type = type;
       switch (type) {
         case 'professor':
           user = await ProfessorModel.getByFields({
@@ -31,12 +22,18 @@ module.exports = {
         default:
           user = await StudentModel.getByFields({ stud_firebase: firebaseId });
       }
+      user.type = type;
       const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: '1h',
       });
 
       return response.status(200).json({ user, accessToken });
     } catch (error) {
+      if (error.code.includes('auth')) {
+        return response
+          .status(403)
+          .json({ notification: 'Invalid credentials' });
+      }
       return response
         .status(500)
         .json({ notification: 'Error while trying to validate credentials' });

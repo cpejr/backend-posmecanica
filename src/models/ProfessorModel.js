@@ -71,7 +71,7 @@ module.exports = {
     const disciplineTable = await connection('discipline').select('*');
     const prof_discTable = await connection('professor_discipline');
     const search_areaTable = await connection('search_area').select('*');
-    const searchArea_profTable = await connection('searchArea_Professor');
+    const searchArea_profTable = await connection('searchArea_professor');
 
     profTable.forEach((professor) => {
       makeBankRelation(professor, bankTable, bank_profTable);
@@ -94,7 +94,7 @@ module.exports = {
     const disciplineTable = await connection('discipline').select('*');
     const prof_discTable = await connection('professor_discipline');
     const search_areaTable = await connection('search_area').select('*');
-    const searchArea_profTable = await connection('searchArea_Professor');
+    const searchArea_profTable = await connection('searchArea_professor');
 
     makeBankRelation(profObject, bankTable, bank_profTable);
     makeDisciplineRelation(profObject, disciplineTable, prof_discTable);

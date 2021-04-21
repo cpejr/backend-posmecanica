@@ -15,18 +15,14 @@
         "prettier"
     ],
     "rules": {
-        // "import/no-unresolved": [
-        //     2,
-        //     {"caseSensitive:": false}
-        // ],
         "prettier/prettier": [
             "error",
             {
                 "endOfLine": "auto"
             }
         ],
-        "no-console": "off",
         "func-names": 0,
+        "no-console": "off",
         "camelcase": "off",
         "no-param-reassign": "off",
         "prefer-destructuring": [

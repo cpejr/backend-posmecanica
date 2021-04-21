@@ -9,23 +9,25 @@ const buildAdministratorObject = (administrator, defaultPassword, uid) => {
   administrator.adm_firebase = uid;
 };
 
-async function updatePassword(administrator, adm_id) {
+async function updateFirebase(administrator, adm_id) {
   const admInfos = await AdmModel.getById(adm_id);
   const firebase_id = admInfos.adm_firebase;
   const name = admInfos.adm_name;
-  let result;
-  try {
-    const update = await firebase.changeUserPassword(
-      firebase_id,
-      administrator.adm_defaultPassword,
-      name
-    );
-    result = update.uid;
-    delete administrator.adm_defaultPassword;
-  } catch (err) {
-    console.error(`Administrator password update failed: ${err}`);
-    return 'ERROR';
-  }
+  const oldEmail = admInfos.adm_email;
+  const update = administrator.adm_defaultPassword
+    ? await firebase.changeUserPassword(
+        firebase_id,
+        administrator.adm_defaultPassword,
+        name
+      )
+    : await firebase.changeUserEmail(
+        firebase_id,
+        administrator.adm_email,
+        name,
+        oldEmail
+      );
+  const result = update.uid;
+  delete administrator.adm_defaultPassword;
   return result;
 }
 
@@ -41,7 +43,7 @@ module.exports = {
       );
       buildAdministratorObject(administrator, defaultPassword, uid);
       await AdmModel.create(administrator);
-      return response.status(200).json({ id: administrator.adm_id });
+      return response.status(201).json({ id: administrator.adm_id });
     } catch (err) {
       console.error(`Administrator creation failed: ${err}`);
       return response.status(500).json({
@@ -82,15 +84,12 @@ module.exports = {
       let result;
       const { adm_id } = request.params;
       const administrator = request.body;
-      if (administrator.adm_defaultPassword) {
-        result = await updatePassword(administrator, adm_id);
-        if (result === 'ERROR') {
-          throw new Error(
-            'Internal server error while trying to update password'
-          );
-        }
+      const isUpdatingFirebase =
+        administrator.adm_defaultPassword || administrator.adm_email;
+      if (isUpdatingFirebase) {
+        result = await updateFirebase(administrator, adm_id);
       }
-      const stillExistFieldsToUpdate = administrator.length > 0;
+      const stillExistFieldsToUpdate = Object.values(administrator).length > 0;
       if (stillExistFieldsToUpdate) {
         result = await AdmModel.updateById(adm_id, administrator);
       }
@@ -107,7 +106,9 @@ module.exports = {
   async delete(request, response) {
     try {
       const { adm_id } = request.params;
-
+      const admInfos = await AdmModel.getById(adm_id);
+      const firebase_id = admInfos.adm_firebase;
+      await firebase.deleteUser(firebase_id);
       const result = await AdmModel.deleteById(adm_id);
       return response.status(200).json(result);
     } catch (err) {

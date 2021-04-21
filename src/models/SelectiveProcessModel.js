@@ -1,11 +1,7 @@
-const { response } = require('express');
-const { v4: uuidv4 } = require('uuid');
 const connection = require('../database/connection');
 
 module.exports = {
   async create(selective_process) {
-    const process_id = uuidv4();
-    selective_process.process_id = process_id;
     const result = await connection('selective_process').insert(
       selective_process
     );
@@ -34,15 +30,13 @@ module.exports = {
     );
 
     selective_process.forEach((item) => {
-      let count = 0;
       const processFilter = candidate.filter(
         (campo) => campo.candidate_process_id === item.process_id
       );
       processFilter.forEach((campo) => {
         delete campo.candidate_process_id;
-        count++;
       });
-      item.count_candidates = count;
+      item.count_candidates = processFilter.length;
       item.candidates = processFilter;
     });
     const result = selective_process;
@@ -56,14 +50,9 @@ module.exports = {
     const candidate = await connection('candidate')
       .where({ candidate_process_id: process_id })
       .select('candidate_id', 'candidate_name');
-    const [count] = await connection('candidate')
-      .where({ candidate_process_id: process_id })
-      .count();
-
-    selective_process.count_candidates = count['count'];
+    selective_process.count_candidates = candidate.length;
     selective_process.candidates = candidate;
     const result = selective_process;
-    console.log(count);
     return result;
   },
 

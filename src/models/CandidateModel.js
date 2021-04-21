@@ -40,7 +40,8 @@ module.exports = {
       .first();
     const processTable = await connection('selective_process')
       .where({ process_id: candidateObject.candidate_process_id })
-      .select('*');
+      .select('*')
+      .first();
     candidateObject.selective_process = processTable;
     return candidateObject;
   },

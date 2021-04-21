@@ -13,19 +13,13 @@ async function updatePassword(professor, prof_id) {
   const profInfos = await ProfessorModel.getById(prof_id);
   const firebase_id = profInfos.prof_firebase;
   const name = profInfos.prof_name;
-  let result;
-  try {
-    const update = await firebase.changeUserPassword(
-      firebase_id,
-      professor.prof_defaultPassword,
-      name
-    );
-    result = update.uid;
-    delete professor.prof_defaultPassword;
-  } catch (err) {
-    console.error(`Professor password update failed: ${err}`);
-    return 'ERROR';
-  }
+  const update = await firebase.changeUserPassword(
+    firebase_id,
+    professor.prof_defaultPassword,
+    name
+  );
+  const result = update.uid;
+  delete professor.prof_defaultPassword;
   return result;
 }
 
@@ -41,7 +35,7 @@ module.exports = {
       );
       buildProfessorObject(professor, defaultPassword, uid);
       await ProfessorModel.create(professor);
-      return response.status(200).json({ id: professor.prof_id });
+      return response.status(201).json({ id: professor.prof_id });
     } catch (err) {
       console.error(`Professor creation failed: ${err}`);
       return response.status(500).json({
@@ -87,13 +81,8 @@ module.exports = {
       let result;
       if (professor.prof_defaultPassword) {
         result = await updatePassword(professor, prof_id);
-        if (result === 'ERROR') {
-          throw new Error(
-            'Internal server error while trying to update password'       
-          );
-        }
       }
-      const stillExistFieldsToUpdate = professor.length > 0;
+      const stillExistFieldsToUpdate = Object.values(professor).length > 0;
       if (stillExistFieldsToUpdate) {
         result = await ProfessorModel.updateById(prof_id, professor);
       }
@@ -109,6 +98,9 @@ module.exports = {
   async delete(request, response) {
     try {
       const { prof_id } = request.params;
+      const profInfos = await ProfessorModel.getById(prof_id);
+      const firebase_id = profInfos.prof_firebase;
+      await firebase.deleteUser(firebase_id);
       const result = await ProfessorModel.deleteById(prof_id);
       return response.status(200).json(result);
     } catch (err) {
