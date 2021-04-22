@@ -25,11 +25,12 @@ module.exports = {
   },
   async checksUserIsAdmin(request, response, next) {
     /* Verificar se o usuario logado na sessão é do tipo administrator */
-    if (request.session.user.type === 'administrator'){
+    if (request.session.user.type === 'administrator') {
       next();
-    }
-    else {
-      response.status(403).json({ error: "Access denied. The user is not an administrator" });
+    } else {
+      response
+        .status(403)
+        .json({ error: 'Access denied. The user is not an administrator' });
     }
   },
 };

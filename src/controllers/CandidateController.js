@@ -1,16 +1,33 @@
 const { v4: uuidv4 } = require('uuid');
 const CandidateModel = require('../models/CandidateModel');
+const StudentModel = require('../models/StudentModel');
+const firebase = require('../utils/firebase');
 
-const buildCandidateObject = (
-  candidate,
-  candidate_id,
-  candidate_process_id
-) => {
+const buildCandidateObject = (candidate, candidate_process_id) => {
   const protocol = parseInt(Math.random() * 1000000000, 10);
   candidate.candidate_id = uuidv4();
   candidate.candidate_protocol = protocol;
   candidate.candidate_process_id = candidate_process_id;
 };
+
+async function updateFirebase(candidate, candidate_id) {
+  const studentInfos = await StudentModel.getByFields({
+    stud_candidate_id: candidate_id,
+  });
+  console.log(studentInfos);
+  const firebase_id = studentInfos.stud_firebase;
+  const name = studentInfos.stud_candidate_name;
+  const oldEmail = studentInfos.stud_candidate_email;
+  const update = await firebase.changeUserEmail(
+    firebase_id,
+    candidate.candidate_email,
+    name,
+    oldEmail
+  );
+  const result = update.uid;
+  delete candidate.candidate_email;
+  return result;
+}
 
 module.exports = {
   async create(request, response) {
@@ -63,8 +80,14 @@ module.exports = {
     try {
       const { candidate_id } = request.params;
       const candidate = request.body;
-      const result = await CandidateModel.updateById(candidate_id, candidate);
-
+      let result;
+      if (candidate.candidate_email) {
+        result = await updateFirebase(candidate, candidate_id);
+      }
+      const stillExistFieldsToUpdate = Object.values(candidate).length > 0;
+      if (stillExistFieldsToUpdate) {
+        result = await CandidateModel.updateById(candidate_id, candidate);
+      }
       return response.status(200).json(result);
     } catch (err) {
       console.error(`Candidate update failed: ${err}`);

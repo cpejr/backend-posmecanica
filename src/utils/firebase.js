@@ -37,7 +37,6 @@ module.exports = {
     const result = await firebase
       .auth()
       .signInWithEmailAndPassword(email, password);
-
     return result.user.uid;
   },
 
@@ -48,6 +47,21 @@ module.exports = {
     if (result.uid) {
       Mail.ConfirmateAccessAndChangePassword(result.email, name, newPassword);
     }
+    return result;
+  },
+
+  async changeUserEmail(uid, newEmail, name, oldEmail) {
+    const result = await admin.auth().updateUser(uid, {
+      email: newEmail,
+    });
+    if (result.uid) {
+      Mail.ChangeEmail(oldEmail, name, newEmail);
+    }
+    return result;
+  },
+
+  async deleteUser(uid) {
+    const result = await admin.auth().deleteUser(uid);
     return result;
   },
 };

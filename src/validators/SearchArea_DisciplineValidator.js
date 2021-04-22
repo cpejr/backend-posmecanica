@@ -15,7 +15,7 @@ module.exports = {
         .required(),
     }),
     [Segments.BODY]: Joi.object().keys({
-        sAd_research_ids: Joi.array()
+      sAd_research_ids: Joi.array()
         .items({
           sAd_research_id: Joi.string().guid({
             version: ['uuidv4'],
@@ -32,7 +32,7 @@ module.exports = {
       })
       .unknown(),
     [Segments.PARAMS]: Joi.object().keys({
-        search_dis_id: Joi.number().integer().required(),
+      search_dis_id: Joi.number().integer().required(),
     }),
   }),
   getAll: celebrate({

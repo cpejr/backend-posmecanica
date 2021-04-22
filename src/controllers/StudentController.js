@@ -6,13 +6,11 @@ const firebase = require('../utils/firebase');
 
 const buildStudentObject = (
   student,
-  stud_process_id,
   stud_candidate_id,
   defaultPassword,
   uid
 ) => {
   student.stud_id = uuidv4();
-  student.stud_process_id = stud_process_id;
   student.stud_candidate_id = stud_candidate_id;
   student.stud_firebase = uid;
   student.stud_defaultPassword = defaultPassword;
@@ -23,19 +21,13 @@ async function updatePassword(student, stud_id) {
   const studInfos = await StudentModel.getById(stud_id);
   const firebase_id = studInfos.stud_firebase;
   const name = studInfos.stud_candidate_name;
-  let result;
-  try {
-    const update = await firebase.changeUserPassword(
-      firebase_id,
-      student.stud_defaultPassword,
-      name
-    );
-    result = update.uid;
-    delete student.stud_defaultPassword;
-  } catch (err) {
-    console.error(`Student password update failed: ${err}`);
-    return 'ERROR';
-  }
+  const update = await firebase.changeUserPassword(
+    firebase_id,
+    student.stud_defaultPassword,
+    name
+  );
+  const result = update.uid;
+  delete student.stud_defaultPassword;
   return result;
 }
 
@@ -43,27 +35,17 @@ module.exports = {
   async create(request, response) {
     try {
       const student = request.body;
-      const { stud_process_id, stud_candidate_id } = request.params;
+      const { stud_candidate_id } = request.params;
       const infos = await CandidateModel.getById(stud_candidate_id);
       const defaultPassword = crypto.randomBytes(8).toString('Hex');
-      console.log('student');
-      console.log(student);
-      console.log('infos');
-      console.log(infos);
       const uid = await firebase.createNewUser(
         infos.candidate_email,
         defaultPassword,
         infos.candidate_name
       );
-      buildStudentObject(
-        student,
-        stud_process_id,
-        stud_candidate_id,
-        defaultPassword,
-        uid
-      );
+      buildStudentObject(student, stud_candidate_id, defaultPassword, uid);
       await StudentModel.create(student);
-      return response.status(200).json({ id: student.stud_id });
+      return response.status(201).json({ id: student.stud_id });
     } catch (err) {
       console.error(`Student creation failed: ${err}`);
       return response.status(500).json({
@@ -110,13 +92,8 @@ module.exports = {
       let result;
       if (student.stud_defaultPassword) {
         result = await updatePassword(student, stud_id);
-        if (result === 'ERROR') {
-          throw new Error(
-            'Internal server error while trying to update password'
-          );
-        }
       }
-      const stillExistFieldsToUpdate = student.length > 0;
+      const stillExistFieldsToUpdate = Object.values(student).length > 0;
       if (stillExistFieldsToUpdate) {
         result = await StudentModel.updateById(stud_id, student);
       }
@@ -132,8 +109,12 @@ module.exports = {
   async delete(request, response) {
     try {
       const { stud_id } = request.params;
-
-      const result = await StudentModel.deleteById(stud_id);
+      const studInfos = await StudentModel.getById(stud_id);
+      const firebase_id = studInfos.stud_firebase;
+      await firebase.deleteUser(firebase_id);
+      const result = await CandidateModel.deleteById(
+        studInfos.stud_candidate_id
+      );
       return response.status(200).json(result);
     } catch (err) {
       console.error(`Student delete failed: ${err}`);

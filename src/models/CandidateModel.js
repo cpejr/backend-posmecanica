@@ -27,7 +27,6 @@ module.exports = {
       const relation = processTable.find(
         (element) => element.process_id === candidate.candidate_process_id
       );
-
       candidate.selective_process = relation;
     });
     const result = candidateTable;
@@ -35,11 +34,16 @@ module.exports = {
   },
 
   async getById(candidate_id) {
-    const result = await connection('candidate')
+    const candidateObject = await connection('candidate')
       .where({ candidate_id })
       .select('*')
       .first();
-    return result;
+    const processTable = await connection('selective_process')
+      .where({ process_id: candidateObject.candidate_process_id })
+      .select('*')
+      .first();
+    candidateObject.selective_process = processTable;
+    return candidateObject;
   },
 
   async updateById(candidate_id, candidate) {

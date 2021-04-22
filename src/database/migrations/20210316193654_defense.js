@@ -1,9 +1,9 @@
 exports.up = function (knex) {
   return knex.schema.createTable('defense', (table) => {
     table.uuid('defense_id').primary().notNullable();
-    table.uuid('defense_stud_id').notNullable();
-    table.uuid('defense_bank_id').notNullable();
-    table.uuid('defense_sArea_id').notNullable();
+    table.uuid('defense_stud_id');
+    table.uuid('defense_bank_id');
+    table.uuid('defense_sArea_id');
     table.enu('defense_type', ['DISSERTACAO', 'TESE']);
     table.string('defense_title').notNullable();
     table.text('defense_content', 'longtext').notNullable();

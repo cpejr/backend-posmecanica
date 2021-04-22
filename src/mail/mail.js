@@ -22,6 +22,7 @@ class Email {
       from: `${process.env.EMAIL_LOGIN}`,
       ...request,
     };
+    console.log(config);
     try {
       transporter.sendMail(config);
     } catch (error) {
@@ -42,6 +43,18 @@ module.exports = {
     };
     return Email.sendEmail(emailContent);
   },
+  ChangeEmail(to, firstname, newEmail) {
+    const content = `Prezado ${firstname}, seu email foi atualizado para: ${newEmail}.`;
+    const subject = 'Pós-Mecânica: Email Atualizado';
+
+    const emailContent = {
+      to,
+      subject,
+      text: content,
+    };
+    return Email.sendEmail(emailContent);
+  },
+
   ConfirmateCreateUser(to, firstname, password) {
     const content = `Olá ${firstname}! Sua conta foi criada com sucesso. A sua senha é ${password}`;
     const subject = 'Pós-Mecânica: Inscrição no sistema realizada';

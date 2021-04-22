@@ -30,7 +30,10 @@ module.exports = {
         .valid('mestrado', 'doutorado', 'colaborador', 'visitante')
         .insensitive()
         .required(),
-      prof_title: Joi.string().valid('Doutor', 'Mestre').insensitive(),
+      prof_title: Joi.string()
+        .valid('Doutor', 'Mestre')
+        .insensitive()
+        .required(),
       prof_title_year: Joi.number().integer().required(),
       prof_university: Joi.string().required(),
       prof_city: Joi.string().required(),

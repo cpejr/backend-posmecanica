@@ -43,7 +43,7 @@ module.exports = {
       });
     }
   },
-  
+
   async getAll(request, response) {
     try {
       const url = request.route.path.split('/');
