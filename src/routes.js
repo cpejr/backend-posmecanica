@@ -348,7 +348,7 @@ routes.get(
   StudentController.getById
 );
 routes.post(
-  '/students/:stud_process_id/:stud_candidate_id',
+  '/students/:stud_candidate_id',
   StudentValidator.create,
   Authorization.authenticateToken,
   StudentController.create

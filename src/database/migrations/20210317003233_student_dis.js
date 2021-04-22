@@ -3,7 +3,6 @@ exports.up = function (knex) {
     table.increments('student_dis_id').primary().notNullable();
     table.uuid('sd_student_id').notNullable();
     table.uuid('sd_dis_id').notNullable();
-    table.string('student_dis_grades');
 
     table
       .foreign('sd_student_id')

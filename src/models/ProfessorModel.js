@@ -38,7 +38,7 @@ const makeSearchAreaRelation = (
   searchAreaRelation.forEach((ids) => {
     relation.push(
       search_areaTable.find(
-        (element) => element.discipline_id === ids.sp_searchArea_id
+        (element) => element.search_area_id === ids.sp_searchArea_id
       )
     );
   });

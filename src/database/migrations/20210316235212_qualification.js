@@ -1,9 +1,9 @@
 exports.up = function (knex) {
   return knex.schema.createTable('qualification', (table) => {
     table.uuid('quali_id').primary().notNullable();
-    table.uuid('quali_stud_id').notNullable();
-    table.uuid('quali_bank_id').notNullable();
-    table.uuid('quali_sArea_id').notNullable();
+    table.uuid('quali_stud_id');
+    table.uuid('quali_bank_id');
+    table.uuid('quali_sArea_id');
     table.uuid('quali_defense_id');
     table.string('quali_title').notNullable();
     table.text('quali_content', 'longtext').notNullable();

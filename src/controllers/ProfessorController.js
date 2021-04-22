@@ -9,15 +9,23 @@ const buildProfessorObject = (professor, defaultPassword, uid) => {
   professor.prof_firebase = uid;
 };
 
-async function updatePassword(professor, prof_id) {
+async function updateFirebase(professor, prof_id) {
   const profInfos = await ProfessorModel.getById(prof_id);
   const firebase_id = profInfos.prof_firebase;
   const name = profInfos.prof_name;
-  const update = await firebase.changeUserPassword(
-    firebase_id,
-    professor.prof_defaultPassword,
-    name
-  );
+  const oldEmail = profInfos.prof_email;
+  const update = professor.prof_defaultPassword
+    ? await firebase.changeUserPassword(
+        firebase_id,
+        professor.prof_defaultPassword,
+        name
+      )
+    : await firebase.changeUserEmail(
+        firebase_id,
+        professor.prof_email,
+        name,
+        oldEmail
+      );
   const result = update.uid;
   delete professor.prof_defaultPassword;
   return result;
@@ -79,8 +87,10 @@ module.exports = {
       const { prof_id } = request.params;
       const professor = request.body;
       let result;
-      if (professor.prof_defaultPassword) {
-        result = await updatePassword(professor, prof_id);
+      const isUpdatingFirebase =
+        professor.prof_defaultPassword || professor.prof_email;
+      if (isUpdatingFirebase) {
+        result = await updateFirebase(professor, prof_id);
       }
       const stillExistFieldsToUpdate = Object.values(professor).length > 0;
       if (stillExistFieldsToUpdate) {

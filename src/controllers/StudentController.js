@@ -6,13 +6,11 @@ const firebase = require('../utils/firebase');
 
 const buildStudentObject = (
   student,
-  stud_process_id,
   stud_candidate_id,
   defaultPassword,
   uid
 ) => {
   student.stud_id = uuidv4();
-  student.stud_process_id = stud_process_id;
   student.stud_candidate_id = stud_candidate_id;
   student.stud_firebase = uid;
   student.stud_defaultPassword = defaultPassword;
@@ -37,7 +35,7 @@ module.exports = {
   async create(request, response) {
     try {
       const student = request.body;
-      const { stud_process_id, stud_candidate_id } = request.params;
+      const { stud_candidate_id } = request.params;
       const infos = await CandidateModel.getById(stud_candidate_id);
       const defaultPassword = crypto.randomBytes(8).toString('Hex');
       const uid = await firebase.createNewUser(
@@ -45,13 +43,7 @@ module.exports = {
         defaultPassword,
         infos.candidate_name
       );
-      buildStudentObject(
-        student,
-        stud_process_id,
-        stud_candidate_id,
-        defaultPassword,
-        uid
-      );
+      buildStudentObject(student, stud_candidate_id, defaultPassword, uid);
       await StudentModel.create(student);
       return response.status(201).json({ id: student.stud_id });
     } catch (err) {
@@ -120,7 +112,9 @@ module.exports = {
       const studInfos = await StudentModel.getById(stud_id);
       const firebase_id = studInfos.stud_firebase;
       await firebase.deleteUser(firebase_id);
-      const result = await StudentModel.deleteById(stud_id);
+      const result = await CandidateModel.deleteById(
+        studInfos.stud_candidate_id
+      );
       return response.status(200).json(result);
     } catch (err) {
       console.error(`Student delete failed: ${err}`);

@@ -84,10 +84,16 @@ module.exports = {
   },
 
   async getByFields(fields) {
-    const result = await connection('student')
+    const student = await connection('student')
       .where(fields)
       .select('*')
       .first();
+    const disciplineTable = await connection('discipline').select('*');
+    const candidateTable = await connection('candidate').select('*');
+    const stud_discTable = await connection('student_dis').select('*');
+    recoverCandidateInfos(student, candidateTable);
+    makeDisciplinesRelation(student, disciplineTable, stud_discTable);
+    const result = student;
     return result;
   },
 };
