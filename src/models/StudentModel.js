@@ -1,13 +1,13 @@
 const connection = require('../database/connection');
 
 const recoverCandidateInfos = (student, candidate) => {
-  const filteredCandidate = candidate.filter(
+  const filteredCandidate = candidate.find(
     (campo) => campo.candidate_id === student.stud_candidate_id
   );
   delete student.stud_candidate_id;
-  Object.keys(filteredCandidate[0]).forEach((campo) => {
+  Object.keys(filteredCandidate).forEach((campo) => {
     const newName = campo.toString().replace('candidate', 'stud_candidate');
-    student[newName] = filteredCandidate[0][campo];
+    student[newName] = filteredCandidate[campo];
   });
 };
 

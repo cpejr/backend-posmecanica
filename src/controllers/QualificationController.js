@@ -19,7 +19,12 @@ module.exports = {
   async create(request, response) {
     try {
       const qualification = request.body;
-      const { quali_stud_id, quali_bank_id, quali_sArea_id, quali_defense_id } = request.params;
+      const {
+        quali_stud_id,
+        quali_bank_id,
+        quali_sArea_id,
+        quali_defense_id,
+      } = request.params;
       buildQualificationObject(
         qualification,
         quali_stud_id,

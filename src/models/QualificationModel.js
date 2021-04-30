@@ -77,12 +77,12 @@ module.exports = {
       .where({ defense_id: qualification.quali_defense_id })
       .select('defense_id', 'defense_title')
       .first();
-    qualification.search_area = search_area;
+    qualification.defense = defense;
     delete qualification.quali_stud_id;
     delete qualification.quali_bank_id;
     delete qualification.quali_sArea_id;
     delete qualification.quali_defense_id;
-    
+
     const result = qualification;
     return result;
   },

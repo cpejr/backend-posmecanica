@@ -14,7 +14,6 @@ async function updateFirebase(candidate, candidate_id) {
   const studentInfos = await StudentModel.getByFields({
     stud_candidate_id: candidate_id,
   });
-  console.log(studentInfos);
   const firebase_id = studentInfos.stud_firebase;
   const name = studentInfos.stud_candidate_name;
   const oldEmail = studentInfos.stud_candidate_email;

@@ -11,16 +11,31 @@ module.exports = {
       const firebaseId = await Firebase.login(email, password);
       let user;
       switch (type) {
-        case 'professor':
+        case 'professor': {
           user = await ProfessorModel.getByFields({
             prof_firebase: firebaseId,
           });
+          user.email = user.prof_email;
+          user.name = user.prof_name;
+          delete user.prof_name;
+          delete user.prof_email;
           break;
-        case 'administrator':
+        }
+        case 'administrator': {
           user = await AdmModel.getByFields({ adm_firebase: firebaseId });
+          user.email = user.adm_email;
+          user.name = user.adm_name;
+          delete user.adm_name;
+          delete user.adm_email;
           break;
-        default:
+        }
+        default: {
           user = await StudentModel.getByFields({ stud_firebase: firebaseId });
+          user.email = user.stud_candidate_email;
+          user.name = user.stud_candidate_name;
+          delete user.stud_candidate_name;
+          delete user.stud_candidate_email;
+        }
       }
       user.type = type;
       const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {

@@ -22,7 +22,6 @@ class Email {
       from: `${process.env.EMAIL_LOGIN}`,
       ...request,
     };
-    console.log(config);
     try {
       transporter.sendMail(config);
     } catch (error) {
