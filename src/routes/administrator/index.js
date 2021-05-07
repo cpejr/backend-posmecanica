@@ -7,30 +7,30 @@ const AdmValidator = require('../../validators/AdmValidator');
 const { authenticateToken } = require('../../middlewares/authentication');
 
 administratorRouter.get(
-    '/adms',
+    '/',
     authenticateToken,
     AdmController.getAll
 );
 administratorRouter.get(
-    '/adms/:adm_id',
+    '/:adm_id',
     AdmValidator.getById,
     authenticateToken,
     AdmController.getById
 );
 administratorRouter.post(
-    '/adms',
+    '/',
     AdmValidator.create,
     authenticateToken,
     AdmController.create
 );
 administratorRouter.put(
-    '/adms/:adm_id',
+    '/:adm_id',
     AdmValidator.update,
     authenticateToken,
     AdmController.update
 );
 administratorRouter.delete(
-    '/adms/:adm_id',
+    '/:adm_id',
     AdmValidator.delete,
     authenticateToken,
     AdmController.delete

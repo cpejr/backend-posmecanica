@@ -4,18 +4,18 @@ const disciplineRouter = express.Router();
 const DisciplineController = require('../../controllers/DisciplineController');
 const DisciplineValidator = require('../../validators/DisciplineValidator');
 
-// const { authenticateToken } = require('../../middlewares/authentication');
+const { authenticateToken } = require('../../middlewares/authentication');
 
 disciplineRouter.get(
   '/',
   DisciplineValidator.getAll,
-  // authenticateToken,
+  authenticateToken,
   DisciplineController.getAll
 );
 disciplineRouter.get(
   '/:discipline_id',
   DisciplineValidator.getById,
-  // authenticateToken,
+  authenticateToken,
   DisciplineController.getById
 );
 disciplineRouter.post(
@@ -31,7 +31,7 @@ disciplineRouter.put(
 disciplineRouter.delete(
   '/discipline/:discipline_id',
   DisciplineValidator.delete,
-  // authenticateToken,
+  authenticateToken,
   DisciplineController.delete
 );
 

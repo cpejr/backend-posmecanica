@@ -28,11 +28,11 @@ routes.use('/adms', administratorRouter);
 routes.use('/banks', bankRouter);
 routes.use('/candidates', candidateRouter);
 routes.use('/defenses', defenseRouter);
-routes.use('/discipline', disciplineRouter);
+routes.use('/disciplines', disciplineRouter);
 routes.use('/professors', professorRouter);
 routes.use('/qualifications', qualificationRouter);
-routes.use('/searchArea', searchAreaRouter);
-routes.use('/selectiveProcess', selectiveProcessRouter);
+routes.use('/searchAreas', searchAreaRouter);
+routes.use('/selectiveProcesses', selectiveProcessRouter);
 routes.use('/login', sessionRouter);
 routes.use('/students', studentRouter);
 

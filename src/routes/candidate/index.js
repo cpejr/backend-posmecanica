@@ -4,18 +4,18 @@ const candidateRouter = express.Router();
 const CandidateController = require('../../controllers/CandidateController');
 const CandidateValidator = require('../../validators/CandidateValidator');
 
-// const { authenticateToken } = require('../../middlewares/authentication');
+const { authenticateToken } = require('../../middlewares/authentication');
 
 candidateRouter.get(
   '/',
   CandidateValidator.getAll,
-  // authenticateToken,
+  authenticateToken,
   CandidateController.getAll
 );
 candidateRouter.get(
   '/:candidate_id',
   CandidateValidator.getById,
-  // authenticateToken,
+  authenticateToken,
   CandidateController.getById
 );
 candidateRouter.post(
@@ -31,7 +31,7 @@ candidateRouter.put(
 candidateRouter.delete(
   '/:candidate_id',
   CandidateValidator.delete,
-  // authenticateToken,
+  authenticateToken,
   CandidateController.delete
 );
 
