@@ -93,7 +93,7 @@ module.exports = {
       if (stillExistFieldsToUpdate) {
         result = await AdmModel.updateById(adm_id, administrator);
       }
-      return response.status(200).json(result);
+      return response.status(200).json('OK');
     } catch (err) {
       console.error(`Administrator update failed: ${err}`);
       return response.status(500).json({
