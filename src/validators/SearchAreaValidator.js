@@ -13,24 +13,14 @@ module.exports = {
   }),
 
   getAll: celebrate({
-    [Segments.HEADERS]: Joi.object()
-      .keys({
-        authorization: Joi.string().required(),
-      })
-      .unknown(),
     [Segments.QUERY]: Joi.object().keys({
       times: Joi.number().integer().required(),
       field: Joi.string(),
-      filter: Joi.string(),
+      filter: Joi.string().allow(null, '').allow(null, ''),
     }),
   }),
 
   getById: celebrate({
-    [Segments.HEADERS]: Joi.object()
-      .keys({
-        authorization: Joi.string().required(),
-      })
-      .unknown(),
     [Segments.PARAMS]: Joi.object().keys({
       search_area_id: Joi.string()
         .guid({

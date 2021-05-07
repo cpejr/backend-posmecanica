@@ -47,7 +47,7 @@ module.exports = {
     [Segments.QUERY]: Joi.object().keys({
       times: Joi.number().integer().required(),
       field: Joi.string(),
-      filter: Joi.string(),
+      filter: Joi.string().allow(null, ''),
     }),
   }),
 

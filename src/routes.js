@@ -268,13 +268,11 @@ routes.delete(
 routes.get(
   '/searchAreas',
   SearchAreaValidator.getAll,
-  Authorization.authenticateToken,
   SearchAreaController.getAll
 );
 routes.get(
   '/searchAreas/:search_area_id',
   SearchAreaValidator.getById,
-  Authorization.authenticateToken,
   SearchAreaController.getById
 );
 routes.post(

@@ -25,7 +25,7 @@ module.exports = {
       times: Joi.number().integer().required(),
       field: Joi.string(),
 
-      filter: Joi.string(),
+      filter: Joi.string().allow(null, ''),
     }),
   }),
 
