@@ -34,11 +34,19 @@ module.exports = {
     const limit = 50;
     let students;
     if (filter && field) {
-      students = await connection('student')
-        .where(field, 'ilike', `%${filter}%`)
-        .select('*')
-        .limit(limit)
-        .offset(limit * times);
+      if (field.includes('id')) {
+        students = await connection('student')
+          .where({ [field]: filter })
+          .select('*')
+          .limit(limit)
+          .offset(limit * times);
+      } else {
+        students = await connection('student')
+          .where(field, 'ilike', `%${filter}%`)
+          .select('*')
+          .limit(limit)
+          .offset(limit * times);
+      }
     } else {
       students = await connection('student')
         .select('*')

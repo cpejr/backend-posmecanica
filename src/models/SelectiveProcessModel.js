@@ -12,11 +12,19 @@ module.exports = {
     const limit = 50;
     let selective_process;
     if (field && filter) {
-      selective_process = await connection('selective_process')
-        .where(field, 'ilike', `%${filter}%`)
-        .select('*')
-        .limit(limit)
-        .offset(limit * times);
+      if (field.includes('id')) {
+        selective_process = await connection('selective_process')
+          .where({ [field]: filter })
+          .select('*')
+          .limit(limit)
+          .offset(limit * times);
+      } else {
+        selective_process = await connection('selective_process')
+          .where(field, 'ilike', `%${filter}%`)
+          .select('*')
+          .limit(limit)
+          .offset(limit * times);
+      }
     } else {
       selective_process = await connection('selective_process')
         .select('*')

@@ -10,11 +10,19 @@ module.exports = {
     const limit = 50;
     let candidateTable;
     if (field && filter) {
-      candidateTable = await connection('candidate')
-        .where(field, 'ilike', `%${filter}%`)
-        .select('*')
-        .limit(limit)
-        .offset(limit * times);
+      if (field.includes('id')) {
+        candidateTable = await connection('candidate')
+          .where({ [field]: filter })
+          .select('*')
+          .limit(limit)
+          .offset(limit * times);
+      } else {
+        candidateTable = await connection('candidate')
+          .where(field, 'ilike', `%${filter}%`)
+          .select('*')
+          .limit(limit)
+          .offset(limit * times);
+      }
     } else {
       candidateTable = await connection('candidate')
         .select('*')
