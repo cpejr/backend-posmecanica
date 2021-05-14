@@ -11,11 +11,19 @@ module.exports = {
     let qualification;
 
     if (field && filter) {
-      qualification = await connection('qualification')
-        .where(field, 'ilike', `%${filter}%`)
-        .select('*')
-        .limit(limit)
-        .offset(limit * times);
+      if (field.includes('id')) {
+        qualification = await connection('qualification')
+          .where({ [field]: filter })
+          .select('*')
+          .limit(limit)
+          .offset(limit * times);
+      } else {
+        qualification = await connection('qualification')
+          .where(field, 'ilike', `%${filter}%`)
+          .select('*')
+          .limit(limit)
+          .offset(limit * times);
+      }
     } else {
       qualification = await connection('qualification')
         .select('*')

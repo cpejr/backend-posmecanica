@@ -55,11 +55,19 @@ module.exports = {
     const limit = 50;
     let disciplineTable;
     if (field && filter) {
-      disciplineTable = await connection('discipline')
-        .where(field, 'ilike', `%${filter}%`)
-        .select('*')
-        .limit(limit)
-        .offset(limit * times);
+      if (field.includes('id')) {
+        disciplineTable = await connection('discipline')
+          .where({ [field]: filter })
+          .select('*')
+          .limit(limit)
+          .offset(limit * times);
+      } else {
+        disciplineTable = await connection('discipline')
+          .where(field, 'ilike', `%${filter}%`)
+          .select('*')
+          .limit(limit)
+          .offset(limit * times);
+      }
     } else {
       disciplineTable = await connection('discipline')
         .select('*')

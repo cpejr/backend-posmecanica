@@ -10,11 +10,19 @@ module.exports = {
     const limit = 50;
     let bankTable;
     if (field && filter) {
-      bankTable = await connection('bank')
-        .where(field, 'ilike', `%${filter}%`)
-        .select('*')
-        .limit(limit)
-        .offset(limit * times);
+      if (field.includes('id')) {
+        bankTable = await connection('bank')
+          .where({ [field]: filter })
+          .select('*')
+          .limit(limit)
+          .offset(limit * times);
+      } else {
+        bankTable = await connection('bank')
+          .where(field, 'ilike', `%${filter}%`)
+          .select('*')
+          .limit(limit)
+          .offset(limit * times);
+      }
     } else {
       bankTable = await connection('bank')
         .select('*')

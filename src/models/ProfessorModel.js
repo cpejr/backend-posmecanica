@@ -55,11 +55,19 @@ module.exports = {
     const limit = 50;
     let profTable;
     if (field && filter) {
-      profTable = await connection('professor')
-        .where(field, 'ilike', `%${filter}%`)
-        .select('*')
-        .limit(limit)
-        .offset(limit * times);
+      if (field.includes('id')) {
+        profTable = await connection('professor')
+          .where({ [field]: filter })
+          .select('*')
+          .limit(limit)
+          .offset(limit * times);
+      } else {
+        profTable = await connection('professor')
+          .where(field, 'ilike', `%${filter}%`)
+          .select('*')
+          .limit(limit)
+          .offset(limit * times);
+      }
     } else {
       profTable = await connection('professor')
         .select('*')

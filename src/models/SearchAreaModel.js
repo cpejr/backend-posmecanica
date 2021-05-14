@@ -49,11 +49,19 @@ module.exports = {
     const limit = 50;
     let searchTable;
     if (field && filter) {
-      searchTable = await connection('search_area')
-        .where(field, 'ilike', `%${filter}%`)
-        .select('*')
-        .limit(limit)
-        .offset(limit * times);
+      if (field.includes('id')) {
+        searchTable = await connection('search_area')
+          .where({ [field]: filter })
+          .select('*')
+          .limit(limit)
+          .offset(limit * times);
+      } else {
+        searchTable = await connection('search_area')
+          .where(field, 'ilike', `%${filter}%`)
+          .select('*')
+          .limit(limit)
+          .offset(limit * times);
+      }
     } else {
       searchTable = await connection('search_area')
         .select('*')
