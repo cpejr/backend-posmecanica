@@ -6,6 +6,7 @@ const { errors } = require('celebrate');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 const routes = require('./routes');
+const FirebaseStore = require('./utils/FirebaseStore');
 
 const port = process.env.PORT || 3333;
 
@@ -15,25 +16,27 @@ const corsOptions = {
   exposedHeaders: 'X-Total-Count',
 };
 
-
 const swaggerOptions = {
   swaggerDefinition: {
-    openapi: "3.0.0",
+    openapi: '3.0.0',
     info: {
-      title: "PosMecanica - Swagger",
-      description: "Documentação do projeto desenvolvido pela Tribo Draconis em 2021/1.",
-      version: "1.0.0"
+      title: 'PosMecanica - Swagger',
+      description:
+        'Documentação do projeto desenvolvido pela Tribo Draconis em 2021/1.',
+      version: '1.0.0',
     },
     servers: [
       {
-        url: "http://localhost:3333"
+        url: 'http://localhost:3333',
       },
     ],
   },
-  apis: ["./src/routes/**/doc/*.js"],
-}
+  apis: ['./src/routes/**/doc/*.js'],
+};
 
 const specs = swaggerJsDoc(swaggerOptions);
+
+FirebaseStore.config();
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -41,7 +44,7 @@ app.use(routes);
 app.use(errors());
 
 app.use(
-  "/api-docs",
+  '/api-docs',
   swaggerUi.serve,
   swaggerUi.setup(specs, { explorer: true })
   // http://localhost:3333/api-docs/#/ (URL para acessar documentação)

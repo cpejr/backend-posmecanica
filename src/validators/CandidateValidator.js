@@ -9,6 +9,7 @@ module.exports = {
         })
         .required(),
     }),
+
     [Segments.BODY]: Joi.object().keys({
       candidate_name: Joi.string().required(),
       candidate_birth: Joi.date().required(),
@@ -59,7 +60,13 @@ module.exports = {
       candidate_rating: Joi.number().integer(),
     }),
   }),
-
+  upload: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
+  }),
   getAll: celebrate({
     [Segments.HEADERS]: Joi.object()
       .keys({

@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/cpejr/backend-posmecanica#readme",
   "dependencies": {
+    "@google-cloud/storage": "^5.8.5",
     "celebrate": "^13.0.4",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -26,6 +27,7 @@
     "firebase-admin": "^9.5.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.17",
+    "multer": "^1.4.2",
     "nodemailer": "^6.5.0",
     "pg": "^8.5.1",
     "swagger-jsdoc": "4.0.0",
