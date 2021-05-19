@@ -2,7 +2,11 @@ const { v4: uuidv4 } = require('uuid');
 const CandidateModel = require('../models/CandidateModel');
 const StudentModel = require('../models/StudentModel');
 const firebase = require('../utils/firebase');
-const { uploadFile } = require('../utils/FirebaseStore');
+const {
+  uploadFile,
+  listFiles,
+  deleteFolder,
+} = require('../utils/FirebaseStore');
 
 const buildCandidateObject = (candidate, candidate_process_id) => {
   const protocol = parseInt(Math.random() * 1000000000, 10);
@@ -100,7 +104,7 @@ module.exports = {
   async delete(request, response) {
     try {
       const { candidate_id } = request.params;
-
+      await deleteFolder(candidate_id);
       const result = await CandidateModel.deleteById(candidate_id);
       return response.status(200).json(result);
     } catch (err) {
@@ -113,19 +117,29 @@ module.exports = {
 
   async upload(request, response) {
     try {
-      const { candidate_id, adm_id } = request.session.user;
-      console.log(request.session);
-      const user_id = candidate_id || adm_id;
+      const { candidate_id } = request.params;
       const fileId = await uploadFile(
         request.file,
-        user_id,
-        `Users/${user_id}/`
+        candidate_id,
+        `Candidates/${candidate_id}/`
       );
       return response.status(200).json(fileId);
     } catch (err) {
       console.error(`Upload file failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to upload file',
+      });
+    }
+  },
+  async getFiles(request, response) {
+    try {
+      const { candidate_id } = request.params;
+      const files = await listFiles(candidate_id);
+      return response.status(200).json(files);
+    } catch (err) {
+      console.error(`List files failed: ${err}`);
+      return response.status(500).json({
+        notification: 'Internal server error while trying to list files',
       });
     }
   },

@@ -20,33 +20,25 @@ async function config() {
   }
 }
 
-async function listFiles() {
-  // Lists files in the bucket
-  const [files] = await storage.bucket(bucketName).getFiles();
-
-  console.log('Files:');
-  files.forEach((file) => {
-    console.log(file.name);
-  });
-}
-
-async function getDefaultProfileImages(user_id) {
+async function listFiles(user_id) {
   // Lists files in the bucket
   const [files] = await storage
     .bucket(bucketName)
-    .getFiles({ prefix: `User/${user_id}/` });
-
+    .getFiles({ prefix: `Candidates/${user_id}/` });
   const list = [];
   files.forEach((file) => {
-    if (file.metadata.size > 0) list.push(file.name);
+    if (file.metadata.size > 0) {
+      const fileName = file.name.split('/');
+      list.push(fileName[2]);
+    }
   });
-
   return list;
 }
 
 async function uploadFile(file, userId, prefix = '') {
   return new Promise((resolve, reject) => {
-    const fileName = `${file.originalname.replace('.', '-')}-${Date.now()}`;
+    const firstName = file.originalname.split('.');
+    const fileName = firstName[0];
 
     const blob = storage.bucket(bucketName).file(`${prefix}${fileName}`);
     const blobWriter = blob.createWriteStream({
@@ -79,15 +71,16 @@ async function uploadFile(file, userId, prefix = '') {
   });
 }
 
-async function deleteFile(filename) {
-  // Deletes the file from the bucket
-  await storage.bucket(bucketName).file(filename).delete();
+async function deleteFolder(user_id) {
+  // Deletes the path of user from the bucket
+  await storage.bucket(bucketName).deleteFiles({
+    prefix: `Candidates/${user_id}/`,
+  });
 }
 
 module.exports = {
   config,
   listFiles,
   uploadFile,
-  deleteFile,
-  getDefaultProfileImages,
+  deleteFolder,
 };

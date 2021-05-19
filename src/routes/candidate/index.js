@@ -13,12 +13,12 @@ candidateRouter.get(
   authenticateToken,
   CandidateController.getAll
 );
-candidateRouter.post(
-  '/upload',
-  fileUploader('file'),
-  CandidateValidator.upload,
+
+candidateRouter.get(
+  '/list/:candidate_id',
+  CandidateValidator.getFiles,
   authenticateToken,
-  CandidateController.upload
+  CandidateController.getFiles
 );
 
 candidateRouter.get(
@@ -31,6 +31,12 @@ candidateRouter.post(
   '/:candidate_process_id',
   CandidateValidator.create,
   CandidateController.create
+);
+candidateRouter.post(
+  '/upload/:candidate_id',
+  fileUploader('file'),
+  CandidateValidator.upload,
+  CandidateController.upload
 );
 candidateRouter.put(
   '/:candidate_id',
