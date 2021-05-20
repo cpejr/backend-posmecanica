@@ -9,6 +9,7 @@ module.exports = {
         })
         .required(),
     }),
+
     [Segments.BODY]: Joi.object().keys({
       candidate_name: Joi.string().required(),
       candidate_birth: Joi.date().required(),
@@ -59,7 +60,29 @@ module.exports = {
       candidate_rating: Joi.number().integer(),
     }),
   }),
-
+  upload: celebrate({
+    [Segments.PARAMS]: Joi.object().keys({
+      candidate_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
+    }),
+  }),
+  getFiles: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
+    [Segments.PARAMS]: Joi.object().keys({
+      candidate_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
+    }),
+  }),
   getAll: celebrate({
     [Segments.HEADERS]: Joi.object()
       .keys({
