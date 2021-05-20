@@ -1,6 +1,6 @@
 const express = require('express');
 
-//Principais
+// Principais
 const administratorRouter = require('./administrator');
 const bankRouter = require('./bank');
 const candidateRouter = require('./candidate');
@@ -13,17 +13,17 @@ const selectiveProcessRouter = require('./selectiveProcess');
 const sessionRouter = require('./session');
 const studentRouter = require('./student');
 
-//Relacionais
+// Relacionais
 const bank_professorRouter = require('./bank_professor');
 const professor_disciplineRouter = require('./professor_discipline');
 const searchArea_disciplineRouter = require('./searchArea_discipline');
 const searchArea_professorRouter = require('./searchArea_professor');
 const student_disciplineRouter = require('./student_discipline');
-
+const candidate_disciplineRouter = require('./candidate_discipline');
 
 const routes = express.Router();
 
-//Principais
+// Principais
 routes.use('/adms', administratorRouter);
 routes.use('/banks', bankRouter);
 routes.use('/candidates', candidateRouter);
@@ -36,12 +36,12 @@ routes.use('/selectiveProcesses', selectiveProcessRouter);
 routes.use('/login', sessionRouter);
 routes.use('/students', studentRouter);
 
-//Relacionais
+// Relacionais
 routes.use('/', bank_professorRouter);
 routes.use('/', professor_disciplineRouter);
 routes.use('/', searchArea_disciplineRouter);
 routes.use('/', searchArea_professorRouter);
 routes.use('/', student_disciplineRouter);
-
+routes.use('/', candidate_disciplineRouter);
 
 module.exports = routes;

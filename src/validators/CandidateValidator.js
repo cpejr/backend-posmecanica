@@ -46,7 +46,7 @@ module.exports = {
       candidate_university: Joi.string().required(),
       candidate_graduation: Joi.string().required(),
       candidate_grade: Joi.string()
-        .valid('MESTRADO', 'DOUTORADO')
+        .valid('MESTRADO', 'DOUTORADO', 'NENHUMA DAS OPÇÕES')
         .insensitive(),
       candidate_grade_date_begin: Joi.date(),
       candidate_grade_date_end: Joi.date(),

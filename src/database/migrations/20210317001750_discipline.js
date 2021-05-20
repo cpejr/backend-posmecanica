@@ -5,6 +5,7 @@ exports.up = function (knex) {
     table.text('discipline_content', 'longtext').notNullable();
     table.string('discipline_name').notNullable();
     table.boolean('discipline_is_isolated').defaultTo(false).notNullable();
+    table.boolean('discipline_iso_approved').defaultTo(false);
     table
       .enu('discipline_semester', [
         'PRIMEIRO',
