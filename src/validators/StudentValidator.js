@@ -63,6 +63,9 @@ module.exports = {
     [Segments.BODY]: Joi.object().keys({
       stud_registration: Joi.string(),
       stud_defaultPassword: Joi.string().min(8).max(20),
+      stud_type: Joi.string()
+        .valid('ATIVO', 'DEFENDENDO DISSERTAÇÃO', 'NENHUMA DAS OPÇÕES')
+        .insensitive(),
       stud_scholarship: Joi.boolean(),
       stud_prof_advisor: Joi.string(),
       stud_prof_coAdvisor: Joi.string(),

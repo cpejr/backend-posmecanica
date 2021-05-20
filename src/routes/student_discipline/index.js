@@ -1,4 +1,5 @@
 const express = require('express');
+
 const student_disciplineRouter = express.Router();
 
 const Student_DisciplineController = require('../../controllers/Student_DisciplineController');
@@ -18,9 +19,6 @@ student_disciplineRouter.delete(
   authenticateToken,
   Student_DisciplineController.disconnect
 );
-student_disciplineRouter.get(
-  '/getAll/student_dis',
-  authenticateToken
-);
+student_disciplineRouter.get('/getAll/student_dis', authenticateToken);
 
 module.exports = student_disciplineRouter;

@@ -32,7 +32,11 @@ exports.up = function (knex) {
     table.string('candidate_phone_number').notNullable();
     table.string('candidate_university').notNullable();
     table.string('candidate_graduation').notNullable();
-    table.enu('candidate_grade', ['MESTRADO', 'DOUTORADO']);
+    table.enu('candidate_grade', [
+      'MESTRADO',
+      'DOUTORADO',
+      'NENHUMA DAS OPÇÕES',
+    ]);
     table.date('candidate_grade_date_begin');
     table.date('candidate_grade_date_end');
     table.string('candidate_pGraduate_university');
