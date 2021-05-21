@@ -69,6 +69,7 @@ module.exports = {
       discipline_content: Joi.string(),
       discipline_name: Joi.string(),
       discipline_is_isolated: Joi.boolean(),
+      discipline_iso_approved: Joi.boolean(),
       discipline_semester: Joi.string()
         .valid('PRIMEIRO', 'SEGUNDO', 'PRIMEIRO_SEGUNDO, NAO_OFERTADO')
         .insensitive(),

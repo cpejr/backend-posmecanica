@@ -1,5 +1,6 @@
 const express = require('express');
 const candidateRouter = express.Router();
+const fileUploader = require('../../middlewares/fileUploader');
 
 const CandidateController = require('../../controllers/CandidateController');
 const CandidateValidator = require('../../validators/CandidateValidator');
@@ -12,6 +13,14 @@ candidateRouter.get(
   authenticateToken,
   CandidateController.getAll
 );
+
+candidateRouter.get(
+  '/list/:candidate_id',
+  CandidateValidator.getFiles,
+  authenticateToken,
+  CandidateController.getFiles
+);
+
 candidateRouter.get(
   '/:candidate_id',
   CandidateValidator.getById,
@@ -22,6 +31,12 @@ candidateRouter.post(
   '/:candidate_process_id',
   CandidateValidator.create,
   CandidateController.create
+);
+candidateRouter.post(
+  '/upload/:candidate_id',
+  fileUploader('file'),
+  CandidateValidator.upload,
+  CandidateController.upload
 );
 candidateRouter.put(
   '/:candidate_id',

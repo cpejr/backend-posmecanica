@@ -8,12 +8,14 @@ const buildStudentObject = (
   student,
   stud_candidate_id,
   defaultPassword,
-  uid
+  uid,
+  studentType
 ) => {
   student.stud_id = uuidv4();
   student.stud_candidate_id = stud_candidate_id;
   student.stud_firebase = uid;
   student.stud_defaultPassword = defaultPassword;
+  student.stud_type = studentType;
   delete student.stud_password;
 };
 
@@ -38,12 +40,19 @@ module.exports = {
       const { stud_candidate_id } = request.params;
       const infos = await CandidateModel.getById(stud_candidate_id);
       const defaultPassword = crypto.randomBytes(8).toString('Hex');
+      const studentType = 'ATIVO';
       const uid = await firebase.createNewUser(
         infos.candidate_email,
         defaultPassword,
         infos.candidate_name
       );
-      buildStudentObject(student, stud_candidate_id, defaultPassword, uid);
+      buildStudentObject(
+        student,
+        stud_candidate_id,
+        defaultPassword,
+        uid,
+        studentType
+      );
       await StudentModel.create(student);
       return response.status(201).json({ id: student.stud_id });
     } catch (err) {

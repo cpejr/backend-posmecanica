@@ -3,6 +3,8 @@ exports.up = function (knex) {
     table.uuid('prof_id').primary().notNullable();
     table.string('prof_name').notNullable();
     table.string('prof_email').notNullable();
+    table.string('professor_description').notNullable();
+    table.string('professor_curriculum').notNullable();
     table.string('prof_firebase').notNullable();
     table.enu('prof_gender', [
       'mulher cis',

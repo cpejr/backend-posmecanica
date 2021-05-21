@@ -1,6 +1,23 @@
 const connection = require('../database/connection');
 const { arrayFilterWithOrCondition } = require('./utils/Methods');
 
+const makeDisciplinesRelation = (
+  candidate,
+  disciplineTable,
+  candidate_disciplineTable
+) => {
+  const relation = [];
+  const disciplineRelation = candidate_disciplineTable.filter(
+    (elements) => elements.cd_candidate_id === candidate.candidate_id
+  );
+  disciplineRelation.forEach((ids) => {
+    relation.push(
+      disciplineTable.find((element) => element.discipline_id === ids.cd_dis_id)
+    );
+  });
+  candidate.disciplines = relation;
+};
+
 module.exports = {
   async create(candidate) {
     const result = await connection('candidate').insert(candidate);
@@ -25,12 +42,19 @@ module.exports = {
         .offset(limit * times);
     }
     const processTable = await connection('selective_process').select('*');
+    const disciplineTable = await connection('discipline').select('*');
+    const candidate_disciplineTable = await connection('candidate_dis');
 
     candidateTable.forEach((candidate) => {
       const relation = processTable.find(
         (element) => element.process_id === candidate.candidate_process_id
       );
       candidate.selective_process = relation;
+      makeDisciplinesRelation(
+        candidate,
+        disciplineTable,
+        candidate_disciplineTable
+      );
     });
     const result = candidateTable;
     return result;
@@ -45,6 +69,13 @@ module.exports = {
       .where({ process_id: candidateObject.candidate_process_id })
       .select('*')
       .first();
+    const disciplineTable = await connection('discipline').select('*');
+    const candidate_disciplineTable = await connection('candidate_dis');
+    makeDisciplinesRelation(
+      candidateObject,
+      disciplineTable,
+      candidate_disciplineTable
+    );
     candidateObject.selective_process = processTable;
     return candidateObject;
   },

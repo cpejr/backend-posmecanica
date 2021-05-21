@@ -9,6 +9,7 @@ module.exports = {
         })
         .required(),
     }),
+
     [Segments.BODY]: Joi.object().keys({
       candidate_name: Joi.string().required(),
       candidate_birth: Joi.date().required(),
@@ -45,7 +46,7 @@ module.exports = {
       candidate_university: Joi.string().required(),
       candidate_graduation: Joi.string().required(),
       candidate_grade: Joi.string()
-        .valid('MESTRADO', 'DOUTORADO')
+        .valid('MESTRADO', 'DOUTORADO', 'NENHUMA DAS OPÇÕES')
         .insensitive(),
       candidate_grade_date_begin: Joi.date(),
       candidate_grade_date_end: Joi.date(),
@@ -59,7 +60,29 @@ module.exports = {
       candidate_rating: Joi.number().integer(),
     }),
   }),
-
+  upload: celebrate({
+    [Segments.PARAMS]: Joi.object().keys({
+      candidate_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
+    }),
+  }),
+  getFiles: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
+    [Segments.PARAMS]: Joi.object().keys({
+      candidate_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
+    }),
+  }),
   getAll: celebrate({
     [Segments.HEADERS]: Joi.object()
       .keys({
