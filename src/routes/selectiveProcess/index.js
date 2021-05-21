@@ -1,4 +1,5 @@
 const express = require('express');
+
 const selectiveProcessRouter = express.Router();
 
 const SelectiveProcessController = require('../../controllers/SelectiveProcessController');
@@ -9,13 +10,11 @@ const { authenticateToken } = require('../../middlewares/authentication');
 selectiveProcessRouter.get(
   '/',
   SelectiveProcessValidator.getAll,
-  authenticateToken,
   SelectiveProcessController.getAll
 );
 selectiveProcessRouter.get(
   '/:process_id',
   SelectiveProcessValidator.getById,
-  authenticateToken,
   SelectiveProcessController.getById
 );
 selectiveProcessRouter.post(
