@@ -15,8 +15,8 @@ module.exports = {
   getAll: celebrate({
     [Segments.QUERY]: Joi.object().keys({
       times: Joi.number().integer().required(),
-      field: Joi.string(),
-      filter: Joi.string().allow(null, '').allow(null, ''),
+      field: Joi.string().allow(null, ''),
+      filter: Joi.allow(null, ''),
     }),
   }),
 
