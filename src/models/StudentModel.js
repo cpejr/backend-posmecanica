@@ -1,4 +1,5 @@
 const connection = require('../database/connection');
+const { arrayFilterWithOrCondition } = require('./utils/Methods');
 
 const recoverCandidateInfos = (student, candidate) => {
   const filteredCandidate = candidate.find(
@@ -34,19 +35,13 @@ module.exports = {
     const limit = 50;
     let students;
     if (filter && field) {
-      if (field.includes('id')) {
-        students = await connection('student')
-          .where({ [field]: filter })
-          .select('*')
-          .limit(limit)
-          .offset(limit * times);
-      } else {
-        students = await connection('student')
-          .where(field, 'ilike', `%${filter}%`)
-          .select('*')
-          .limit(limit)
-          .offset(limit * times);
-      }
+      students = await connection('student')
+        .select('*')
+        .limit(limit)
+        .offset(limit * times);
+      students = Array.isArray(filter)
+        ? arrayFilterWithOrCondition(students, field, filter)
+        : students.filter((obj) => obj[field] === filter);
     } else {
       students = await connection('student')
         .select('*')

@@ -1,4 +1,5 @@
 const connection = require('../database/connection');
+const { arrayFilterWithOrCondition } = require('./utils/Methods');
 
 module.exports = {
   async create(defense) {
@@ -10,19 +11,13 @@ module.exports = {
     const limit = 50;
     let defense;
     if (field && filter) {
-      if (field.includes('id')) {
-        defense = await connection('defense')
-          .where({ [field]: filter })
-          .select('*')
-          .limit(limit)
-          .offset(limit * times);
-      } else {
-        defense = await connection('defense')
-          .where(field, 'ilike', `%${filter}%`)
-          .select('*')
-          .limit(limit)
-          .offset(limit * times);
-      }
+      defense = await connection('defense')
+        .select('*')
+        .limit(limit)
+        .offset(limit * times);
+      defense = Array.isArray(filter)
+        ? arrayFilterWithOrCondition(defense, field, filter)
+        : defense.filter((obj) => obj[field] === filter);
     } else {
       defense = await connection('defense')
         .select('*')

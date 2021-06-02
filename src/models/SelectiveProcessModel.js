@@ -1,4 +1,5 @@
 const connection = require('../database/connection');
+const { arrayFilterWithOrCondition } = require('./utils/Methods');
 
 module.exports = {
   async create(selective_process) {
@@ -12,19 +13,13 @@ module.exports = {
     const limit = 50;
     let selective_process;
     if (field && filter) {
-      if (field.includes('id')) {
-        selective_process = await connection('selective_process')
-          .where({ [field]: filter })
-          .select('*')
-          .limit(limit)
-          .offset(limit * times);
-      } else {
-        selective_process = await connection('selective_process')
-          .where(field, 'ilike', `%${filter}%`)
-          .select('*')
-          .limit(limit)
-          .offset(limit * times);
-      }
+      selective_process = await connection('selective_process')
+        .select('*')
+        .limit(limit)
+        .offset(limit * times);
+      selective_process = Array.isArray(filter)
+        ? arrayFilterWithOrCondition(selective_process, field, filter)
+        : selective_process.filter((obj) => obj[field] === filter);
     } else {
       selective_process = await connection('selective_process')
         .select('*')

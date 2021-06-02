@@ -1,4 +1,5 @@
 const connection = require('../database/connection');
+const { arrayFilterWithOrCondition } = require('./utils/Methods');
 
 const makeProfessorRelation = (discipline, professorTable, prof_discTable) => {
   const relation = [];
@@ -55,19 +56,13 @@ module.exports = {
     const limit = 50;
     let disciplineTable;
     if (field && filter) {
-      if (field.includes('id')) {
-        disciplineTable = await connection('discipline')
-          .where({ [field]: filter })
-          .select('*')
-          .limit(limit)
-          .offset(limit * times);
-      } else {
-        disciplineTable = await connection('discipline')
-          .where(field, 'ilike', `%${filter}%`)
-          .select('*')
-          .limit(limit)
-          .offset(limit * times);
-      }
+      disciplineTable = await connection('discipline')
+        .select('*')
+        .limit(limit)
+        .offset(limit * times);
+      disciplineTable = Array.isArray(filter)
+        ? arrayFilterWithOrCondition(disciplineTable, field, filter)
+        : disciplineTable.filter((obj) => obj[field] === filter);
     } else {
       disciplineTable = await connection('discipline')
         .select('*')

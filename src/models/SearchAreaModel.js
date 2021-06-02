@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
 const connection = require('../database/connection');
+const { arrayFilterWithOrCondition } = require('./utils/Methods');
 
 const makeProfessorRelation = (
   searchArea,
@@ -49,19 +50,13 @@ module.exports = {
     const limit = 50;
     let searchTable;
     if (field && filter) {
-      if (field.includes('id')) {
-        searchTable = await connection('search_area')
-          .where({ [field]: filter })
-          .select('*')
-          .limit(limit)
-          .offset(limit * times);
-      } else {
-        searchTable = await connection('search_area')
-          .where(field, 'ilike', `%${filter}%`)
-          .select('*')
-          .limit(limit)
-          .offset(limit * times);
-      }
+      searchTable = await connection('search_area')
+        .select('*')
+        .limit(limit)
+        .offset(limit * times);
+      searchTable = Array.isArray(filter)
+        ? arrayFilterWithOrCondition(searchTable, field, filter)
+        : searchTable.filter((obj) => obj[field] === filter);
     } else {
       searchTable = await connection('search_area')
         .select('*')
