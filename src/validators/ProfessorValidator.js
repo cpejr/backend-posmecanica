@@ -10,8 +10,8 @@ module.exports = {
     [Segments.BODY]: Joi.object().keys({
       prof_name: Joi.string().required(),
       prof_email: Joi.string().email().required(),
-      professor_description: Joi.string().required(),
-      professor_curriculum: Joi.string().required(),
+      prof_description: Joi.string().required(),
+      prof_curriculum: Joi.string().required(),
       prof_birth: Joi.date().required(),
       prof_gender: Joi.string()
         .valid(
@@ -119,6 +119,8 @@ module.exports = {
       prof_course: Joi.string(),
       prof_treatment: Joi.string(),
       prof_workplace: Joi.string(),
+      prof_description: Joi.string(),
+      prof_curriculum: Joi.string(),
     }),
   }),
 
