@@ -39,7 +39,8 @@ module.exports = {
       const uid = await firebase.createNewUser(
         administrator.adm_email,
         defaultPassword,
-        administrator.adm_name
+        administrator.adm_name,
+        'administrator'
       );
       buildAdministratorObject(administrator, defaultPassword, uid);
       await AdmModel.create(administrator);
@@ -81,17 +82,16 @@ module.exports = {
 
   async update(request, response) {
     try {
-      let result;
       const { adm_id } = request.params;
       const administrator = request.body;
       const isUpdatingFirebase =
         administrator.adm_defaultPassword || administrator.adm_email;
       if (isUpdatingFirebase) {
-        result = await updateFirebase(administrator, adm_id);
+        await updateFirebase(administrator, adm_id);
       }
       const stillExistFieldsToUpdate = Object.values(administrator).length > 0;
       if (stillExistFieldsToUpdate) {
-        result = await AdmModel.updateById(adm_id, administrator);
+        await AdmModel.updateById(adm_id, administrator);
       }
       return response.status(200).json('OK');
     } catch (err) {
