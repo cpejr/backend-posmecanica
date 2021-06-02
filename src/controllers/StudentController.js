@@ -44,7 +44,8 @@ module.exports = {
       const uid = await firebase.createNewUser(
         infos.candidate_email,
         defaultPassword,
-        infos.candidate_name
+        infos.candidate_name,
+        'student'
       );
       buildStudentObject(
         student,

@@ -39,7 +39,8 @@ module.exports = {
       const uid = await firebase.createNewUser(
         professor.prof_email,
         defaultPassword,
-        professor.prof_name
+        professor.prof_name,
+        'professor'
       );
       buildProfessorObject(professor, defaultPassword, uid);
       await ProfessorModel.create(professor);

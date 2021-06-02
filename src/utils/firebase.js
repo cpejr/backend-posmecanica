@@ -23,21 +23,23 @@ admin.initializeApp({
 });
 
 module.exports = {
-  async createNewUser(email, password, name) {
-    const result = await firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password);
-    if (result.user.uid) {
+  async createNewUser(email, password, name, type) {
+    const result = await admin.auth().createUser({
+      email,
+      password,
+      displayName: type,
+    });
+    if (result.uid) {
       Mail.ConfirmateCreateUser(email, name, password);
     }
-    return result.user.uid;
+    return result.uid;
   },
 
   async login(email, password) {
     const result = await firebase
       .auth()
       .signInWithEmailAndPassword(email, password);
-    return result.user.uid;
+    return result.user;
   },
 
   async changeUserPassword(uid, newPassword, name) {

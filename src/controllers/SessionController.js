@@ -7,13 +7,13 @@ const ProfessorModel = require('../models/ProfessorModel');
 module.exports = {
   async signIn(request, response) {
     try {
-      const { email, password, type } = request.body;
-      const firebaseId = await Firebase.login(email, password);
+      const { email, password } = request.body;
+      const firebase = await Firebase.login(email, password);
       let user;
-      switch (type) {
+      switch (firebase.displayName) {
         case 'professor': {
           user = await ProfessorModel.getByFields({
-            prof_firebase: firebaseId,
+            prof_firebase: firebase.uid,
           });
           user.email = user.prof_email;
           user.name = user.prof_name;
@@ -22,7 +22,7 @@ module.exports = {
           break;
         }
         case 'administrator': {
-          user = await AdmModel.getByFields({ adm_firebase: firebaseId });
+          user = await AdmModel.getByFields({ adm_firebase: firebase.uid });
           user.email = user.adm_email;
           user.name = user.adm_name;
           delete user.adm_name;
@@ -30,14 +30,16 @@ module.exports = {
           break;
         }
         default: {
-          user = await StudentModel.getByFields({ stud_firebase: firebaseId });
+          user = await StudentModel.getByFields({
+            stud_firebase: firebase.uid,
+          });
           user.email = user.stud_candidate_email;
           user.name = user.stud_candidate_name;
           delete user.stud_candidate_name;
           delete user.stud_candidate_email;
         }
       }
-      user.type = type;
+      user.type = firebase.displayName;
       const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: '1h',
       });
