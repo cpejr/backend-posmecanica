@@ -1,4 +1,5 @@
 const express = require('express');
+
 const candidateRouter = express.Router();
 const fileUploader = require('../../middlewares/fileUploader');
 
@@ -15,10 +16,16 @@ candidateRouter.get(
 );
 
 candidateRouter.get(
-  '/list/:candidate_id',
+  '/list/:candidate_id/:file_name',
   CandidateValidator.getFiles,
   authenticateToken,
   CandidateController.getFiles
+);
+candidateRouter.get(
+  '/download/:candidate_id',
+  CandidateValidator.download,
+  authenticateToken,
+  CandidateController.downloadFolder
 );
 
 candidateRouter.get(

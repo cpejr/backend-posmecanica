@@ -19,6 +19,52 @@ async function config() {
     console.error(error);
   }
 }
+async function deleteFolder(user_id) {
+  // Deletes the path of user from the bucket
+  await storage.bucket(bucketName).deleteFiles({
+    prefix: `Candidates/${user_id}/`,
+  });
+}
+
+async function downloadFile(user_id, fileName) {
+  // Download one file in the bucket
+  await storage
+    .bucket(bucketName)
+    .file(`Candidates/${user_id}/${fileName}`)
+    .download({
+      destination: `/home/estevao/Downloads/Ana/${fileName}`,
+    });
+}
+
+function downloadFolder(user_id) {
+  // Download the files in the bucket
+  const fileName = [
+    `Documento 1`,
+    `Documento 2`,
+    `Documento 3`,
+    `Documento 4`,
+    `Documento 5`,
+  ];
+
+  // eslint-disable-next-line no-plusplus
+  for (let i = 0; i < 5; i++) {
+    downloadFile(user_id, fileName[i]);
+  }
+}
+
+async function getUrlFIle(user_id, fileName) {
+  // Download one file in the bucket
+  const options = {
+    version: 'v4',
+    action: 'read',
+    expires: Date.now() + 15 * 60 * 1000, // 15 minutes
+  };
+  const [url] = await storage
+    .bucket(bucketName)
+    .file(`Candidates/${user_id}/${fileName}`)
+    .getSignedUrl(options);
+  return url;
+}
 
 async function listFiles(user_id) {
   // Lists files in the bucket
@@ -71,16 +117,11 @@ async function uploadFile(file, userId, prefix = '') {
   });
 }
 
-async function deleteFolder(user_id) {
-  // Deletes the path of user from the bucket
-  await storage.bucket(bucketName).deleteFiles({
-    prefix: `Candidates/${user_id}/`,
-  });
-}
-
 module.exports = {
   config,
   listFiles,
   uploadFile,
   deleteFolder,
+  downloadFolder,
+  getUrlFIle,
 };
