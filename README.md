@@ -1,4 +1,4 @@
-# Pos Mecanica
+# Pos Mecanica - Backend
 ### Estrutura de Diretórios
 
     -> src
