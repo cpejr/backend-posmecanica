@@ -1,11 +1,7 @@
 // Imports the Google Cloud client library
 const { Storage } = require('@google-cloud/storage');
 const { v4: uuidv4 } = require('uuid');
-const { zip, COMPRESSION_LEVEL } = require('zip-a-folder');
-const path = require('path');
 
-const cwd = path.join(__dirname, '../../Candidates_files');
-// Creates a client from a Google service account key.
 const storage = new Storage({
   projectId: process.env.FIREBASE_PROJECTID,
   keyFilename: 'serviceAccountKey.json',
@@ -27,36 +23,6 @@ async function deleteFolder(user_id) {
   await storage.bucket(bucketName).deleteFiles({
     prefix: `Candidates/${user_id}/`,
   });
-}
-
-async function downloadFile(user_id, fileName) {
-  // Download one file in the bucket
-  const destFileName = path.join(cwd, fileName);
-
-  await storage
-    .bucket(bucketName)
-    .file(`Candidates/${user_id}/${fileName}`)
-    .download({
-      destination: destFileName,
-    });
-}
-
-function downloadFolder(user_id) {
-  // Download the files in the bucket
-  const fileName = [
-    `Documento 1.pdf`,
-    `Documento 2.pdf`,
-    `Documento 3.pdf`,
-    `Documento 4.pdf`,
-    `Documento 5.pdf`,
-  ];
-
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < 5; i++) {
-    downloadFile(user_id, fileName[i]);
-  }
-
-  zip('Candidates_files', `${user_id}.zip`, COMPRESSION_LEVEL.high);
 }
 
 async function getUrlFIle(user_id, fileName) {
@@ -113,6 +79,5 @@ module.exports = {
   config,
   uploadFile,
   deleteFolder,
-  downloadFolder,
   getUrlFIle,
 };
