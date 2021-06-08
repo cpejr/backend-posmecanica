@@ -4,9 +4,7 @@ const StudentModel = require('../models/StudentModel');
 const firebase = require('../utils/firebase');
 const {
   uploadFile,
-  listFiles,
   deleteFolder,
-  downloadFolder,
   getUrlFIle,
 } = require('../utils/FirebaseStore');
 
@@ -133,29 +131,15 @@ module.exports = {
       });
     }
   },
-  async getFiles(request, response) {
+  async getUrl(request, response) {
     try {
       const { candidate_id, file_name } = request.params;
-      const result = [];
-      result.push(await listFiles(candidate_id));
-      result.push(await getUrlFIle(candidate_id, file_name));
+      const result = await getUrlFIle(candidate_id, file_name);
       return response.status(200).json(result);
     } catch (err) {
       console.error(`List files failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to list files',
-      });
-    }
-  },
-  async downloadFolder(request, response) {
-    try {
-      const { candidate_id } = request.params;
-      const files = await downloadFolder(candidate_id);
-      return response.status(200).json(files);
-    } catch (err) {
-      console.error(`Download files failed: ${err}`);
-      return response.status(500).json({
-        notification: 'Internal server error while trying to download files',
       });
     }
   },

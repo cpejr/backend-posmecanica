@@ -1,7 +1,10 @@
 // Imports the Google Cloud client library
 const { Storage } = require('@google-cloud/storage');
 const { v4: uuidv4 } = require('uuid');
+const { zip, COMPRESSION_LEVEL } = require('zip-a-folder');
+const path = require('path');
 
+const cwd = path.join(__dirname, '../../Candidates_files');
 // Creates a client from a Google service account key.
 const storage = new Storage({
   projectId: process.env.FIREBASE_PROJECTID,
@@ -28,28 +31,32 @@ async function deleteFolder(user_id) {
 
 async function downloadFile(user_id, fileName) {
   // Download one file in the bucket
+  const destFileName = path.join(cwd, fileName);
+
   await storage
     .bucket(bucketName)
     .file(`Candidates/${user_id}/${fileName}`)
     .download({
-      destination: `/home/estevao/Downloads/Ana/${fileName}`,
+      destination: destFileName,
     });
 }
 
 function downloadFolder(user_id) {
   // Download the files in the bucket
   const fileName = [
-    `Documento 1`,
-    `Documento 2`,
-    `Documento 3`,
-    `Documento 4`,
-    `Documento 5`,
+    `Documento 1.pdf`,
+    `Documento 2.pdf`,
+    `Documento 3.pdf`,
+    `Documento 4.pdf`,
+    `Documento 5.pdf`,
   ];
 
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < 5; i++) {
     downloadFile(user_id, fileName[i]);
   }
+
+  zip('Candidates_files', `${user_id}.zip`, COMPRESSION_LEVEL.high);
 }
 
 async function getUrlFIle(user_id, fileName) {
@@ -66,22 +73,7 @@ async function getUrlFIle(user_id, fileName) {
   return url;
 }
 
-async function listFiles(user_id) {
-  // Lists files in the bucket
-  const [files] = await storage
-    .bucket(bucketName)
-    .getFiles({ prefix: `Candidates/${user_id}/` });
-  const list = [];
-  files.forEach((file) => {
-    if (file.metadata.size > 0) {
-      const fileName = file.name.split('/');
-      list.push(fileName[2]);
-    }
-  });
-  return list;
-}
-
-async function uploadFile(file, userId, prefix = '') {
+async function uploadFile(file, prefix = '') {
   return new Promise((resolve, reject) => {
     const firstName = file.originalname.split('.');
     const fileName = firstName[0];
@@ -119,7 +111,6 @@ async function uploadFile(file, userId, prefix = '') {
 
 module.exports = {
   config,
-  listFiles,
   uploadFile,
   deleteFolder,
   downloadFolder,

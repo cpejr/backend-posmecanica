@@ -16,16 +16,10 @@ candidateRouter.get(
 );
 
 candidateRouter.get(
-  '/list/:candidate_id/:file_name',
-  CandidateValidator.getFiles,
+  '/view_document/:candidate_id/:file_name',
+  CandidateValidator.getUrl,
   authenticateToken,
-  CandidateController.getFiles
-);
-candidateRouter.get(
-  '/download/:candidate_id',
-  CandidateValidator.download,
-  authenticateToken,
-  CandidateController.downloadFolder
+  CandidateController.getUrl
 );
 
 candidateRouter.get(
