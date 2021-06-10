@@ -172,6 +172,7 @@ module.exports = {
           version: ['uuidv4'],
         })
         .required(),
+      fileName: Joi.string().required(),
     }),
   }),
 };

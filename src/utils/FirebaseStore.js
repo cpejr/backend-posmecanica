@@ -39,11 +39,8 @@ async function getUrlFIle(user_id, fileName) {
   return url;
 }
 
-async function uploadFile(file, prefix = '') {
+async function uploadFile(file, prefix = '', fileName) {
   return new Promise((resolve, reject) => {
-    const firstName = file.originalname.split('.');
-    const fileName = firstName[0];
-
     const blob = storage.bucket(bucketName).file(`${prefix}${fileName}`);
     const blobWriter = blob.createWriteStream({
       resumable: false,

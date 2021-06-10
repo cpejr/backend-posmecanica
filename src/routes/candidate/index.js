@@ -34,9 +34,9 @@ candidateRouter.post(
   CandidateController.create
 );
 candidateRouter.post(
-  '/upload/:candidate_id',
-  fileUploader('file'),
+  '/upload/:candidate_id/:fileName',
   CandidateValidator.upload,
+  fileUploader('file'),
   CandidateController.upload
 );
 candidateRouter.put(

@@ -117,11 +117,11 @@ module.exports = {
 
   async upload(request, response) {
     try {
-      const { candidate_id } = request.params;
+      const { candidate_id, fileName } = request.params;
       const fileId = await uploadFile(
         request.file,
-        candidate_id,
-        `Candidates/${candidate_id}/`
+        `Candidates/${candidate_id}/`,
+        fileName
       );
       return response.status(200).json(fileId);
     } catch (err) {
