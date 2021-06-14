@@ -1,4 +1,5 @@
 const express = require('express');
+
 const candidateRouter = express.Router();
 const fileUploader = require('../../middlewares/fileUploader');
 
@@ -15,10 +16,10 @@ candidateRouter.get(
 );
 
 candidateRouter.get(
-  '/list/:candidate_id',
-  CandidateValidator.getFiles,
+  '/view_document/:candidate_id/:file_name',
+  CandidateValidator.getUrl,
   authenticateToken,
-  CandidateController.getFiles
+  CandidateController.getUrl
 );
 
 candidateRouter.get(
@@ -33,9 +34,9 @@ candidateRouter.post(
   CandidateController.create
 );
 candidateRouter.post(
-  '/upload/:candidate_id',
-  fileUploader('file'),
+  '/upload/:candidate_id/:fileName',
   CandidateValidator.upload,
+  fileUploader('file'),
   CandidateController.upload
 );
 candidateRouter.put(

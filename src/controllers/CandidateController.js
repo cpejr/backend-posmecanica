@@ -4,8 +4,8 @@ const StudentModel = require('../models/StudentModel');
 const firebase = require('../utils/firebase');
 const {
   uploadFile,
-  listFiles,
   deleteFolder,
+  getUrlFIle,
 } = require('../utils/FirebaseStore');
 
 const buildCandidateObject = (candidate, candidate_process_id) => {
@@ -117,11 +117,11 @@ module.exports = {
 
   async upload(request, response) {
     try {
-      const { candidate_id } = request.params;
+      const { candidate_id, fileName } = request.params;
       const fileId = await uploadFile(
         request.file,
-        candidate_id,
-        `Candidates/${candidate_id}/`
+        `Candidates/${candidate_id}/`,
+        fileName
       );
       return response.status(200).json(fileId);
     } catch (err) {
@@ -131,11 +131,11 @@ module.exports = {
       });
     }
   },
-  async getFiles(request, response) {
+  async getUrl(request, response) {
     try {
-      const { candidate_id } = request.params;
-      const files = await listFiles(candidate_id);
-      return response.status(200).json(files);
+      const { candidate_id, file_name } = request.params;
+      const result = await getUrlFIle(candidate_id, file_name);
+      return response.status(200).json(result);
     } catch (err) {
       console.error(`List files failed: ${err}`);
       return response.status(500).json({

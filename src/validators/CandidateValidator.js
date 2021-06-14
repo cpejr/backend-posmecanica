@@ -60,16 +60,7 @@ module.exports = {
       candidate_rating: Joi.number().integer(),
     }),
   }),
-  upload: celebrate({
-    [Segments.PARAMS]: Joi.object().keys({
-      candidate_id: Joi.string()
-        .guid({
-          version: ['uuidv4'],
-        })
-        .required(),
-    }),
-  }),
-  getFiles: celebrate({
+  delete: celebrate({
     [Segments.HEADERS]: Joi.object()
       .keys({
         authorization: Joi.string().required(),
@@ -81,6 +72,22 @@ module.exports = {
           version: ['uuidv4'],
         })
         .required(),
+    }),
+  }),
+
+  getUrl: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
+    [Segments.PARAMS]: Joi.object().keys({
+      candidate_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
+      file_name: Joi.string().required(),
     }),
   }),
   getAll: celebrate({
@@ -158,19 +165,14 @@ module.exports = {
       candidate_rating: Joi.number().integer(),
     }),
   }),
-
-  delete: celebrate({
-    [Segments.HEADERS]: Joi.object()
-      .keys({
-        authorization: Joi.string().required(),
-      })
-      .unknown(),
+  upload: celebrate({
     [Segments.PARAMS]: Joi.object().keys({
       candidate_id: Joi.string()
         .guid({
           version: ['uuidv4'],
         })
         .required(),
+      fileName: Joi.string().required(),
     }),
   }),
 };

@@ -2,7 +2,6 @@
 const { Storage } = require('@google-cloud/storage');
 const { v4: uuidv4 } = require('uuid');
 
-// Creates a client from a Google service account key.
 const storage = new Storage({
   projectId: process.env.FIREBASE_PROJECTID,
   keyFilename: 'serviceAccountKey.json',
@@ -19,27 +18,29 @@ async function config() {
     console.error(error);
   }
 }
-
-async function listFiles(user_id) {
-  // Lists files in the bucket
-  const [files] = await storage
-    .bucket(bucketName)
-    .getFiles({ prefix: `Candidates/${user_id}/` });
-  const list = [];
-  files.forEach((file) => {
-    if (file.metadata.size > 0) {
-      const fileName = file.name.split('/');
-      list.push(fileName[2]);
-    }
+async function deleteFolder(user_id) {
+  // Deletes the path of user from the bucket
+  await storage.bucket(bucketName).deleteFiles({
+    prefix: `Candidates/${user_id}/`,
   });
-  return list;
 }
 
-async function uploadFile(file, userId, prefix = '') {
-  return new Promise((resolve, reject) => {
-    const firstName = file.originalname.split('.');
-    const fileName = firstName[0];
+async function getUrlFIle(user_id, fileName) {
+  // Download one file in the bucket
+  const options = {
+    version: 'v4',
+    action: 'read',
+    expires: Date.now() + 15 * 60 * 1000, // 15 minutes
+  };
+  const [url] = await storage
+    .bucket(bucketName)
+    .file(`Candidates/${user_id}/${fileName}`)
+    .getSignedUrl(options);
+  return url;
+}
 
+async function uploadFile(file, prefix = '', fileName) {
+  return new Promise((resolve, reject) => {
     const blob = storage.bucket(bucketName).file(`${prefix}${fileName}`);
     const blobWriter = blob.createWriteStream({
       resumable: false,
@@ -71,16 +72,9 @@ async function uploadFile(file, userId, prefix = '') {
   });
 }
 
-async function deleteFolder(user_id) {
-  // Deletes the path of user from the bucket
-  await storage.bucket(bucketName).deleteFiles({
-    prefix: `Candidates/${user_id}/`,
-  });
-}
-
 module.exports = {
   config,
-  listFiles,
   uploadFile,
   deleteFolder,
+  getUrlFIle,
 };
