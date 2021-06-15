@@ -35,11 +35,9 @@ async function updateFirebase(candidate, candidate_id) {
 }
 
 async function SelectiveProcessResult(candidate, candidate_id) {
-  const studentInfos = await StudentModel.getByFields({
-    stud_candidate_id: candidate_id,
-  });
-  const name = studentInfos.stud_candidate_name;
-  const email = studentInfos.stud_candidate_email;
+  const candidateInfos = await CandidateModel.getById(candidate_id);
+  const name = candidateInfos.candidate_name;
+  const email = candidateInfos.candidate_email;
   Mail.SelectiveProcessResult(
     email,
     name,
@@ -103,7 +101,7 @@ module.exports = {
       if (candidate.candidate_email) {
         result = await updateFirebase(candidate, candidate_id);
       }
-      if (candidate.candidate_test_approval) {
+      if (candidate.candidate_rating) {
         await SelectiveProcessResult(candidate, candidate_id);
       }
       const stillExistFieldsToUpdate = Object.values(candidate).length > 0;
