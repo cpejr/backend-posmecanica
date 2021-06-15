@@ -73,7 +73,6 @@ module.exports = {
       subject,
       text: content,
     };
-    console.log(emailContent);
     return Email.sendEmail(emailContent);
   },
 };
