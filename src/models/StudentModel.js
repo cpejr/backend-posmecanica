@@ -1,9 +1,10 @@
 const connection = require('../database/connection');
+const CandidateModel = require('./CandidateModel');
 const { arrayFilterWithOrCondition } = require('./utils/Methods');
 
-const recoverCandidateInfos = (student, candidate) => {
-  const filteredCandidate = candidate.find(
-    (campo) => campo.candidate_id === student.stud_candidate_id
+const recoverCandidateInfos = async (student) => {
+  const filteredCandidate = await CandidateModel.getById(
+    student.stud_candidate_id
   );
   delete student.stud_candidate_id;
   Object.keys(filteredCandidate).forEach((campo) => {
@@ -46,18 +47,25 @@ module.exports = {
       students = await connection('student')
         .select('*')
         .limit(limit)
-        .offset(limit * times);
+        .offset(limit * times)
+        .innerJoin(
+          'candidate',
+          'student.stud_candidate_id',
+          'candidate.candidate_id'
+        )
+        .innerJoin(
+          'selective_process',
+          'candidate.candidate_process_id',
+          'selective_process.process_id'
+        );
     }
-    const candidate = await connection('candidate').select('*');
     const disciplineTable = await connection('discipline').select('*');
     const stud_discTable = await connection('student_dis');
-
     students.forEach((item) => {
-      recoverCandidateInfos(item, candidate);
       makeDisciplinesRelation(item, disciplineTable, stud_discTable);
+      delete item.stud_candidate_id;
     });
-    const result = students;
-    return result;
+    return students;
   },
 
   async getById(stud_id) {
