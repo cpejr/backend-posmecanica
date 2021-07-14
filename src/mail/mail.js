@@ -64,4 +64,15 @@ module.exports = {
     };
     return Email.sendEmail(emailContent);
   },
+  SelectiveProcessResult(to, firstname, result, position) {
+    const confirmation = result ? 'Aprovado' : 'Reprovado';
+    const content = `Olá ${firstname}, você foi ${confirmation} no processo seletivo. Sua colocação na prova foi ${position}° lugar`;
+    const subject = 'Pós-Mecânica: Resultado Inscrição';
+    const emailContent = {
+      to,
+      subject,
+      text: content,
+    };
+    return Email.sendEmail(emailContent);
+  },
 };

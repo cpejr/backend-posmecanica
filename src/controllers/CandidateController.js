@@ -7,6 +7,7 @@ const {
   deleteFolder,
   getUrlFIle,
 } = require('../utils/FirebaseStore');
+const Mail = require('../mail/mail');
 
 const buildCandidateObject = (candidate, candidate_process_id) => {
   const protocol = parseInt(Math.random() * 1000000000, 10);
@@ -31,6 +32,18 @@ async function updateFirebase(candidate, candidate_id) {
   const result = update.uid;
   delete candidate.candidate_email;
   return result;
+}
+
+async function SelectiveProcessResult(candidate, candidate_id) {
+  const candidateInfos = await CandidateModel.getById(candidate_id);
+  const name = candidateInfos.candidate_name;
+  const email = candidateInfos.candidate_email;
+  Mail.SelectiveProcessResult(
+    email,
+    name,
+    candidate.candidate_test_approval,
+    candidate.candidate_rating
+  );
 }
 
 module.exports = {
@@ -87,6 +100,9 @@ module.exports = {
       let result;
       if (candidate.candidate_email) {
         result = await updateFirebase(candidate, candidate_id);
+      }
+      if (candidate.candidate_rating) {
+        await SelectiveProcessResult(candidate, candidate_id);
       }
       const stillExistFieldsToUpdate = Object.values(candidate).length > 0;
       if (stillExistFieldsToUpdate) {
