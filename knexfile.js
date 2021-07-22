@@ -25,6 +25,28 @@ module.exports = {
     },
   },
 
+  test: {
+    client: 'pg',
+    connection: {
+      connectionString: process.env.DATABASE_URL,
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
+    migrations: {
+      directory: './src/database/migrations',
+    },
+    seeds: {
+      directory: './src/database/seeds',
+    },
+    useNullAsDefault: true,
+    pool: {
+      min: 2,
+      max: 10,
+    },
+  },
+
   production: {
     client: 'pg',
     connection: {
