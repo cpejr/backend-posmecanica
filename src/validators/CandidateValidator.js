@@ -58,6 +58,9 @@ module.exports = {
       candidate_test_approval: Joi.boolean(),
       candidate_curriculum_approval: Joi.boolean(),
       candidate_rating: Joi.number().integer(),
+      first_discipline_isolated: Joi.string().required(),
+      second_discipline_isolated: Joi.string().required(),
+      third_discipline_isolated: Joi.string().required(),
     }),
   }),
   delete: celebrate({
