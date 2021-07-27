@@ -5,6 +5,18 @@ const StudentModel = require('../models/StudentModel');
 const ProfessorModel = require('../models/ProfessorModel');
 
 module.exports = {
+  async forgottenPassword(request, response) {
+    try {
+      const { email } = request.body;
+      const res = await Firebase.firebaseChangeUserPassword(email);
+      return response.status(200).json({ res });
+    } catch (error) {
+      console.error(error);
+      return response.status(500).json({
+        notification: 'Error while trying to send reset password email',
+      });
+    }
+  },
   async signIn(request, response) {
     try {
       const { email, password } = request.body;
