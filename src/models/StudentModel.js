@@ -33,6 +33,14 @@ module.exports = {
   },
 
   async getAll(times, field, filter) {
+    let newFilter;
+    if (filter === 'true') {
+      newFilter = true;
+    } else if (filter === 'false') {
+      newFilter = false;
+    } else {
+      newFilter = filter;
+    }
     const limit = 50;
     let students;
     if (filter && field) {
@@ -40,9 +48,9 @@ module.exports = {
         .select('*')
         .limit(limit)
         .offset(limit * times);
-      students = Array.isArray(filter)
-        ? arrayFilterWithOrCondition(students, field, filter)
-        : students.filter((obj) => obj[field] === filter);
+      students = Array.isArray(newFilter)
+        ? arrayFilterWithOrCondition(students, field, newFilter)
+        : students.filter((obj) => obj[field] === newFilter);
     } else {
       students = await connection('student')
         .select('*')
