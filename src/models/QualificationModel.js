@@ -8,6 +8,14 @@ module.exports = {
   },
 
   async getAll(times, field, filter) {
+    let newFilter;
+    if (filter === 'true') {
+      newFilter = true;
+    } else if (filter === 'false') {
+      newFilter = false;
+    } else {
+      newFilter = filter;
+    }
     const limit = 50;
     let qualification;
 
@@ -16,9 +24,9 @@ module.exports = {
         .select('*')
         .limit(limit)
         .offset(limit * times);
-      qualification = Array.isArray(filter)
-        ? arrayFilterWithOrCondition(qualification, field, filter)
-        : qualification.filter((obj) => obj[field] === filter);
+      qualification = Array.isArray(newFilter)
+        ? arrayFilterWithOrCondition(qualification, field, newFilter)
+        : qualification.filter((obj) => obj[field] === newFilter);
     } else {
       qualification = await connection('qualification')
         .select('*')
