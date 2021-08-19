@@ -38,20 +38,14 @@ module.exports = {
     try {
       const student = request.body;
       const { stud_candidate_id } = request.params;
-      const infos = await CandidateModel.getById(stud_candidate_id);
+      // const infos = await CandidateModel.getById(stud_candidate_id);
       const defaultPassword = crypto.randomBytes(8).toString('Hex');
       const studentType = 'ATIVO';
-      const uid = await firebase.createNewUser(
-        infos.candidate_email,
-        defaultPassword,
-        infos.candidate_name,
-        'student'
-      );
       buildStudentObject(
         student,
         stud_candidate_id,
         defaultPassword,
-        uid,
+        // uid,
         studentType
       );
       await StudentModel.create(student);

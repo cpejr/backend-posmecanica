@@ -35,7 +35,7 @@ module.exports = {
     }
     const limit = 50;
     let candidateTable;
-    if (field && filter) {
+    if (field && newFilter) {
       candidateTable = await connection('candidate')
         .select('*')
         .limit(limit)
