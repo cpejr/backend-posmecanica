@@ -7,9 +7,9 @@ exports.up = function (knex) {
 };
 
 exports.down = function (knex) {
-  return knex.schema.table('candidate', (table) => {
-    table.dropColumn('first_discipline_isolated');
-    table.dropColumn('second_discipline_isolated');
-    table.dropColumn('third_discipline_isolated');
+  return knex.schema.table('candidate', () => {
+    // table.dropColumn('first_discipline_isolated');
+    // table.dropColumn('second_discipline_isolated');
+    // table.dropColumn('third_discipline_isolated');
   });
 };
