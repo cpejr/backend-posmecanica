@@ -49,6 +49,7 @@ exports.up = function (knex) {
     table.boolean('candidate_test_approval');
     table.boolean('candidate_curriculum_approval');
     table.integer('candidate_rating');
+    table.boolean('candidate_deferment').defaultTo(false).notNullable();
 
     table
       .foreign('candidate_process_id')
