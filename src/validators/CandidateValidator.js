@@ -167,6 +167,7 @@ module.exports = {
       candidate_test_approval: Joi.boolean(),
       candidate_curriculum_approval: Joi.boolean(),
       candidate_rating: Joi.number().integer(),
+      candidate_deferment: Joi.boolean(),
     }),
   }),
   upload: celebrate({
