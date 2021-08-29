@@ -54,7 +54,12 @@ exports.up = function (knex) {
     table.boolean('candidate_curriculum_approval');
     table.integer('candidate_rating');
     table.boolean('candidate_deferment').defaultTo(false).notNullable();
+    table.string('candidate_grade_obtained');
     table.text('candidate_justify');
+    table.string('candidate_study_regimen');
+    table.boolean('candidate_scholarship');
+    table.string('candidate_concentration_area');
+    table.boolean('candidate_PcD');
 
     table
       .foreign('candidate_process_id')
