@@ -54,7 +54,7 @@ module.exports = {
       candidate_grade_date_begin: Joi.date(),
       candidate_grade_date_end: Joi.date(),
       candidate_pGraduate_university: Joi.string(),
-      candidate_pGraduation_curse: Joi.string(),
+      candidate_pGraduation_course: Joi.string(),
       candidate_ufmg_active_serv: Joi.boolean(),
       candidate_ufmg_retired_serv: Joi.boolean(),
       candidate_date_inscrition: Joi.date().required(),
