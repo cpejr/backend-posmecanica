@@ -22,7 +22,7 @@ module.exports = {
   },
   async getAll(table, times, field, filter) {
     const limit = 50;
-    if (field === 'pd_professor_id' && filter) {
+    if (field && filter) {
       const result = await connection(table)
         .where('pd_professor_id', filter)
         .select('*');
