@@ -164,7 +164,8 @@ module.exports = {
   async getUserFiles(request, response) {
     try {
       const { candidate_id } = request.params;
-      const result = await getUserFiles(candidate_id);
+      const { file_name } = request.params
+      const result = await getUserFiles(candidate_id, file_name);
       return response.status(200).json(result);
     } catch (err) {
       console.error(`List files failed: ${err}`);
