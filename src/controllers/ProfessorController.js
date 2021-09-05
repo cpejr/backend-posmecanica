@@ -121,4 +121,17 @@ module.exports = {
       });
     }
   },
+
+  async getProfByDisciplineId(request, response) {
+    try {
+      const { discipline_id } = request.params;
+      const result = await ProfessorModel.getProfByDisciplineId(discipline_id);
+      return response.status(200).json(result);
+    } catch (err) {
+      console.error(`Professor getAll failed: ${err}`);
+      return response.status(500).json({
+        notification: 'Internal server error',
+      });
+    }
+  },
 };
