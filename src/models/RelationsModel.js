@@ -31,4 +31,8 @@ module.exports = {
       .offset(limit * times);
     return result;
   },
+  async updateById(table, field, data) {
+    const result = await connection(table).where(field).update(data);
+    return result;
+  },
 };

@@ -25,5 +25,11 @@ candidate_disciplineRouter.get(
   authenticateToken,
   Candidate_DisciplineController.getAll
 );
+candidate_disciplineRouter.put(
+  '/update/candidate_dis/:candidate_id',
+  Candidate_DisciplineValidator.update,
+  authenticateToken,
+  Candidate_DisciplineController.update
+);
 
 module.exports = candidate_disciplineRouter;

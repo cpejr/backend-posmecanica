@@ -48,4 +48,22 @@ module.exports = {
       filter: Joi.allow(null, ''),
     }),
   }),
+
+  update: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
+    [Segments.PARAMS]: Joi.object().keys({
+      candidate_dis_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
+    }),
+    [Segments.BODY]: Joi.object().keys({
+      cd_dis_deferment: Joi.boolean(),
+    }),
+  }),
 };
