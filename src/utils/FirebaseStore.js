@@ -72,9 +72,33 @@ async function uploadFile(file, prefix = '', fileName) {
   });
 }
 
+async function getUserFiles(user_id) {
+  const options = {
+    version: 'v4',
+    action: 'read',
+    expires: Date.now() + 15 * 60 * 1000, // 15 minutes
+  };
+  const [files] = await storage.bucket(bucketName).getFiles({
+    prefix: `Candidates/${user_id}/`,
+  });
+  const result = [];
+  await Promise.all(
+    files.map(async (file) => {
+      const [url] = await storage
+        .bucket(bucketName)
+        .file(`${file.name}`)
+        .getSignedUrl(options);
+      const name = file.name.split('/');
+      result.push({ url, name: name[2] });
+    })
+  );
+  return result;
+}
+
 module.exports = {
   config,
   uploadFile,
   deleteFolder,
   getUrlFIle,
+  getUserFiles,
 };

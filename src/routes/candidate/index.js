@@ -23,6 +23,13 @@ candidateRouter.get(
 );
 
 candidateRouter.get(
+  '/documents/:candidate_id/',
+  CandidateValidator.getFiles,
+  authenticateToken,
+  CandidateController.getUserFiles
+);
+
+candidateRouter.get(
   '/:candidate_id',
   CandidateValidator.getById,
   authenticateToken,
