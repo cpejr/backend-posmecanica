@@ -128,6 +128,8 @@ async function deleteThesis(user_cpf) {
 async function uploadThesis(file, prefix = '', thesis_name) {
   return new Promise((resolve, reject) => {
     const blob = storage.bucket(bucketName).file(`${prefix}${thesis_name}`);
+    console.log(prefix);
+    console.log(thesis_name);
     const blobWriter = blob.createWriteStream({
       resumable: false,
       metadata: {

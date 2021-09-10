@@ -135,11 +135,13 @@ module.exports = {
 
   async upload(request, response) {
     try {
-      const { student_name, file_name } = request.params;
+      const { candidate_name, thesis_name } = request.params;
+      console.log(candidate_name);
+      console.log(thesis_name);
       const fileId = await uploadThesis(
         request.file,
-        `Thesis/${student_name}/`,
-        file_name
+        `Thesis/${candidate_name}/`,
+        thesis_name
       );
       return response.status(200).json(fileId);
     } catch (err) {

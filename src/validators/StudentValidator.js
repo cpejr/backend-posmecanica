@@ -91,8 +91,8 @@ module.exports = {
   
   upload: celebrate({
     [Segments.PARAMS]: Joi.object().keys({
-      stud_candidate_name: Joi.string().required(),
-      fileName: Joi.string().required(),
+      candidate_name: Joi.string().required(),
+      thesis_name: Joi.string().required(),
     }),
   }),
 };

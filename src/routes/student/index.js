@@ -27,7 +27,7 @@ studentRouter.post(
   StudentController.create
 );
 studentRouter.post(
-  '/upload/:stud_candidate_name/:fileName',
+  '/upload/:candidate_name/:thesis_name',
   StudentValidator.upload,
   fileUploader('file'),
   StudentController.upload
