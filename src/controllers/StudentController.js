@@ -3,19 +3,24 @@ const { v4: uuidv4 } = require('uuid');
 const StudentModel = require('../models/StudentModel');
 const CandidateModel = require('../models/CandidateModel');
 const firebase = require('../utils/firebase');
+const {
+  uploadThesis,
+} = require('../utils/FirebaseStore');
 
 const buildStudentObject = (
   student,
   stud_candidate_id,
   defaultPassword,
   uid,
-  studentType
+  studentType,
+  student_name
 ) => {
   student.stud_id = uuidv4();
   student.stud_candidate_id = stud_candidate_id;
   student.stud_firebase = uid;
   student.stud_defaultPassword = defaultPassword;
   student.stud_type = studentType;
+  student.stud_candidate_name = student_name;
   delete student.stud_password;
 };
 
@@ -124,6 +129,36 @@ module.exports = {
       console.error(`Student delete failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to delete Student',
+      });
+    }
+  },
+
+  async upload(request, response) {
+    try {
+      const { student_name, file_name } = request.params;
+      const fileId = await uploadThesis(
+        request.file,
+        `Thesis/${student_name}/`,
+        file_name
+      );
+      return response.status(200).json(fileId);
+    } catch (err) {
+      console.error(`Upload file failed: ${err}`);
+      return response.status(500).json({
+        notification: 'Internal server error while trying to upload file',
+      });
+    }
+  },
+
+  async getThesis(request, response) {
+    try {
+      const { student_name, file_thesis } = request.params;
+      const result = await getThesis(student_name, file_thesis);
+      return response.status(200).json(result);
+    } catch (err) {
+      console.error(`List files failed: ${err}`);
+      return response.status(500).json({
+        notification: 'Internal server error while trying to list files',
       });
     }
   },
