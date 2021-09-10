@@ -19,6 +19,17 @@ candidate_disciplineRouter.delete(
   authenticateToken,
   Candidate_DisciplineController.disconnect
 );
-candidate_disciplineRouter.get('/getAll/student_dis', authenticateToken);
+candidate_disciplineRouter.get(
+  '/getAll/candidate_dis',
+  Candidate_DisciplineValidator.getAll,
+  authenticateToken,
+  Candidate_DisciplineController.getAll
+);
+candidate_disciplineRouter.put(
+  '/update/candidate_dis/:candidate_id',
+  Candidate_DisciplineValidator.update,
+  authenticateToken,
+  Candidate_DisciplineController.update
+);
 
 module.exports = candidate_disciplineRouter;

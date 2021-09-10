@@ -20,11 +20,19 @@ module.exports = {
       .delete();
     return result;
   },
-  async getAll(table, times) {
+  async getAll(table, times, field, filter) {
     const limit = 50;
+    if (field && filter) {
+      const result = await connection(table).where(field, filter).select('*');
+      return result;
+    }
     const result = await connection(table)
       .limit(limit)
       .offset(limit * times);
+    return result;
+  },
+  async updateById(table, field, data) {
+    const result = await connection(table).where(field).update(data);
     return result;
   },
 };

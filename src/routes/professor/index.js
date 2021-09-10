@@ -19,6 +19,12 @@ professorRouter.get(
   authenticateToken,
   ProfessorController.getById
 );
+professorRouter.get(
+  '/discipline/:discipline_id',
+  ProfessorValidator.getProfByDisciplineId,
+  authenticateToken,
+  ProfessorController.getProfByDisciplineId
+);
 professorRouter.post(
   '/',
   ProfessorValidator.create,
