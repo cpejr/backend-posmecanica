@@ -10,6 +10,10 @@ module.exports = {
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
       port: process.env.DB_PORT,
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
     },
 
     migrations: {

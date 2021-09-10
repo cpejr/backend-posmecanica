@@ -105,6 +105,20 @@ module.exports = {
       file_name: Joi.string().required(),
     }),
   }),
+  getFiles: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
+    [Segments.PARAMS]: Joi.object().keys({
+      candidate_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
+    }),
+  }),
   getAll: celebrate({
     [Segments.HEADERS]: Joi.object()
       .keys({

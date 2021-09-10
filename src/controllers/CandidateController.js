@@ -6,6 +6,7 @@ const {
   uploadFile,
   deleteFolder,
   getUrlFIle,
+  getUserFiles,
 } = require('../utils/FirebaseStore');
 const Mail = require('../mail/mail');
 
@@ -151,6 +152,19 @@ module.exports = {
     try {
       const { candidate_id, file_name } = request.params;
       const result = await getUrlFIle(candidate_id, file_name);
+      return response.status(200).json(result);
+    } catch (err) {
+      console.error(`List files failed: ${err}`);
+      return response.status(500).json({
+        notification: 'Internal server error while trying to list files',
+      });
+    }
+  },
+
+  async getUserFiles(request, response) {
+    try {
+      const { candidate_id } = request.params;
+      const result = await getUserFiles(candidate_id);
       return response.status(200).json(result);
     } catch (err) {
       console.error(`List files failed: ${err}`);
