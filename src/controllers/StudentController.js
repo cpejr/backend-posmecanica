@@ -136,8 +136,6 @@ module.exports = {
   async upload(request, response) {
     try {
       const { candidate_name, thesis_name } = request.params;
-      console.log(candidate_name);
-      console.log(thesis_name);
       const fileId = await uploadThesis(
         request.file,
         `Thesis/${candidate_name}/`,
@@ -151,17 +149,5 @@ module.exports = {
       });
     }
   },
-
-  async getThesis(request, response) {
-    try {
-      const { student_name, file_thesis } = request.params;
-      const result = await getThesis(student_name, file_thesis);
-      return response.status(200).json(result);
-    } catch (err) {
-      console.error(`List files failed: ${err}`);
-      return response.status(500).json({
-        notification: 'Internal server error while trying to list files',
-      });
-    }
-  },
+  
 };

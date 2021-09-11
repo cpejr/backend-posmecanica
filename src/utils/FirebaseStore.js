@@ -95,41 +95,9 @@ async function getUserFiles(user_id) {
   return result;
 }
 
-async function deleteThesis(user_cpf) {
-  // Deletes the path of user from the bucket
-  await storage.bucket(bucketName).deleteFiles({
-    prefix: `Candidates/${user_cpf}/`,
-  });
-}
-
-// async function getThesis(candidate_cpf, file_thesis) {
-//   const options = {
-//     version: 'v4',
-//     action: 'read',
-//     expires: Date.now() + 15 * 60 * 1000, // 15 minutes
-//   };
-//   const [files] = await storage.bucket(bucketName).getFiles({
-//     prefix: file_thesis ? `Thesis/${candidate_cpf}/${file_thesis}` : `Teses/${cpf}`,
-//   });
-//   const result = [];
-//   await Promise.all(
-//     files.map(async (file) => {
-//       const [url] = await storage
-//         .bucket(bucketName)
-//         .file(`${file_thesis}`)
-//         .getSignedUrl(options);
-//       const thesis = file.thesis.split('/');
-//       result.push({ url, thesis: thesis[2] });
-//     })
-//   );
-//   return result;
-// };
-
 async function uploadThesis(file, prefix = '', thesis_name) {
   return new Promise((resolve, reject) => {
     const blob = storage.bucket(bucketName).file(`${prefix}${thesis_name}`);
-    console.log(prefix);
-    console.log(thesis_name);
     const blobWriter = blob.createWriteStream({
       resumable: false,
       metadata: {
@@ -167,6 +135,4 @@ module.exports = {
   getUrlFIle,
   getUserFiles,
   uploadThesis,
-  // getThesis,
-  deleteThesis,
 };
