@@ -3,7 +3,7 @@ exports.up = function (knex) {
     table.increments('candidate_dis_id').primary().notNullable();
     table.uuid('cd_candidate_id').notNullable();
     table.uuid('cd_dis_id').notNullable();
-    table.boolean('cd_dis_deferment').defaultTo(false).notNullable();
+    table.boolean('cd_dis_deferment');
 
     table
       .foreign('cd_candidate_id')
