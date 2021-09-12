@@ -25,6 +25,12 @@ candidate_disciplineRouter.get(
   authenticateToken,
   Candidate_DisciplineController.getAll
 );
+candidate_disciplineRouter.get(
+  '/getByIdDisciplineDeferment/candidate_dis',
+  Candidate_DisciplineValidator.getByIdDisciplineDeferment,
+  authenticateToken,
+  Candidate_DisciplineController.getByIdDisciplineDeferment
+);
 candidate_disciplineRouter.put(
   '/update/candidate_dis/:candidate_id',
   Candidate_DisciplineValidator.update,
