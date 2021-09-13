@@ -78,4 +78,27 @@ module.exports = {
       cd_dis_deferment: Joi.boolean(),
     }),
   }),
+
+  updateByIdDisciplineDeferment: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
+    [Segments.PARAMS]: Joi.object().keys({
+      cd_candidate_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
+      cd_dis_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
+    }),
+    [Segments.BODY]: Joi.object().keys({
+      cd_dis_deferment: Joi.boolean(),
+    }),
+  }),
 };

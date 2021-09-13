@@ -42,4 +42,11 @@ module.exports = {
     const result = await connection(table).where(field).update(data);
     return result;
   },
+  async updateByIdDisciplineDeferment(table, cd_candidate_id, cd_dis_id, data) {
+    const result = await connection(table)
+      .where({ cd_candidate_id })
+      .where({ cd_dis_id })
+      .update(data);
+    return result;
+  },
 };
