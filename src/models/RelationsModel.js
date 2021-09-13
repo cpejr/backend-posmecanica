@@ -31,6 +31,13 @@ module.exports = {
       .offset(limit * times);
     return result;
   },
+  async getByIdDisciplineDeferment(table, firstFilter, secondFilter) {
+    const result = await connection(table)
+      .where('cd_candidate_id', firstFilter)
+      .where('cd_dis_id', secondFilter)
+      .select('*');
+    return result;
+  },
   async updateById(table, field, data) {
     const result = await connection(table).where(field).update(data);
     return result;

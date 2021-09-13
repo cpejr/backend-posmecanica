@@ -59,6 +59,24 @@ module.exports = {
       });
     }
   },
+  async getByIdDisciplineDeferment(request, response) {
+    try {
+      const url = request.route.path.split('/');
+      const table = url[2];
+      const result = await RelationsModel.getByIdDisciplineDeferment(
+        table,
+        request.query.firstFilter,
+        request.query.secondFilter
+      );
+
+      return response.status(200).json(result);
+    } catch (err) {
+      console.error(`Candidate_Discipline getAll failed: ${err}`);
+      return response.status(500).json({
+        notification: 'Internal server error',
+      });
+    }
+  },
   async update(request, response) {
     try {
       const url = request.route.path.split('/');
