@@ -43,15 +43,76 @@ module.exports = {
     try {
       const url = request.route.path.split('/');
       const table = url[2];
-      const { times } = request.query;
+      const result = await RelationsModel.getAll(
+        table,
+        request.query.times,
+        request.query.field,
+        request.query.filter
+      );
 
-      const result = await RelationsModel.getAll(table, times);
       return response.status(200).json(result);
     } catch (err) {
       console.error(`Candidate_Discipline getAll failed: ${err}`);
       return response.status(500).json({
         notification:
           'Internal server error while trying to GET candidate and discipline',
+      });
+    }
+  },
+  async getByIdDisciplineDeferment(request, response) {
+    try {
+      const url = request.route.path.split('/');
+      const table = url[2];
+      const result = await RelationsModel.getByIdDisciplineDeferment(
+        table,
+        request.query.firstFilter,
+        request.query.secondFilter
+      );
+
+      return response.status(200).json(result);
+    } catch (err) {
+      console.error(`Candidate_Discipline getAll failed: ${err}`);
+      return response.status(500).json({
+        notification: 'Internal server error',
+      });
+    }
+  },
+  async update(request, response) {
+    try {
+      const url = request.route.path.split('/');
+      const table = url[2];
+      const { candidate_dis_id } = request.params;
+      const data = request.body;
+      const result = await RelationsModel.updateById(
+        table,
+        candidate_dis_id,
+        data
+      );
+      return response.status(200).json(result);
+    } catch (err) {
+      console.error(err);
+      return response.status(500).json({
+        notification: 'Internal server error',
+      });
+    }
+  },
+  async updateDisciplineDeferment(request, response) {
+    try {
+      const url = request.route.path.split('/');
+      const table = url[2];
+      const data = request.body;
+      const result = await RelationsModel.updateByIdDisciplineDeferment(
+        table,
+        request.params.cd_candidate_id,
+        request.params.cd_dis_id,
+        data
+      );
+
+      return response.status(200).json(result);
+    } catch (err) {
+      console.error(`Candidate_Discipline getAll failed: ${err}`);
+      return response.status(500).json({
+        notification: 'Internal server error',
       });
     }
   },
