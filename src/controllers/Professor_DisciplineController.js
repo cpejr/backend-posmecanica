@@ -43,9 +43,13 @@ module.exports = {
     try {
       const url = request.route.path.split('/');
       const table = url[2];
-      const { times } = request.query;
+      const result = await RelationsModel.getAll(
+        table,
+        request.query.times,
+        request.query.field,
+        request.query.filter
+      );
 
-      const result = await RelationsModel.getAll(table, times);
       return response.status(200).json(result);
     } catch (err) {
       console.error(`Professor_discipline getAll failed: ${err}`);

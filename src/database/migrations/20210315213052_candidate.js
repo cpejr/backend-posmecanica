@@ -17,6 +17,8 @@ exports.up = function (knex) {
     table.string('candidate_cpf').notNullable();
     table.string('candidate_identity').notNullable();
     table.string('candidate_expedition').notNullable();
+    table.string('candidate_mother_name').notNullable();
+    table.string('candidate_father_name').notNullable();
     table.string('candidate_civil_state').notNullable();
     table.string('candidate_voter_title').notNullable();
     table.integer('candidate_zone_title').notNullable();
@@ -28,10 +30,12 @@ exports.up = function (knex) {
     table.string('candidate_district').notNullable();
     table.string('candidate_country').notNullable();
     table.integer('candidate_adress_num').notNullable();
+    table.string('candidate_complement');
     table.string('candidate_email').notNullable();
     table.string('candidate_phone_number').notNullable();
     table.string('candidate_university').notNullable();
     table.string('candidate_graduation').notNullable();
+    table.string('candidate_pGraduation_course');
     table.enu('candidate_grade', [
       'MESTRADO',
       'DOUTORADO',
@@ -50,6 +54,12 @@ exports.up = function (knex) {
     table.boolean('candidate_curriculum_approval');
     table.integer('candidate_rating');
     table.boolean('candidate_deferment').defaultTo(false).notNullable();
+    table.string('candidate_grade_obtained');
+    table.text('candidate_justify');
+    table.string('candidate_study_regimen');
+    table.boolean('candidate_scholarship');
+    table.string('candidate_concentration_area');
+    table.boolean('candidate_PcD');
 
     table
       .foreign('candidate_process_id')

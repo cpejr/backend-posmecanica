@@ -3,6 +3,7 @@ exports.up = function (knex) {
     table.string('first_discipline_isolated').defaultTo('none').notNullable();
     table.string('second_discipline_isolated').defaultTo('none').notNullable();
     table.string('third_discipline_isolated').defaultTo('none').notNullable();
+    table.string('fourth_discipline_isolated').defaultTo('none').notNullable();
   });
 };
 

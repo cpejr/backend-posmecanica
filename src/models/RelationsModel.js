@@ -20,11 +20,33 @@ module.exports = {
       .delete();
     return result;
   },
-  async getAll(table, times) {
+  async getAll(table, times, field, filter) {
     const limit = 50;
+    if (field && filter) {
+      const result = await connection(table).where(field, filter).select('*');
+      return result;
+    }
     const result = await connection(table)
       .limit(limit)
       .offset(limit * times);
+    return result;
+  },
+  async getByIdDisciplineDeferment(table, firstFilter, secondFilter) {
+    const result = await connection(table)
+      .where('cd_candidate_id', firstFilter)
+      .where('cd_dis_id', secondFilter)
+      .select('*');
+    return result;
+  },
+  async updateById(table, field, data) {
+    const result = await connection(table).where(field).update(data);
+    return result;
+  },
+  async updateByIdDisciplineDeferment(table, cd_candidate_id, cd_dis_id, data) {
+    const result = await connection(table)
+      .where({ cd_candidate_id })
+      .where({ cd_dis_id })
+      .update(data);
     return result;
   },
 };
