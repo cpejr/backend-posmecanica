@@ -41,7 +41,7 @@ candidate_disciplineRouter.put(
   '/updateDisciplineDeferment/candidate_dis/:cd_candidate_id/:cd_dis_id',
   Candidate_DisciplineValidator.updateByIdDisciplineDeferment,
   authenticateToken,
-  Candidate_DisciplineController.updateDisciplineDeferment
+  Candidate_DisciplineController.updateByDisciplineDeferment
 );
 
 module.exports = candidate_disciplineRouter;

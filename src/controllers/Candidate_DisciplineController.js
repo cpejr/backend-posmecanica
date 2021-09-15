@@ -96,7 +96,7 @@ module.exports = {
       });
     }
   },
-  async updateDisciplineDeferment(request, response) {
+  async updateByDisciplineDeferment(request, response) {
     try {
       const url = request.route.path.split('/');
       const table = url[2];
