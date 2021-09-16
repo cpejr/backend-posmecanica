@@ -66,6 +66,7 @@ module.exports = {
       process_name: Joi.string(),
       process_date_begin: Joi.date(),
       process_date_end: Joi.date(),
+      candidate_quantity: Joi.number().integer(),
     }),
   }),
 
