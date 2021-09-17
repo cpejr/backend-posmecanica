@@ -38,6 +38,13 @@ module.exports = {
       .select('*');
     return result;
   },
+  async getByIdDisciplineDefermentCandidateSituation(table, filter, situation) {
+    const result = await connection(table)
+      .where('cd_candidate_id', filter)
+      .where({ cd_dis_deferment: situation })
+      .select('*');
+    return result;
+  },
   async updateById(table, field, data) {
     const result = await connection(table).where(field).update(data);
     return result;
