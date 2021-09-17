@@ -4,7 +4,7 @@ const studentRouter = express.Router();
 
 const StudentController = require('../../controllers/StudentController');
 const StudentValidator = require('../../validators/StudentValidator');
-const fileUploader = require('../../middlewares/fileUploader');
+const thesisUploader = require('../../middlewares/thesisUploader');
 
 const { authenticateToken } = require('../../middlewares/authentication');
 
@@ -29,7 +29,7 @@ studentRouter.post(
 studentRouter.post(
   '/upload/:candidate_name/:thesis_name',
   StudentValidator.upload,
-  fileUploader('file'),
+  thesisUploader('file'),
   StudentController.upload
 );
 studentRouter.put(
