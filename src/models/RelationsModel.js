@@ -41,7 +41,7 @@ module.exports = {
   async getByIdDisciplineDefermentCandidateSituation(table, filter, situation) {
     const result = await connection(table)
       .where('cd_candidate_id', filter)
-      .where({ cd_dis_deferment: situation })
+      .where('cd_dis_deferment', situation)
       .select('*');
     return result;
   },
