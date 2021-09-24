@@ -95,10 +95,44 @@ async function getUserFiles(user_id) {
   return result;
 }
 
+async function uploadThesis(file, prefix = '', thesis_name) {
+  return new Promise((resolve, reject) => {
+    const blob = storage.bucket(bucketName).file(`${prefix}${thesis_name}`);
+    const blobWriter = blob.createWriteStream({
+      resumable: false,
+      metadata: {
+        contentType: file.mimetype,
+        metadata: {
+          firebaseStorageDownloadTokens: uuidv4(),
+        },
+      },
+    });
+
+    // If there's an error
+    blobWriter.on('error', (err) => {
+      console.warn(err);
+      reject(err);
+    });
+    // If all is good and done
+    blobWriter.on('finish', () => {
+      // Assembling public URL for accessing the file via HTTP
+      // const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/${encodeURIComponent(
+      //   blob.name
+      // )}?alt=media`;
+
+      // Return the file name and its public URL
+      resolve(blob.name);
+    });
+    // When there is no more data to be consumed from the stream the end event gets emitted
+    blobWriter.end(file.buffer);
+  });
+}
+
 module.exports = {
   config,
   uploadFile,
   deleteFolder,
   getUrlFIle,
   getUserFiles,
+  uploadThesis,
 };

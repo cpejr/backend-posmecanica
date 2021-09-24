@@ -88,4 +88,11 @@ module.exports = {
         .required(),
     }),
   }),
+  
+  upload: celebrate({
+    [Segments.PARAMS]: Joi.object().keys({
+      candidate_name: Joi.string().required(),
+      thesis_name: Joi.string().required(),
+    }),
+  }),
 };

@@ -3,19 +3,24 @@ const { v4: uuidv4 } = require('uuid');
 const StudentModel = require('../models/StudentModel');
 const CandidateModel = require('../models/CandidateModel');
 const firebase = require('../utils/firebase');
+const {
+  uploadThesis,
+} = require('../utils/FirebaseStore');
 
 const buildStudentObject = (
   student,
   stud_candidate_id,
   defaultPassword,
   uid,
-  studentType
+  studentType,
+  student_name
 ) => {
   student.stud_id = uuidv4();
   student.stud_candidate_id = stud_candidate_id;
   student.stud_firebase = uid;
   student.stud_defaultPassword = defaultPassword;
   student.stud_type = studentType;
+  student.stud_candidate_name = student_name;
   delete student.stud_password;
 };
 
@@ -127,4 +132,22 @@ module.exports = {
       });
     }
   },
+
+  async upload(request, response) {
+    try {
+      const { candidate_name, thesis_name } = request.params;
+      const fileId = await uploadThesis(
+        request.file,
+        `Thesis/${candidate_name}/`,
+        thesis_name
+      );
+      return response.status(200).json(fileId);
+    } catch (err) {
+      console.error(`Upload file failed: ${err}`);
+      return response.status(500).json({
+        notification: 'Internal server error while trying to upload file',
+      });
+    }
+  },
+  
 };
