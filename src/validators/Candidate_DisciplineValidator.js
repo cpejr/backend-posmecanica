@@ -17,7 +17,7 @@ module.exports = {
     [Segments.BODY]: Joi.object().keys({
       cd_dis_ids: Joi.array()
         .items({
-          cd_dis_id: Joi.string().guid({
+          cd_dis_id: Joi.string().allow('', null).guid({
             version: ['uuidv4'],
           }),
         })

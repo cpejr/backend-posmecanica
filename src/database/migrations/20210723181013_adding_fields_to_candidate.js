@@ -1,9 +1,9 @@
 exports.up = function (knex) {
   return knex.schema.table('candidate', (table) => {
-    table.string('first_discipline_isolated').defaultTo('none').notNullable();
-    table.string('second_discipline_isolated').defaultTo('none').notNullable();
-    table.string('third_discipline_isolated').defaultTo('none').notNullable();
-    table.string('fourth_discipline_isolated').defaultTo('none').notNullable();
+    table.string('first_discipline_isolated');
+    table.string('second_discipline_isolated');
+    table.string('third_discipline_isolated');
+    table.string('fourth_discipline_isolated');
   });
 };
 
