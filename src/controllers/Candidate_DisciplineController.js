@@ -71,7 +71,29 @@ module.exports = {
 
       return response.status(200).json(result);
     } catch (err) {
-      console.error(`Candidate_Discipline getAll failed: ${err}`);
+      console.error(
+        `Candidate_Discipline getByIdDisciplineDeferment failed: ${err}`
+      );
+      return response.status(500).json({
+        notification: 'Internal server error',
+      });
+    }
+  },
+  async getByIdDisciplineDefermentCandidateSituation(request, response) {
+    try {
+      const url = request.route.path.split('/');
+      const table = url[2];
+      const result = await RelationsModel.getByIdDisciplineDefermentCandidateSituation(
+        table,
+        request.query.filter,
+        request.query.situation
+      );
+
+      return response.status(200).json(result);
+    } catch (err) {
+      console.error(
+        `Candidate_Discipline getByIdDisciplineDefermentCandidateSituation failed: ${err}`
+      );
       return response.status(500).json({
         notification: 'Internal server error',
       });
@@ -96,7 +118,7 @@ module.exports = {
       });
     }
   },
-  async updateDisciplineDeferment(request, response) {
+  async updateByIdDisciplineDeferment(request, response) {
     try {
       const url = request.route.path.split('/');
       const table = url[2];

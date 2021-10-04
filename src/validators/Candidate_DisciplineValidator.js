@@ -61,6 +61,18 @@ module.exports = {
     }),
   }),
 
+  getByIdDisciplineDefermentCandidateSituation: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
+    [Segments.QUERY]: Joi.object().keys({
+      filter: Joi.required(),
+      situation: Joi.required(),
+    }),
+  }),
+
   update: celebrate({
     [Segments.HEADERS]: Joi.object()
       .keys({
