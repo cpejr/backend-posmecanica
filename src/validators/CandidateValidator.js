@@ -117,6 +117,7 @@ module.exports = {
           version: ['uuidv4'],
         })
         .required(),
+      file_name: Joi.string()
     }),
   }),
   getAll: celebrate({
