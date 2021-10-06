@@ -10,7 +10,8 @@ exports.up = function (knex) {
       .enu('discipline_semester', [
         'PRIMEIRO',
         'SEGUNDO',
-        'PRIMEIRO_SEGUNDO, NAO_OFERTADO',
+        'PRIMEIRO_SEGUNDO',
+        'NAO_OFERTADO',
       ])
       .notNullable();
     table.enu('discipline_type', ['MESTRADO', 'DOUTORADO']).notNullable();
