@@ -3,24 +3,20 @@ const { v4: uuidv4 } = require('uuid');
 const StudentModel = require('../models/StudentModel');
 const CandidateModel = require('../models/CandidateModel');
 const firebase = require('../utils/firebase');
-const {
-  uploadThesis,
-} = require('../utils/FirebaseStore');
+const { uploadThesis } = require('../utils/FirebaseStore');
 
 const buildStudentObject = (
   student,
   stud_candidate_id,
   defaultPassword,
   uid,
-  studentType,
-  student_name
+  studentType
 ) => {
   student.stud_id = uuidv4();
   student.stud_candidate_id = stud_candidate_id;
   student.stud_firebase = uid;
   student.stud_defaultPassword = defaultPassword;
   student.stud_type = studentType;
-  student.stud_candidate_name = student_name;
   delete student.stud_password;
 };
 
@@ -43,18 +39,16 @@ module.exports = {
     try {
       const student = request.body;
       const { stud_candidate_id } = request.params;
-      // const infos = await CandidateModel.getById(stud_candidate_id);
       const defaultPassword = crypto.randomBytes(8).toString('Hex');
       const studentType = 'ATIVO';
       buildStudentObject(
         student,
         stud_candidate_id,
         defaultPassword,
-        // uid,
         studentType
       );
       await StudentModel.create(student);
-      return response.status(201).json({ id: student.stud_id });
+      return response.status(200).json({ id: student.stud_id });
     } catch (err) {
       console.error(`Student creation failed: ${err}`);
       return response.status(500).json({
@@ -149,5 +143,4 @@ module.exports = {
       });
     }
   },
-  
 };
