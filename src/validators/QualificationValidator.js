@@ -12,25 +12,17 @@ module.exports = {
         .guid({
           version: ['uuidv4'],
         })
-        .required(),
-      quali_bank_id: Joi.string()
-        .guid({
-          version: ['uuidv4'],
-        })
-        .required(),
-      quali_sArea_id: Joi.string()
-        .guid({
-          version: ['uuidv4'],
-        })
-        .required(),
     }),
     [Segments.BODY]: Joi.object().keys({
+      quali_type: Joi.string()
+        .valid('DISSERTACAO', 'TESE')
+        .insensitive()
+        .required(),
       quali_title: Joi.string().required(),
-      quali_content: Joi.string().required(),
-      quali_number: Joi.number().integer().required(),
       quali_place: Joi.string().required(),
+      quali_hour: Joi.string().required(),
       quali_date: Joi.date().required(),
-      quali_approved: Joi.boolean().required(),
+      quali_approved: Joi.boolean(),
     }),
   }),
 
@@ -76,15 +68,14 @@ module.exports = {
         .required(),
     }),
     [Segments.BODY]: Joi.object().keys({
+      quali_type: Joi.string()
+        .valid('DISSERTACAO', 'TESE')
+        .insensitive(),
       quali_title: Joi.string(),
-      quali_content: Joi.string(),
-      quali_number: Joi.number().integer(),
       quali_place: Joi.string(),
+      quali_hour: Joi.string(),
       quali_date: Joi.date(),
       quali_approved: Joi.boolean(),
-      quali_defense_id: Joi.string().guid({
-        version: ['uuidv4'],
-      }),
     }),
   }),
 

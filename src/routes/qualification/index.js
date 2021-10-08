@@ -19,7 +19,7 @@ qualificationRouter.get(
     QualificationController.getById
   );
   qualificationRouter.post(
-    '/:quali_stud_id/:quali_bank_id/:quali_sArea_id/:quali_defense_id',
+    '/:quali_stud_id',
     QualificationValidator.create,
     authenticateToken,
     QualificationController.create

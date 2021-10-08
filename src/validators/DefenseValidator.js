@@ -13,16 +13,6 @@ module.exports = {
           version: ['uuidv4'],
         })
         .required(),
-      defense_bank_id: Joi.string()
-        .guid({
-          version: ['uuidv4'],
-        })
-        .required(),
-      defense_sArea_id: Joi.string()
-        .guid({
-          version: ['uuidv4'],
-        })
-        .required(),
     }),
     [Segments.BODY]: Joi.object().keys({
       defense_type: Joi.string()
@@ -30,11 +20,11 @@ module.exports = {
         .insensitive()
         .required(),
       defense_title: Joi.string().required(),
-      defense_content: Joi.string().required(),
       defense_number: Joi.number().integer().required(),
       defense_place: Joi.string().required(),
+      defense_hour: Joi.string().required(),
       defense_date: Joi.date().required(),
-      defense_approved: Joi.boolean().required(),
+      defense_approved: Joi.boolean(),
     }),
   }),
 

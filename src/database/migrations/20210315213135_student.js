@@ -8,6 +8,7 @@ exports.up = function (knex) {
     table.boolean('stud_scholarship').defaultTo(false).notNullable();
     table.string('stud_prof_advisor');
     table.string('stud_prof_coAdvisor');
+    table.string('stud_bank');
     table.boolean('stud_workplane');
     table.date('stud_workplane_date');
     table.uuid('stud_candidate_id').notNullable();

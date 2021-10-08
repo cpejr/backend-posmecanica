@@ -4,15 +4,9 @@ const QualificationModel = require('../models/QualificationModel');
 const buildQualificationObject = (
   qualification,
   quali_stud_id,
-  quali_bank_id,
-  quali_sArea_id,
-  quali_defense_id
 ) => {
   qualification.quali_id = uuidv4();
   qualification.quali_stud_id = quali_stud_id;
-  qualification.quali_bank_id = quali_bank_id;
-  qualification.quali_sArea_id = quali_sArea_id;
-  qualification.quali_defense_id = quali_defense_id;
 };
 
 module.exports = {
@@ -21,16 +15,10 @@ module.exports = {
       const qualification = request.body;
       const {
         quali_stud_id,
-        quali_bank_id,
-        quali_sArea_id,
-        quali_defense_id,
       } = request.params;
       buildQualificationObject(
         qualification,
         quali_stud_id,
-        quali_bank_id,
-        quali_sArea_id,
-        quali_defense_id
       );
       await QualificationModel.create(qualification);
       return response.status(200).json({ id: qualification.quali_id });

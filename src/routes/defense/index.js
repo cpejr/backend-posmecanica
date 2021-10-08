@@ -19,7 +19,7 @@ defenseRouter.get(
     DefenseController.getById
   );
   defenseRouter.post(
-    '/:defense_stud_id/:defense_bank_id/:defense_sArea_id',
+    '/:defense_stud_id',
     DefenseValidator.create,
     authenticateToken,
     DefenseController.create

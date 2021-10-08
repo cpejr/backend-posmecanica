@@ -4,13 +4,9 @@ const DefenseModel = require('../models/DefenseModel');
 const buildDefenseObject = (
   defense,
   defense_stud_id,
-  defense_bank_id,
-  defense_sArea_id
 ) => {
   defense.defense_id = uuidv4();
   defense.defense_stud_id = defense_stud_id;
-  defense.defense_bank_id = defense_bank_id;
-  defense.defense_sArea_id = defense_sArea_id;
 };
 
 module.exports = {
@@ -19,14 +15,10 @@ module.exports = {
       const defense = request.body;
       const {
         defense_stud_id,
-        defense_bank_id,
-        defense_sArea_id,
       } = request.params;
       buildDefenseObject(
         defense,
         defense_stud_id,
-        defense_bank_id,
-        defense_sArea_id
       );
       await DefenseModel.create(defense);
       return response.status(200).json({ id: defense.defense_id });
