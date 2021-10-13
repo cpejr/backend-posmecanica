@@ -37,16 +37,31 @@ async function updatePassword(student, stud_id) {
 module.exports = {
   async create(request, response) {
     try {
-      const student = request.body;
+      console.log('body');
+      console.log(request.body);
+      const student = {
+        stud_scholarship: request.body.stud_scholarship,
+      };
+      const email = request.body.candidate_email;
+      const name = request.body.candidate_name;
       const { stud_candidate_id } = request.params;
       const defaultPassword = crypto.randomBytes(8).toString('Hex');
+      const uid = await firebase.createNewUser(
+        email,
+        defaultPassword,
+        name,
+        'aluno'
+      );
       const studentType = 'ATIVO';
       buildStudentObject(
         student,
         stud_candidate_id,
         defaultPassword,
+        uid,
         studentType
       );
+      console.log('student');
+      console.log(student);
       await StudentModel.create(student);
       return response.status(200).json({ id: student.stud_id });
     } catch (err) {
