@@ -1,7 +1,6 @@
 const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
 const StudentModel = require('../models/StudentModel');
-const CandidateModel = require('../models/CandidateModel');
 const firebase = require('../utils/firebase');
 const { uploadThesis } = require('../utils/FirebaseStore');
 
@@ -60,8 +59,6 @@ module.exports = {
         uid,
         studentType
       );
-      console.log('student');
-      console.log(student);
       await StudentModel.create(student);
       return response.status(200).json({ id: student.stud_id });
     } catch (err) {
@@ -130,9 +127,7 @@ module.exports = {
       const studInfos = await StudentModel.getById(stud_id);
       const firebase_id = studInfos.stud_firebase;
       await firebase.deleteUser(firebase_id);
-      const result = await CandidateModel.deleteById(
-        studInfos.stud_candidate_id
-      );
+      const result = await StudentModel.deleteById(studInfos.stud_id);
       return response.status(200).json(result);
     } catch (err) {
       console.error(`Student delete failed: ${err}`);
