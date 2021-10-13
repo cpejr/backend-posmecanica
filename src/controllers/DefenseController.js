@@ -60,6 +60,20 @@ module.exports = {
     }
   },
 
+  async getByStudent(request, response) {
+    try {
+      const { defense_stud_id } = request.params;
+      const result = await DefenseModel.getByStudent(defense_stud_id);
+      return response.status(200).json(result);
+    } catch (err) {
+      console.error(err);
+      return response.status(500).json({
+        notification:
+          'Internal server error while trying to get a defense by id',
+      });
+    }
+  },
+
   async update(request, response) {
     try {
       const { defense_id } = request.params;

@@ -18,6 +18,12 @@ defenseRouter.get(
     authenticateToken,
     DefenseController.getById
   );
+  defenseRouter.get(
+    '/students/:defense_stud_id',
+    DefenseValidator.getByStudent,
+    authenticateToken,
+    DefenseController.getByStudent
+  );
   defenseRouter.post(
     '/:defense_stud_id',
     DefenseValidator.create,

@@ -19,6 +19,7 @@ module.exports = {
         .valid('DISSERTACAO', 'TESE')
         .insensitive()
         .required(),
+      defense_stud_name: Joi.string().required(),
       defense_title: Joi.string().required(),
       defense_number: Joi.number().integer().required(),
       defense_place: Joi.string().required(),
@@ -49,6 +50,21 @@ module.exports = {
       .unknown(),
     [Segments.PARAMS]: Joi.object().keys({
       defense_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
+    }),
+  }),
+
+  getByStudent: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
+    [Segments.PARAMS]: Joi.object().keys({
+      defense_stud_id: Joi.string()
         .guid({
           version: ['uuidv4'],
         })

@@ -77,6 +77,14 @@ module.exports = {
     return result;
   },
 
+  async getByStudent(stud_id) {
+    const defense = await connection('defense')
+      .where({ defense_stud_id: stud_id })
+      .first();
+      const result = defense;
+      return result;
+  },
+
   async updateById(defense_id, defense) {
     const result = await connection('defense')
       .where({ defense_id })

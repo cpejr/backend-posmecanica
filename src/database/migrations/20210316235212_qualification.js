@@ -2,6 +2,7 @@ exports.up = function (knex) {
   return knex.schema.createTable('qualification', (table) => {
     table.uuid('quali_id').primary().notNullable();
     table.uuid('quali_stud_id');
+    table.string('quali_stud_name').notNullable();
     table.enu('quali_type', ['DISSERTACAO', 'TESE']);
     table.string('quali_title').notNullable();
     table.string('quali_place').notNullable();

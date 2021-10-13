@@ -18,6 +18,12 @@ qualificationRouter.get(
     authenticateToken,
     QualificationController.getById
   );
+  qualificationRouter.get(
+    '/students/:quali_stud_id',
+    QualificationValidator.getByStudent,
+    authenticateToken,
+    QualificationController.getByStudent
+  );
   qualificationRouter.post(
     '/:quali_stud_id',
     QualificationValidator.create,

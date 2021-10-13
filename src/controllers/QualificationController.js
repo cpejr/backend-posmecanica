@@ -1,10 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const QualificationModel = require('../models/QualificationModel');
 
-const buildQualificationObject = (
-  qualification,
-  quali_stud_id,
-) => {
+const buildQualificationObject = (qualification, quali_stud_id) => {
   qualification.quali_id = uuidv4();
   qualification.quali_stud_id = quali_stud_id;
 };
@@ -13,13 +10,8 @@ module.exports = {
   async create(request, response) {
     try {
       const qualification = request.body;
-      const {
-        quali_stud_id,
-      } = request.params;
-      buildQualificationObject(
-        qualification,
-        quali_stud_id,
-      );
+      const { quali_stud_id } = request.params;
+      buildQualificationObject(qualification, quali_stud_id);
       await QualificationModel.create(qualification);
       return response.status(200).json({ id: qualification.quali_id });
     } catch (err) {
@@ -54,6 +46,19 @@ module.exports = {
       return response.status(200).json(result);
     } catch (err) {
       console.error(`Qualification getById failed: ${err}`);
+      return response.status(500).json({
+        notification: 'Internal server error while trying to get Qualification',
+      });
+    }
+  },
+
+  async getByStudent(request, response) {
+    try {
+      const { quali_stud_id } = request.params;
+      const result = await QualificationModel.getByStudent(quali_stud_id);
+      return response.status(200).json(result);
+    } catch (err) {
+      console.error(`Qualification getByStudent failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to get Qualification',
       });
