@@ -36,8 +36,6 @@ async function updatePassword(student, stud_id) {
 module.exports = {
   async create(request, response) {
     try {
-      console.log('body');
-      console.log(request.body);
       const student = {
         stud_scholarship: request.body.stud_scholarship,
       };
