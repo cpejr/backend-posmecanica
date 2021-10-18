@@ -51,7 +51,7 @@ module.exports = {
           delete user.stud_candidate_email;
         }
       }
-      user.type = firebase.displayName;
+      user.type = 'aluno';
       const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: '1h',
       });

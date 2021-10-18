@@ -27,7 +27,7 @@ studentRouter.post(
   StudentController.create
 );
 studentRouter.post(
-  '/upload/:candidate_name/:thesis_name',
+  '/upload/:candidate_id/:thesis_name',
   StudentValidator.upload,
   thesisUploader('file'),
   StudentController.upload
@@ -43,6 +43,13 @@ studentRouter.delete(
   StudentValidator.delete,
   authenticateToken,
   StudentController.delete
+);
+
+studentRouter.get(
+  '/thesis/:candidate_id/:thesis_name?',
+  StudentValidator.getThesis,
+  authenticateToken,
+  StudentController.getThesis
 );
 
 module.exports = studentRouter;

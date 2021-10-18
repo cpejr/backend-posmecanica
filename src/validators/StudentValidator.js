@@ -91,8 +91,28 @@ module.exports = {
   
   upload: celebrate({
     [Segments.PARAMS]: Joi.object().keys({
-      candidate_name: Joi.string().required(),
+      candidate_id: Joi.string()
+      .guid({
+        version: ['uuidv4'],
+      })
+      .required(),
       thesis_name: Joi.string().required(),
+    }),
+  }),
+
+  getThesis: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
+    [Segments.PARAMS]: Joi.object().keys({
+      candidate_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
+        thesis_name: Joi.string()
     }),
   }),
 };
