@@ -5,7 +5,7 @@ exports.up = function (knex) {
     table.string('defense_stud_name').notNullable();
     table.enu('defense_type', ['DISSERTACAO', 'TESE']);
     table.string('defense_title').notNullable();
-    table.integer('defense_number').notNullable();
+    table.string('defense_protocol').notNullable();
     table.string('defense_place').notNullable();
     table.string('defense_hour').notNullable();
     table.datetime('defense_date').notNullable();
