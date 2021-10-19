@@ -42,8 +42,7 @@ async function SelectiveProcessResult(candidate, candidate_id) {
   Mail.SelectiveProcessResult(
     email,
     name,
-    candidate.candidate_test_approval,
-    candidate.candidate_rating
+    candidate.candidate_approval
   );
 }
 
@@ -102,7 +101,7 @@ module.exports = {
       if (candidate.candidate_email) {
         result = await updateFirebase(candidate, candidate_id);
       }
-      if (candidate.candidate_rating) {
+      if (candidate.candidate_approval) {
         await SelectiveProcessResult(candidate, candidate_id);
       }
       const stillExistFieldsToUpdate = Object.values(candidate).length > 0;

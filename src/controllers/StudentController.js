@@ -1,7 +1,6 @@
 const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
 const StudentModel = require('../models/StudentModel');
-const CandidateModel = require('../models/CandidateModel');
 const firebase = require('../utils/firebase');
 const { uploadThesis } = require('../utils/FirebaseStore');
 
@@ -37,14 +36,25 @@ async function updatePassword(student, stud_id) {
 module.exports = {
   async create(request, response) {
     try {
-      const student = request.body;
+      const student = {
+        stud_scholarship: request.body.stud_scholarship,
+      };
+      const email = request.body.candidate_email;
+      const name = request.body.candidate_name;
       const { stud_candidate_id } = request.params;
       const defaultPassword = crypto.randomBytes(8).toString('Hex');
+      const uid = await firebase.createNewUser(
+        email,
+        defaultPassword,
+        name,
+        'aluno'
+      );
       const studentType = 'ATIVO';
       buildStudentObject(
         student,
         stud_candidate_id,
         defaultPassword,
+        uid,
         studentType
       );
       await StudentModel.create(student);
@@ -115,9 +125,7 @@ module.exports = {
       const studInfos = await StudentModel.getById(stud_id);
       const firebase_id = studInfos.stud_firebase;
       await firebase.deleteUser(firebase_id);
-      const result = await CandidateModel.deleteById(
-        studInfos.stud_candidate_id
-      );
+      const result = await StudentModel.deleteById(studInfos.stud_id);
       return response.status(200).json(result);
     } catch (err) {
       console.error(`Student delete failed: ${err}`);

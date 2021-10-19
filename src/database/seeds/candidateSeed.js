@@ -40,9 +40,8 @@ exports.seed = function (knex) {
           candidate_process_id: '5ca0963a-c2e7-451b-8490-0b0f8d8bab16',
           candidate_protocol: '780358609',
           candidate_form_approval: false,
-          candidate_test_approval: null,
+          candidate_approval: null,
           candidate_curriculum_approval: null,
-          candidate_rating: null,
         },
       ])
     );

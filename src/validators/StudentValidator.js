@@ -16,6 +16,8 @@ module.exports = {
     }),
     [Segments.BODY]: Joi.object().keys({
       stud_scholarship: Joi.boolean().required(),
+      candidate_email: Joi.string().email().required(),
+      candidate_name: Joi.string().required(),
     }),
   }),
 
@@ -89,7 +91,7 @@ module.exports = {
         .required(),
     }),
   }),
-  
+
   upload: celebrate({
     [Segments.PARAMS]: Joi.object().keys({
       candidate_name: Joi.string().required(),
