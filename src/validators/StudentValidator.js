@@ -69,6 +69,7 @@ module.exports = {
       stud_scholarship: Joi.boolean(),
       stud_prof_advisor: Joi.string(),
       stud_prof_coAdvisor: Joi.string(),
+      stud_bank: Joi.string(),
       stud_workplane: Joi.boolean(),
       stud_workplane_date: Joi.date(),
     }),
