@@ -38,6 +38,12 @@ module.exports = {
     if (field && newFilter) {
       candidateTable = await connection('candidate')
         .select('*')
+        .leftJoin(
+          'student',
+          'candidate.candidate_id',
+          'student.stud_candidate_id'
+        )
+        .whereNull('student.stud_candidate_id')
         .limit(limit)
         .offset(limit * times);
       candidateTable = Array.isArray(newFilter)
@@ -46,6 +52,12 @@ module.exports = {
     } else {
       candidateTable = await connection('candidate')
         .select('*')
+        .leftJoin(
+          'student',
+          'candidate.candidate_id',
+          'student.stud_candidate_id'
+        )
+        .whereNull('student.stud_candidate_id')
         .limit(limit)
         .offset(limit * times);
     }

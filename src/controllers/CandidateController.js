@@ -39,11 +39,7 @@ async function SelectiveProcessResult(candidate, candidate_id) {
   const candidateInfos = await CandidateModel.getById(candidate_id);
   const name = candidateInfos.candidate_name;
   const email = candidateInfos.candidate_email;
-  Mail.SelectiveProcessResult(
-    email,
-    name,
-    candidate.candidate_approval
-  );
+  Mail.SelectiveProcessResult(email, name, candidate.candidate_approval);
 }
 
 module.exports = {
@@ -163,7 +159,7 @@ module.exports = {
   async getUserFiles(request, response) {
     try {
       const { candidate_id } = request.params;
-      const { file_name } = request.params
+      const { file_name } = request.params;
       const result = await getUserFiles(candidate_id, file_name);
       return response.status(200).json(result);
     } catch (err) {
