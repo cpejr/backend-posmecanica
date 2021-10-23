@@ -33,7 +33,6 @@ module.exports = {
       'candidate_approval',
       'candidate_deferment'
     );
-    console.log(candidate);
     selective_process.forEach((item) => {
       const processFilter = candidate.filter((campo) => {
         if (
@@ -44,7 +43,6 @@ module.exports = {
           return true;
         return false;
       });
-      console.log(processFilter);
       item.count_candidates = processFilter.length;
       item.candidates = processFilter;
     });
