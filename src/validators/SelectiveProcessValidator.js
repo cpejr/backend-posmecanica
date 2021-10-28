@@ -19,11 +19,7 @@ module.exports = {
   }),
 
   getAll: celebrate({
-    [Segments.HEADERS]: Joi.object()
-      .keys({
-        authorization: Joi.string().required(),
-      })
-      .unknown(),
+    [Segments.HEADERS]: Joi.object(),
     [Segments.QUERY]: Joi.object().keys({
       times: Joi.number().integer().required(),
       field: Joi.string().allow(null, ''),
@@ -32,11 +28,7 @@ module.exports = {
   }),
 
   getById: celebrate({
-    [Segments.HEADERS]: Joi.object()
-      .keys({
-        authorization: Joi.string().required(),
-      })
-      .unknown(),
+    [Segments.HEADERS]: Joi.object(),
     [Segments.PARAMS]: Joi.object().keys({
       process_id: Joi.string()
         .guid({
@@ -47,11 +39,7 @@ module.exports = {
   }),
 
   update: celebrate({
-    [Segments.HEADERS]: Joi.object()
-      .keys({
-        authorization: Joi.string().required(),
-      })
-      .unknown(),
+    [Segments.HEADERS]: Joi.object(),
     [Segments.PARAMS]: Joi.object().keys({
       process_id: Joi.string()
         .guid({
