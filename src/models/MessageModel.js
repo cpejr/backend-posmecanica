@@ -24,6 +24,8 @@ module.exports = {
         message_receiver_type: type,
         message_receiver_id: id,
       })
+      .where({ message_sender_type: type, message_sender_id: id })
+      .orWhere({ message_receiver_type: type, message_receiver_id: id })
       .andWhere({ message_parent_id: '' })
       .select('*');
 

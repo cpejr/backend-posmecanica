@@ -35,13 +35,6 @@ messageRouter.get(
   MessageController.getByAdmId
 );
 
-// messageRouter.delete(
-//   '/:message_id',
-//   MessageValidator.delete,
-//   authenticateToken,
-//   MessageController.delete
-// );
-
 messageRouter.put(
   '/:id',
   MessageValidator.update,
