@@ -8,29 +8,21 @@ module.exports = {
       })
       .unknown(),
     [Segments.PARAMS]: Joi.object().keys({
-      quali_stud_id: Joi.string()
-        .guid({
-          version: ['uuidv4'],
-        })
-        .required(),
-      quali_bank_id: Joi.string()
-        .guid({
-          version: ['uuidv4'],
-        })
-        .required(),
-      quali_sArea_id: Joi.string()
-        .guid({
-          version: ['uuidv4'],
-        })
-        .required(),
+      quali_stud_id: Joi.string().guid({
+        version: ['uuidv4'],
+      }),
     }),
     [Segments.BODY]: Joi.object().keys({
+      quali_type: Joi.string()
+        .valid('DISSERTACAO', 'TESE')
+        .insensitive()
+        .required(),
+      quali_stud_name: Joi.string().required(),
       quali_title: Joi.string().required(),
-      quali_content: Joi.string().required(),
-      quali_number: Joi.number().integer().required(),
       quali_place: Joi.string().required(),
+      quali_hour: Joi.string().required(),
       quali_date: Joi.date().required(),
-      quali_approved: Joi.boolean().required(),
+      quali_approved: Joi.boolean(),
     }),
   }),
 
@@ -40,6 +32,11 @@ module.exports = {
         authorization: Joi.string().required(),
       })
       .unknown(),
+    [Segments.PARAMS]: Joi.object().keys({
+      quali_stud_id: Joi.string().guid({
+        version: ['uuidv4'],
+      }),
+    }),
     [Segments.QUERY]: Joi.object().keys({
       times: Joi.number().integer().required(),
       field: Joi.string().allow(null, ''),
@@ -62,6 +59,21 @@ module.exports = {
     }),
   }),
 
+  getByStudent: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
+    [Segments.PARAMS]: Joi.object().keys({
+      quali_stud_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
+    }),
+  }),
+
   update: celebrate({
     [Segments.HEADERS]: Joi.object()
       .keys({
@@ -76,15 +88,12 @@ module.exports = {
         .required(),
     }),
     [Segments.BODY]: Joi.object().keys({
+      quali_type: Joi.string().valid('DISSERTACAO', 'TESE').insensitive(),
       quali_title: Joi.string(),
-      quali_content: Joi.string(),
-      quali_number: Joi.number().integer(),
       quali_place: Joi.string(),
+      quali_hour: Joi.string(),
       quali_date: Joi.date(),
       quali_approved: Joi.boolean(),
-      quali_defense_id: Joi.string().guid({
-        version: ['uuidv4'],
-      }),
     }),
   }),
 

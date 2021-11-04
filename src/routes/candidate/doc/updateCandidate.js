@@ -161,7 +161,7 @@
  *         required: false
  *         description: Verifica se a informações enviadas pelo candidato foram aprovadas.
  *       - in: body
- *         name: candidate_test_approval
+ *         name: candidate_approval
  *         schema:
  *           type: boolean
  *         required: false
@@ -172,12 +172,6 @@
  *           type: boolean
  *         required: false
  *         description: Verifica se o currículo enviado pelo candidato foi aprovado para a inscrição em disciplinas isoladas.
- *       - in: body
- *         name: candidate_rating
- *         schema:
- *           type: integer
- *         required: false
- *         description: Rank do candidato na prova do processo seletivo.
  *      tags: [Candidato]
  *      description: Atualizar candidato pelo ID.
  *      responses:

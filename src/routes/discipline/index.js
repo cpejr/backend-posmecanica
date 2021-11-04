@@ -9,13 +9,11 @@ const { authenticateToken } = require('../../middlewares/authentication');
 disciplineRouter.get(
   '/',
   DisciplineValidator.getAll,
-  authenticateToken,
   DisciplineController.getAll
 );
 disciplineRouter.get(
   '/:discipline_id',
   DisciplineValidator.getById,
-  authenticateToken,
   DisciplineController.getById
 );
 disciplineRouter.post(

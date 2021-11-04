@@ -1,8 +1,8 @@
 const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
 const StudentModel = require('../models/StudentModel');
-const CandidateModel = require('../models/CandidateModel');
 const firebase = require('../utils/firebase');
+const { uploadThesis } = require('../utils/FirebaseStore');
 
 const buildStudentObject = (
   student,
@@ -36,20 +36,29 @@ async function updatePassword(student, stud_id) {
 module.exports = {
   async create(request, response) {
     try {
-      const student = request.body;
+      const student = {
+        stud_scholarship: request.body.stud_scholarship,
+      };
+      const email = request.body.candidate_email;
+      const name = request.body.candidate_name;
       const { stud_candidate_id } = request.params;
-      // const infos = await CandidateModel.getById(stud_candidate_id);
       const defaultPassword = crypto.randomBytes(8).toString('Hex');
+      const uid = await firebase.createNewUser(
+        email,
+        defaultPassword,
+        name,
+        'aluno'
+      );
       const studentType = 'ATIVO';
       buildStudentObject(
         student,
         stud_candidate_id,
         defaultPassword,
-        // uid,
+        uid,
         studentType
       );
       await StudentModel.create(student);
-      return response.status(201).json({ id: student.stud_id });
+      return response.status(200).json({ id: student.stud_id });
     } catch (err) {
       console.error(`Student creation failed: ${err}`);
       return response.status(500).json({
@@ -116,14 +125,29 @@ module.exports = {
       const studInfos = await StudentModel.getById(stud_id);
       const firebase_id = studInfos.stud_firebase;
       await firebase.deleteUser(firebase_id);
-      const result = await CandidateModel.deleteById(
-        studInfos.stud_candidate_id
-      );
+      const result = await StudentModel.deleteById(studInfos.stud_id);
       return response.status(200).json(result);
     } catch (err) {
       console.error(`Student delete failed: ${err}`);
       return response.status(500).json({
         notification: 'Internal server error while trying to delete Student',
+      });
+    }
+  },
+
+  async upload(request, response) {
+    try {
+      const { candidate_name, thesis_name } = request.params;
+      const fileId = await uploadThesis(
+        request.file,
+        `Thesis/${candidate_name}/`,
+        thesis_name
+      );
+      return response.status(200).json(fileId);
+    } catch (err) {
+      console.error(`Upload file failed: ${err}`);
+      return response.status(500).json({
+        notification: 'Internal server error while trying to upload file',
       });
     }
   },

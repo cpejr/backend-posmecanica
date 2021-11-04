@@ -16,6 +16,8 @@ module.exports = {
     }),
     [Segments.BODY]: Joi.object().keys({
       stud_scholarship: Joi.boolean().required(),
+      candidate_email: Joi.string().email().required(),
+      candidate_name: Joi.string().required(),
     }),
   }),
 
@@ -69,6 +71,7 @@ module.exports = {
       stud_scholarship: Joi.boolean(),
       stud_prof_advisor: Joi.string(),
       stud_prof_coAdvisor: Joi.string(),
+      stud_bank: Joi.string(),
       stud_workplane: Joi.boolean(),
       stud_workplane_date: Joi.date(),
     }),
@@ -86,6 +89,13 @@ module.exports = {
           version: ['uuidv4'],
         })
         .required(),
+    }),
+  }),
+
+  upload: celebrate({
+    [Segments.PARAMS]: Joi.object().keys({
+      candidate_name: Joi.string().required(),
+      thesis_name: Joi.string().required(),
     }),
   }),
 };

@@ -13,28 +13,19 @@ module.exports = {
           version: ['uuidv4'],
         })
         .required(),
-      defense_bank_id: Joi.string()
-        .guid({
-          version: ['uuidv4'],
-        })
-        .required(),
-      defense_sArea_id: Joi.string()
-        .guid({
-          version: ['uuidv4'],
-        })
-        .required(),
     }),
     [Segments.BODY]: Joi.object().keys({
       defense_type: Joi.string()
         .valid('DISSERTACAO', 'TESE')
         .insensitive()
         .required(),
+      defense_stud_name: Joi.string().required(),
       defense_title: Joi.string().required(),
-      defense_content: Joi.string().required(),
-      defense_number: Joi.number().integer().required(),
+      defense_protocol: Joi.string().required(),
       defense_place: Joi.string().required(),
+      defense_hour: Joi.string().required(),
       defense_date: Joi.date().required(),
-      defense_approved: Joi.boolean().required(),
+      defense_approved: Joi.boolean(),
     }),
   }),
 
@@ -66,6 +57,21 @@ module.exports = {
     }),
   }),
 
+  getByStudent: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
+    [Segments.PARAMS]: Joi.object().keys({
+      defense_stud_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
+    }),
+  }),
+
   update: celebrate({
     [Segments.HEADERS]: Joi.object()
       .keys({
@@ -83,7 +89,7 @@ module.exports = {
       defense_type: Joi.string().valid('DISSERTACAO', 'TESE').insensitive(),
       defense_title: Joi.string(),
       defense_content: Joi.string(),
-      defense_number: Joi.number().integer(),
+      defense_protocol: Joi.string(),
       defense_place: Joi.string(),
       defense_date: Joi.date(),
       defense_approved: Joi.boolean(),

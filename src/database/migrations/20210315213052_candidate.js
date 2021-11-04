@@ -50,9 +50,8 @@ exports.up = function (knex) {
     table.uuid('candidate_process_id').notNullable();
     table.string('candidate_protocol').notNullable();
     table.boolean('candidate_form_approval');
-    table.boolean('candidate_test_approval');
+    table.boolean('candidate_approval');
     table.boolean('candidate_curriculum_approval');
-    table.integer('candidate_rating');
     table.boolean('candidate_deferment').defaultTo(false).notNullable();
     table.string('candidate_grade_obtained');
     table.text('candidate_justify');

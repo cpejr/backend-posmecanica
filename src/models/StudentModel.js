@@ -69,7 +69,13 @@ module.exports = {
     }
     const disciplineTable = await connection('discipline').select('*');
     const stud_discTable = await connection('student_dis');
+    const processTable = await connection('selective_process').select('*');
+
     students.forEach((item) => {
+      const relation = processTable.find(
+        (element) => element.process_id === item.candidate_process_id
+      );
+      item.selective_process = relation;
       makeDisciplinesRelation(item, disciplineTable, stud_discTable);
       delete item.stud_candidate_id;
     });

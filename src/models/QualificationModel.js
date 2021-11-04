@@ -65,6 +65,14 @@ module.exports = {
     return result;
   },
 
+  async getByStudent(stud_id) {
+    const qualification = await connection('qualification')
+      .where({ quali_stud_id: stud_id })
+      .first();
+    const result = qualification;
+    return result;
+  },
+
   async getById(quali_id) {
     const qualification = await connection('qualification')
       .where({ quali_id })

@@ -39,12 +39,7 @@ async function SelectiveProcessResult(candidate, candidate_id) {
   const candidateInfos = await CandidateModel.getById(candidate_id);
   const name = candidateInfos.candidate_name;
   const email = candidateInfos.candidate_email;
-  Mail.SelectiveProcessResult(
-    email,
-    name,
-    candidate.candidate_test_approval,
-    candidate.candidate_rating
-  );
+  Mail.SelectiveProcessResult(email, name, candidate.candidate_approval);
 }
 
 module.exports = {
@@ -102,7 +97,7 @@ module.exports = {
       if (candidate.candidate_email) {
         result = await updateFirebase(candidate, candidate_id);
       }
-      if (candidate.candidate_rating) {
+      if (candidate.candidate_approval) {
         await SelectiveProcessResult(candidate, candidate_id);
       }
       const stillExistFieldsToUpdate = Object.values(candidate).length > 0;
@@ -164,7 +159,8 @@ module.exports = {
   async getUserFiles(request, response) {
     try {
       const { candidate_id } = request.params;
-      const result = await getUserFiles(candidate_id);
+      const { file_name } = request.params;
+      const result = await getUserFiles(candidate_id, file_name);
       return response.status(200).json(result);
     } catch (err) {
       console.error(`List files failed: ${err}`);

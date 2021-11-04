@@ -29,15 +29,19 @@ module.exports = {
     const candidate = await connection('candidate').select(
       'candidate_id',
       'candidate_name',
-      'candidate_process_id'
+      'candidate_process_id',
+      'candidate_approval',
+      'candidate_deferment'
     );
-
     selective_process.forEach((item) => {
-      const processFilter = candidate.filter(
-        (campo) => campo.candidate_process_id === item.process_id
-      );
-      processFilter.forEach((campo) => {
-        delete campo.candidate_process_id;
+      const processFilter = candidate.filter((campo) => {
+        if (
+          campo.candidate_approval !== true &&
+          campo.candidate_deferment !== true &&
+          campo.candidate_process_id === item.process_id
+        )
+          return true;
+        return false;
       });
       item.count_candidates = processFilter.length;
       item.candidates = processFilter;

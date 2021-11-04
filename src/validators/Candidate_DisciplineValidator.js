@@ -17,7 +17,7 @@ module.exports = {
     [Segments.BODY]: Joi.object().keys({
       cd_dis_ids: Joi.array()
         .items({
-          cd_dis_id: Joi.string().guid({
+          cd_dis_id: Joi.string().allow('', null).guid({
             version: ['uuidv4'],
           }),
         })
@@ -58,6 +58,18 @@ module.exports = {
     [Segments.QUERY]: Joi.object().keys({
       firstFilter: Joi.required(),
       secondFilter: Joi.required(),
+    }),
+  }),
+
+  getByIdDisciplineDefermentCandidateSituation: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
+    [Segments.QUERY]: Joi.object().keys({
+      filter: Joi.required(),
+      situation: Joi.required(),
     }),
   }),
 

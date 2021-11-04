@@ -40,7 +40,6 @@
 *        - candidate_process_id
 *        - candidate_protocol
 *        - candidate_form_approval
-*        - candidate_rating
 *      properties:
 *        candidate_id:
 *           type: uuid
@@ -144,13 +143,10 @@
 *        candidate_form_approval:
 *            type: boolean
 *            description: Verifica se a informações enviadas pelo candidato foram aprovadas.
-*        candidate_test_approval:
+*        candidate_approval:
 *            type: boolean
 *            description: Verifica se o candidato foi aprovado na prova do processo seletivo.
 *        candidate_curriculum_approval:
 *            type: boolean
 *            description: Verifica se o currículo enviado pelo candidato foi aprovado para a inscrição em disciplinas isoladas.
-*        candidate_rating:
-*            type: integer
-*            description: Rank do candidato na prova do processo seletivo.
 */
