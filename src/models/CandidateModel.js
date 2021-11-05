@@ -85,10 +85,13 @@ module.exports = {
       .where({ candidate_id })
       .select('*')
       .first();
-    const processTable = await connection('selective_process')
-      .where({ process_id: candidateObject.candidate_process_id })
-      .select('*')
-      .first();
+    let processTable;
+    if (candidateObject?.candidate_process_id) {
+      processTable = await connection('selective_process')
+        .where({ process_id: candidateObject.candidate_process_id })
+        .select('*')
+        .first();
+    }
     const disciplineTable = await connection('discipline').select('*');
     const candidate_disciplineTable = await connection('candidate_dis');
     makeDisciplinesRelation(
