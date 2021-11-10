@@ -17,7 +17,7 @@ administratorRouter.get(
 administratorRouter.post(
   '/',
   AdmValidator.create,
-  authenticateToken,
+  // authenticateToken,
   AdmController.create
 );
 administratorRouter.put(
