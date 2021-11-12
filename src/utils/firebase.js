@@ -78,11 +78,24 @@ module.exports = {
     const result = await admin.auth().deleteUser(uid);
     return result;
   },
+
   async firebaseChangeUserPassword(email) {
     return new Promise((resolve, reject) => {
       firebase
         .auth()
         .sendPasswordResetEmail(email)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error));
+    });
+  },
+
+  async getUserByEmail(email) {
+    return new Promise((resolve, reject) => {
+      admin
+        .auth()
+        .getUserByEmail(email)
         .then((res) => {
           resolve(res);
         })
