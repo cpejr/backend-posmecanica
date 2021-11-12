@@ -4,7 +4,10 @@ const { v4: uuidv4 } = require('uuid');
 
 const storage = new Storage({
   projectId: process.env.FIREBASE_PROJECTID,
-  keyFilename: 'serviceAccountKey.json',
+  credentials:
+    process.env.NODE_ENV === 'test'
+      ? JSON.parse(process.env.GOOGLE_CERTS)
+      : 'serviceAccountKey.json',
 });
 
 const bucketName = process.env.FIREBASE_STORAGEBUCKET;
@@ -79,7 +82,9 @@ async function getUserFiles(user_id, file_name) {
     expires: Date.now() + 15 * 60 * 1000, // 15 minutes
   };
   const [files] = await storage.bucket(bucketName).getFiles({
-    prefix: file_name ? `Candidates/${user_id}/${file_name}` : `Candidates/${user_id}`,
+    prefix: file_name
+      ? `Candidates/${user_id}/${file_name}`
+      : `Candidates/${user_id}`,
   });
   const result = [];
   await Promise.all(
