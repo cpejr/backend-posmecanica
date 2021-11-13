@@ -18,6 +18,16 @@ const makeDisciplinesRelation = (
   candidate.disciplines = relation;
 };
 
+const makeCandidatesDisciplinesRelation = (
+  candidate,
+  candidate_disciplineTable
+) => {
+  const disciplineRelation = candidate_disciplineTable.filter(
+    (elements) => elements.cd_candidate_id === candidate.candidate_id
+  );
+  candidate.candidate_disciplines = disciplineRelation;
+};
+
 module.exports = {
   async create(candidate) {
     const result = await connection('candidate').insert(candidate);
@@ -101,6 +111,23 @@ module.exports = {
     );
     candidateObject.selective_process = processTable;
     return candidateObject;
+  },
+
+  async getBySelectiveProcessId(candidate_process_id) {
+    const candidateTable = await connection('candidate')
+      .select('*')
+      .where({ candidate_process_id })
+      .where({ candidate_deferment: false });
+
+    const candidate_disciplineTable = await connection(
+      'candidate_dis'
+    ).whereNull('cd_dis_deferment');
+
+    candidateTable?.forEach((candidate) => {
+      makeCandidatesDisciplinesRelation(candidate, candidate_disciplineTable);
+    });
+    const result = candidateTable;
+    return result;
   },
 
   async updateById(candidate_id, candidate) {
