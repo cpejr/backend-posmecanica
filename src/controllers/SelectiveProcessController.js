@@ -1,5 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
+const cron = require('node-cron');
 const SelectiveProcessModel = require('../models/SelectiveProcessModel');
+const sendEmail = require('../utils/CronJobSelectiveProcess');
 
 module.exports = {
   async create(request, response) {
@@ -8,12 +10,33 @@ module.exports = {
       const process_id = uuidv4();
       selective_process.process_id = process_id;
       await SelectiveProcessModel.create(selective_process);
+      let currentDate;
+
+      // const data = new Date(selective_process.process_date_end);
+      // const day = data.getDate().toString();
+      // const month = (data.getMonth() + 1).toString(); // +1 pois no getMonth Janeiro começa com zero.
+      // const year = data.getFullYear();
+
+      // cron.schedule(`* * ${day} ${month} * ${year}`, () =>
+      //   console.log('Executando a tarefa a cada 1 minuto')
+      // );
+
+      cron.schedule('0 39 17 13 11 *', () => {
+        currentDate = new Date().getFullYear();
+        if (
+          selective_process.process_type === 'ISOLADA' &&
+          JSON.stringify(currentDate) === '2021'
+        ) {
+          console.log('Executando a tarefa a cada 1 minuto');
+          sendEmail.sendEmailToProfessors(selective_process.process_id);
+        }
+      });
+
       return response.status(200).json({ id: selective_process.process_id });
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to create a selective process',
+        notification: 'Internal server error',
       });
     }
   },
