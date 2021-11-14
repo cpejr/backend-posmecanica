@@ -24,7 +24,7 @@ module.exports = {
 
       for (const disc of disciplines) {
         // eslint-disable-next-line no-await-in-loop
-        const prof = await ProfessorModel.getByDisciplineId(disc);
+        const prof = await ProfessorModel.getProfByDisciplineId(disc);
         professors.push(prof);
       }
       console.log(
