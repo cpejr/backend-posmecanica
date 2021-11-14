@@ -93,20 +93,6 @@ module.exports = {
     return result;
   },
 
-  async getByDisciplineId(pd_dis_id) {
-    const { pd_professor_id } = await connection('professor_discipline')
-      .where({ pd_dis_id })
-      .select('*')
-      .first();
-
-    const result = await connection('professor')
-      .where({ prof_id: pd_professor_id })
-      .select('*')
-      .first();
-
-    return result;
-  },
-
   async getById(prof_id) {
     const profObject = await connection('professor')
       .where({ prof_id })
