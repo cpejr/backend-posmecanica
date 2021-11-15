@@ -76,17 +76,19 @@ module.exports = {
     };
     return Email.sendEmail(emailContent);
   },
-  DemandProcess(to, firstname, disciplines) {
-    const content = `Olá ${firstname}, você possui candidatos a serem deferidos no processo seletivo respectivos ${disciplines.length === 1 ? 'à disciplina' : 'às disciplinas'
-      } ${disciplines.map((item) => {
+  DemandProcess(to, name, disciplines) {
+    const content = `Olá ${name}, você possui candidatos a serem deferidos no processo seletivo respectivos ${disciplines.length === 1 ? 'à disciplina' : 'às disciplinas'
+      }${disciplines.map((item) => {
         if (
           item.discipline_name ===
           disciplines[disciplines.length - 1].discipline_name
         ) {
-          return `${item.discipline_name}.`;
+          return ` ${item.discipline_name}.`;
         }
-        return `${item.discipline_name},`;
-      })}`;
+        return ` ${item.discipline_name}`;
+      })}
+      
+Atenciosamente, Administração do Programa de Pós Graduação em Mecânica.`;
     const subject = 'Pós-Mecânica: Demanda de candidatos.';
     const emailContent = {
       to,
