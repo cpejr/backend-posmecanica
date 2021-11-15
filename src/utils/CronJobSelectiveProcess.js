@@ -33,24 +33,16 @@ module.exports = {
 
       professors?.forEach((element) => {
         const disciplinas = [];
-        disciplines
-          .forEach((e) => {
-            const found = element.disciplines.find(
-              (item) => item.discipline_id === e
-            );
-            if (found) {
-              disciplinas.push(found);
-            }
-          })
-          .then(() => {
-            Mail.DemandProcess(
-              element.prof_email,
-              element.prof_name,
-              disciplinas
-            );
-          });
+        disciplines.forEach((e) => {
+          const found = element.disciplines.find(
+            (item) => item.discipline_id === e
+          );
+          if (found) {
+            disciplinas.push(found);
+          }
+        });
+        Mail.DemandProcess(element.prof_email, element.prof_name, disciplinas);
       });
-      return response.status(200).json('OK');
     } catch (err) {
       console.error(err);
       return response({
