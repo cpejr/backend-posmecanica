@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable consistent-return */
 require('dotenv').config();
 
@@ -75,8 +76,17 @@ module.exports = {
     };
     return Email.sendEmail(emailContent);
   },
-  DemandProcess(to, firstname) {
-    const content = `Olá ${firstname}, você possui candidatos à sua disciplina no processo seletivo.`;
+  DemandProcess(to, firstname, disciplines) {
+    const content = `Olá ${firstname}, você possui candidatos a serem deferidos no processo seletivo respectivos ${disciplines.length === 1 ? 'à disciplina' : 'às disciplinas'
+      } ${disciplines.map((item) => {
+        if (
+          item.discipline_name ===
+          disciplines[disciplines.length - 1].discipline_name
+        ) {
+          return `${item.discipline_name}.`;
+        }
+        return `${item.discipline_name},`;
+      })}`;
     const subject = 'Pós-Mecânica: Demanda de candidatos.';
     const emailContent = {
       to,

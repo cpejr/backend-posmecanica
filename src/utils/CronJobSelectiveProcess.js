@@ -7,7 +7,7 @@ module.exports = {
   async sendEmailToProfessors(request, response) {
     try {
       let disciplines = [];
-      let professors = [];
+      const professors = new Map();
       console.log(
         '🚀 ~ file: CronJobSelectiveProcess.js ~ line 5 ~ sendEmailToProfessors ~ request',
         request
@@ -26,18 +26,31 @@ module.exports = {
       for (const disc of disciplines) {
         // eslint-disable-next-line no-await-in-loop
         const prof = await ProfessorModel.getProfByDisciplineId(disc);
-        professors.push(prof);
+        if (!professors.has(prof.prof_id)) {
+          professors.set(prof.prof_id, prof);
+        }
       }
 
-      professors = [...new Set(professors)];
-      console.log(
-        '🚀 ~ file: CronJobSelectiveProcess.js ~ line 29 ~ sendEmailToProfessors ~ professors',
-        professors
-      ); // enquanto não utiliza a função do email
       professors?.forEach((element) => {
-        Mail.DemandProcess(element.prof_email, element.prof_name);
+        const disciplinas = [];
+        disciplines
+          .forEach((e) => {
+            const found = element.disciplines.find(
+              (item) => item.discipline_id === e
+            );
+            if (found) {
+              disciplinas.push(found);
+            }
+          })
+          .then(() => {
+            Mail.DemandProcess(
+              element.prof_email,
+              element.prof_name,
+              disciplinas
+            );
+          });
       });
-      return response;
+      return response.status(200).json('OK');
     } catch (err) {
       console.error(err);
       return response({

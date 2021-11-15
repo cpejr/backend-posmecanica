@@ -144,6 +144,22 @@ module.exports = {
       .where('prof_id', aux.pd_professor_id)
       .select('*')
       .first();
+    const disciplineIds = await connection('professor_discipline')
+      .where('pd_professor_id', aux.pd_professor_id)
+      .select('*');
+
+    const disciplines = [];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const element of disciplineIds) {
+      // eslint-disable-next-line no-await-in-loop
+      const e = await connection('discipline')
+        .where('discipline_id', element.pd_dis_id)
+        .select('*')
+        .first();
+      disciplines.push(e);
+    }
+
+    result.disciplines = disciplines;
     return result;
   },
 };
