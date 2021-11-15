@@ -75,4 +75,14 @@ module.exports = {
     };
     return Email.sendEmail(emailContent);
   },
+  DemandProcess(to, firstname) {
+    const content = `Olá ${firstname}, você possui candidatos à sua disciplina no processo seletivo.`;
+    const subject = 'Pós-Mecânica: Demanda de candidatos.';
+    const emailContent = {
+      to,
+      subject,
+      text: content,
+    };
+    return Email.sendEmail(emailContent);
+  },
 };

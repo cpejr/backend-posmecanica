@@ -1,12 +1,13 @@
 /* eslint-disable no-restricted-syntax */
 const CandidateModel = require('../models/CandidateModel');
 const ProfessorModel = require('../models/ProfessorModel');
+const Mail = require('../mail/mail');
 
 module.exports = {
   async sendEmailToProfessors(request, response) {
     try {
       let disciplines = [];
-      const professors = [];
+      let professors = [];
       console.log(
         '🚀 ~ file: CronJobSelectiveProcess.js ~ line 5 ~ sendEmailToProfessors ~ request',
         request
@@ -27,15 +28,19 @@ module.exports = {
         const prof = await ProfessorModel.getProfByDisciplineId(disc);
         professors.push(prof);
       }
+
+      professors = [...new Set(professors)];
       console.log(
         '🚀 ~ file: CronJobSelectiveProcess.js ~ line 29 ~ sendEmailToProfessors ~ professors',
         professors
       ); // enquanto não utiliza a função do email
-
-      return response.status(200).json('OK');
+      professors?.forEach((element) => {
+        Mail.DemandProcess(element.prof_email, element.prof_name);
+      });
+      return response;
     } catch (err) {
       console.error(err);
-      return response.status(500).json({
+      return response({
         notification: 'Internal server error',
       });
     }

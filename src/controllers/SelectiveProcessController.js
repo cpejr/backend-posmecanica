@@ -21,7 +21,7 @@ module.exports = {
       //   console.log('Executando a tarefa a cada 1 minuto')
       // );
 
-      cron.schedule('0 39 17 13 11 *', () => {
+      cron.schedule('0 11 23 14 11 *', () => {
         currentDate = new Date().getFullYear();
         if (
           selective_process.process_type === 'ISOLADA' &&
