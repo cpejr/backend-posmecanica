@@ -16,7 +16,6 @@ const transporter = nodemailer.createTransport({
     rejectUnauthorized: false,
   },
 });
-
 class Email {
   static sendEmail(request) {
     const config = {

@@ -12,22 +12,17 @@ module.exports = {
       await SelectiveProcessModel.create(selective_process);
       let currentDate;
 
-      // const data = new Date(selective_process.process_date_end);
-      // const day = data.getDate().toString();
-      // const month = (data.getMonth() + 1).toString(); // +1 pois no getMonth Janeiro começa com zero.
-      // const year = data.getFullYear();
+      const data = new Date(selective_process.process_date_end);
+      const day = data.getDate().toString();
+      const month = (data.getMonth() + 1).toString(); // +1 pois no getMonth Janeiro começa com zero.
+      const year = data.getFullYear();
 
-      // cron.schedule(`* * ${day} ${month} * ${year}`, () =>
-      //   console.log('Executando a tarefa a cada 1 minuto')
-      // );
-
-      cron.schedule('0 49 17 15 11 *', () => {
+      cron.schedule(`59 23 ${day} ${month} *`, () => {
         currentDate = new Date().getFullYear();
         if (
           selective_process.process_type === 'ISOLADA' &&
-          JSON.stringify(currentDate) === '2021'
+          currentDate === year
         ) {
-          console.log('Executando a tarefa a cada 1 minuto');
           sendEmail.sendEmailToProfessors(selective_process.process_id);
         }
       });

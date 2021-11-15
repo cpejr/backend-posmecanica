@@ -8,13 +8,8 @@ module.exports = {
     try {
       let disciplines = [];
       const professors = new Map();
-      console.log(
-        '🚀 ~ file: CronJobSelectiveProcess.js ~ line 5 ~ sendEmailToProfessors ~ request',
-        request
-      ); // para ESLint não reclamar que não usou request (TEMPORÁRIO)
-      const candidates = await CandidateModel.getBySelectiveProcessId(
-        'c5aef8b6-a9e5-4009-93fa-18a715e7f65e' // estático para teste
-      );
+
+      const candidates = await CandidateModel.getBySelectiveProcessId(request);
       candidates?.forEach((element) => {
         element.candidate_disciplines?.forEach((item) => {
           disciplines.push(item.cd_dis_id);
@@ -43,6 +38,7 @@ module.exports = {
         });
         Mail.DemandProcess(element.prof_email, element.prof_name, disciplinas);
       });
+      return 'OK';
     } catch (err) {
       console.error(err);
       return response({
