@@ -6,7 +6,7 @@ exports.up = function (knex) {
     table.string('message_receiver_id').notNullable();
     table.enu('message_receiver_type', ['aluno', 'administrator']);
     table.string('message_title');
-    table.string('message_body').notNullable();
+    table.text('message_body').notNullable();
     table.string('message_parent_id');
     table.enu('message_status', ['new', 'answered']).defaultTo('new');
     table.enu('message_type', ['message', 'notification']);
