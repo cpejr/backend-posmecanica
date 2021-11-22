@@ -12,6 +12,7 @@ const searchAreaRouter = require('./searchArea');
 const selectiveProcessRouter = require('./selectiveProcess');
 const sessionRouter = require('./session');
 const studentRouter = require('./student');
+const messageRouter = require('./message');
 
 // Relacionais
 const bank_professorRouter = require('./bank_professor');
@@ -35,6 +36,7 @@ routes.use('/searchAreas', searchAreaRouter);
 routes.use('/selectiveProcesses', selectiveProcessRouter);
 routes.use('/login', sessionRouter);
 routes.use('/students', studentRouter);
+routes.use('/messages', messageRouter);
 
 // Relacionais
 routes.use('/', bank_professorRouter);
