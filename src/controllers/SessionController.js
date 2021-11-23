@@ -35,14 +35,6 @@ module.exports = {
           delete user.prof_email;
           break;
         }
-        case 'administrator': {
-          user = await AdmModel.getByFields({ adm_firebase: firebase.uid });
-          user.email = user.adm_email;
-          user.name = user.adm_name;
-          delete user.adm_name;
-          delete user.adm_email;
-          break;
-        }
         default: {
           user = await StudentModel.getByFields({
             stud_firebase: firebase.uid,
@@ -60,7 +52,37 @@ module.exports = {
 
       return response.status(200).json({ user, accessToken });
     } catch (error) {
-      if (error.code.includes('auth')) {
+      if (error.code?.includes('auth')) {
+        return response
+          .status(403)
+          .json({ notification: 'Invalid credentials' });
+      }
+      return response
+        .status(500)
+        .json({ notification: 'Error while trying to validate credentials' });
+    }
+  },
+
+  async admSignIn(request, response) {
+    try {
+      const { email, password } = request.body;
+      const firebase = await Firebase.login(email, password);
+
+      const user = await AdmModel.getByFields({ adm_firebase: firebase.uid });
+      user.email = user.adm_email;
+      user.name = user.adm_name;
+      delete user.adm_name;
+      delete user.adm_email;
+
+      user.type = firebase.displayName;
+
+      const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: '1h',
+      });
+
+      return response.status(200).json({ user, accessToken });
+    } catch (error) {
+      if (error.code?.includes('auth')) {
         return response
           .status(403)
           .json({ notification: 'Invalid credentials' });
