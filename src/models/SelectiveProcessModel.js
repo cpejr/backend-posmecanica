@@ -63,6 +63,15 @@ module.exports = {
     return result;
   },
 
+  async getUnfinishedSelectiveProcesses() {
+    const currentDate = new Date();
+    const selective_process = await connection('selective_process')
+      .where('process_type', 'ISOLADA')
+      .where('process_date_end', '>', currentDate)
+      .select('*');
+    return selective_process;
+  },
+
   async updateById(process_id, selective_process) {
     const result = await connection('selective_process')
       .where({ process_id })

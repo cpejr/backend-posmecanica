@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable consistent-return */
 require('dotenv').config();
 
@@ -15,7 +16,6 @@ const transporter = nodemailer.createTransport({
     rejectUnauthorized: false,
   },
 });
-
 class Email {
   static sendEmail(request) {
     const config = {
@@ -68,6 +68,27 @@ module.exports = {
     const confirmation = result ? 'Aprovado' : 'Reprovado';
     const content = `Olá ${firstname}, você foi ${confirmation} no processo seletivo. Sua colocação na prova foi ${position}° lugar`;
     const subject = 'Pós-Mecânica: Resultado Inscrição';
+    const emailContent = {
+      to,
+      subject,
+      text: content,
+    };
+    return Email.sendEmail(emailContent);
+  },
+  DemandProcess(to, name, disciplines) {
+    const content = `Olá ${name}, você possui candidatos a serem deferidos no processo seletivo respectivos ${disciplines.length === 1 ? 'à disciplina' : 'às disciplinas'
+      }${disciplines.map((item) => {
+        if (
+          item.discipline_name ===
+          disciplines[disciplines.length - 1].discipline_name
+        ) {
+          return ` ${item.discipline_name}.`;
+        }
+        return ` ${item.discipline_name}`;
+      })}
+      
+Atenciosamente, Administração do Programa de Pós Graduação em Mecânica.`;
+    const subject = 'Pós-Mecânica: Demanda de candidatos.';
     const emailContent = {
       to,
       subject,

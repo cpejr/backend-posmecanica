@@ -10,7 +10,6 @@ const { authenticateToken } = require('../../middlewares/authentication');
 candidate_disciplineRouter.post(
   '/connect/candidate_dis/:cd_candidate_id',
   Candidate_DisciplineValidator.connect,
-  authenticateToken,
   Candidate_DisciplineController.connect
 );
 candidate_disciplineRouter.delete(
