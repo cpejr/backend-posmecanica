@@ -12,7 +12,7 @@ module.exports = {
     } catch (err) {
       console.error(`Discipline creation failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to create discipline',
+        notification: 'Internal server error',
       });
     }
   },
@@ -29,7 +29,7 @@ module.exports = {
     } catch (err) {
       console.error(`Discipline getAll failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get discipline',
+        notification: 'Internal server error',
       });
     }
   },
@@ -42,7 +42,7 @@ module.exports = {
     } catch (err) {
       console.error(`Discipline getById failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get discipline',
+        notification: 'Internal server error',
       });
     }
   },
@@ -60,7 +60,7 @@ module.exports = {
     } catch (err) {
       console.error(`Discipline update failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to update discipline',
+        notification: 'Internal server error',
       });
     }
   },
@@ -74,7 +74,7 @@ module.exports = {
     } catch (err) {
       console.error(`Discipline delete failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to delete Discipline',
+        notification: 'Internal server error',
       });
     }
   },

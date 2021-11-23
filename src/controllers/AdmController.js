@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
 const AdmModel = require('../models/AdmModel');
@@ -16,16 +17,16 @@ async function updateFirebase(administrator, adm_id) {
   const oldEmail = admInfos.adm_email;
   const update = administrator.adm_defaultPassword
     ? await firebase.changeUserPassword(
-        firebase_id,
-        administrator.adm_defaultPassword,
-        name
-      )
+      firebase_id,
+      administrator.adm_defaultPassword,
+      name
+    )
     : await firebase.changeUserEmail(
-        firebase_id,
-        administrator.adm_email,
-        name,
-        oldEmail
-      );
+      firebase_id,
+      administrator.adm_email,
+      name,
+      oldEmail
+    );
   const result = update.uid;
   delete administrator.adm_defaultPassword;
   return result;
@@ -48,8 +49,7 @@ module.exports = {
     } catch (err) {
       console.error(`Administrator creation failed: ${err}`);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to create administrator',
+        notification: 'Internal server error',
       });
     }
   },
@@ -62,7 +62,7 @@ module.exports = {
     } catch (err) {
       console.error(`Administrator getAll failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get administrator',
+        notification: 'Internal server error',
       });
     }
   },
@@ -75,7 +75,7 @@ module.exports = {
     } catch (err) {
       console.error(`Administrator getById failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get administrator',
+        notification: 'Internal server error',
       });
     }
   },
@@ -97,8 +97,7 @@ module.exports = {
     } catch (err) {
       console.error(`Administrator update failed: ${err}`);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to update administrator',
+        notification: 'Internal server error',
       });
     }
   },
@@ -114,8 +113,7 @@ module.exports = {
     } catch (err) {
       console.error(`Administrator delete failed: ${err}`);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to delete Administrator',
+        notification: 'Internal server error',
       });
     }
   },

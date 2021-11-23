@@ -62,7 +62,7 @@ module.exports = {
     } catch (err) {
       console.error(`Student creation failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to create Student',
+        notification: 'Internal server error',
       });
     }
   },
@@ -79,7 +79,7 @@ module.exports = {
     } catch (err) {
       console.error(`Student getAll failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get Student',
+        notification: 'Internal server error',
       });
     }
   },
@@ -93,7 +93,7 @@ module.exports = {
     } catch (err) {
       console.error(`Student getById failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get Student',
+        notification: 'Internal server error',
       });
     }
   },
@@ -114,7 +114,7 @@ module.exports = {
     } catch (err) {
       console.error(`Student update failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to update Student',
+        notification: 'Internal server error',
       });
     }
   },
@@ -130,7 +130,7 @@ module.exports = {
     } catch (err) {
       console.error(`Student delete failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to delete Student',
+        notification: 'Internal server error',
       });
     }
   },
@@ -147,7 +147,7 @@ module.exports = {
     } catch (err) {
       console.error(`Upload file failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to upload file',
+        notification: 'Internal server error',
       });
     }
   },
@@ -160,7 +160,7 @@ module.exports = {
     } catch (err) {
       console.error(`List files failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to list files',
+        notification: 'Internal server error',
       });
     }
   },

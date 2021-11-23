@@ -1,10 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 const DefenseModel = require('../models/DefenseModel');
 
-const buildDefenseObject = (
-  defense,
-  defense_stud_id,
-) => {
+const buildDefenseObject = (defense, defense_stud_id) => {
   defense.defense_id = uuidv4();
   defense.defense_stud_id = defense_stud_id;
 };
@@ -13,19 +10,14 @@ module.exports = {
   async create(request, response) {
     try {
       const defense = request.body;
-      const {
-        defense_stud_id,
-      } = request.params;
-      buildDefenseObject(
-        defense,
-        defense_stud_id,
-      );
+      const { defense_stud_id } = request.params;
+      buildDefenseObject(defense, defense_stud_id);
       await DefenseModel.create(defense);
       return response.status(200).json({ id: defense.defense_id });
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification: 'Internal server error while trying to create a defense',
+        notification: 'Internal server error ',
       });
     }
   },
@@ -41,7 +33,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get all defense',
+        notification: 'Internal server error',
       });
     }
   },
@@ -54,8 +46,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to get a defense by id',
+        notification: 'Internal server error',
       });
     }
   },
@@ -68,8 +59,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to get a defense by id',
+        notification: 'Internal server error',
       });
     }
   },
@@ -83,8 +73,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to update a defense by id',
+        notification: 'Internal server error',
       });
     }
   },
@@ -97,7 +86,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification: 'Internal server error while trying to delete a defense',
+        notification: 'Internal server error',
       });
     }
   },

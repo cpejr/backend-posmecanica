@@ -49,8 +49,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to get all selective process',
+        notification: 'Internal server error',
       });
     }
   },
@@ -63,8 +62,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to get a selective process by id',
+        notification: 'Internal server error',
       });
     }
   },
@@ -81,8 +79,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to update a selective process by id',
+        notification: 'Internal server error',
       });
     }
   },
@@ -95,8 +92,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to delete a selective process',
+        notification: 'Internal server error',
       });
     }
   },

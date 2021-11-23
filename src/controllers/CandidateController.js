@@ -53,7 +53,7 @@ module.exports = {
     } catch (err) {
       console.error(`Candidate creation failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to create Candidate',
+        notification: 'Internal server error',
       });
     }
   },
@@ -70,7 +70,7 @@ module.exports = {
     } catch (err) {
       console.error(`Candidate getAll failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get Candidate',
+        notification: 'Internal server error',
       });
     }
   },
@@ -84,7 +84,7 @@ module.exports = {
     } catch (err) {
       console.error(`Candidate getById failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get Candidate',
+        notification: 'Internal server error',
       });
     }
   },
@@ -108,7 +108,7 @@ module.exports = {
     } catch (err) {
       console.error(`Candidate update failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to update Candidate',
+        notification: 'Internal server error',
       });
     }
   },
@@ -122,7 +122,7 @@ module.exports = {
     } catch (err) {
       console.error(`Candidate delete failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to delete Candidate',
+        notification: 'Internal server error',
       });
     }
   },
@@ -139,7 +139,7 @@ module.exports = {
     } catch (err) {
       console.error(`Upload file failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to upload file',
+        notification: 'Internal server error',
       });
     }
   },
@@ -151,7 +151,7 @@ module.exports = {
     } catch (err) {
       console.error(`List files failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to list files',
+        notification: 'Internal server error',
       });
     }
   },
@@ -165,7 +165,7 @@ module.exports = {
     } catch (err) {
       console.error(`List files failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to list files',
+        notification: 'Internal server error',
       });
     }
   },

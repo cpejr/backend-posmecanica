@@ -12,7 +12,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification: 'Internal server error while trying to create a bank',
+        notification: 'Internal server error',
       });
     }
   },
@@ -28,7 +28,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get all bank',
+        notification: 'Internal server error',
       });
     }
   },
@@ -41,7 +41,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get a bank by id',
+        notification: 'Internal server error',
       });
     }
   },
@@ -55,8 +55,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to update a bank by id',
+        notification: 'Internal server error',
       });
     }
   },
@@ -69,7 +68,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification: 'Internal server error while trying to delete a bank',
+        notification: 'Internal server error',
       });
     }
   },

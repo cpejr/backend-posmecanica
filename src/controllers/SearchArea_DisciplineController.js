@@ -13,8 +13,7 @@ module.exports = {
     } catch (err) {
       console.error(`SearchArea_Discipline creation failed: ${err}`);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to connect search area and discipline',
+        notification: 'Internal server error',
       });
     }
   },
@@ -33,8 +32,7 @@ module.exports = {
     } catch (err) {
       console.error(`SearchArea_Discipline delete failed: ${err}`);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to disconnect search area and discipline',
+        notification: 'Internal server error',
       });
     }
   },
@@ -49,8 +47,7 @@ module.exports = {
     } catch (err) {
       console.error(`SearchArea_Discipline getAll failed: ${err}`);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to GET search area and discipline',
+        notification: 'Internal server error',
       });
     }
   },

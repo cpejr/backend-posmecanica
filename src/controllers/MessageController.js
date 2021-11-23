@@ -19,7 +19,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification: 'Internal server error while trying to create a message',
+        notification: 'Internal server error',
       });
     }
   },
@@ -32,7 +32,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification: 'Internal server error while trying to delete a message',
+        notification: 'Internal server error',
       });
     }
   },
@@ -45,8 +45,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to get a message by id',
+        notification: 'Internal server error',
       });
     }
   },
@@ -59,8 +58,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to get a message by student_id',
+        notification: 'Internal server error',
       });
     }
   },
@@ -73,8 +71,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to get a notification by student_id',
+        notification: 'Internal server error',
       });
     }
   },
@@ -87,8 +84,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to get a message by adm_id',
+        notification: 'Internal server error',
       });
     }
   },
@@ -102,8 +98,7 @@ module.exports = {
     } catch (err) {
       console.error(err);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to update a message by id',
+        notification: 'Internal server error',
       });
     }
   },
