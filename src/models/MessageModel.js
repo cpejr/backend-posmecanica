@@ -27,6 +27,7 @@ module.exports = {
       .where({ message_sender_type: type, message_sender_id: id })
       .orWhere({ message_receiver_type: type, message_receiver_id: id })
       .andWhere({ message_parent_id: '' })
+      .orderBy('message_status', 'desc')
       .select('*');
 
     // eslint-disable-next-line no-restricted-syntax
