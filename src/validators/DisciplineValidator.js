@@ -14,7 +14,7 @@ module.exports = {
       discipline_is_isolated: Joi.boolean().required(),
       discipline_iso_approved: Joi.boolean(),
       discipline_semester: Joi.string()
-        .valid('ATIVO', 'NAO_OFERTADO')
+        .valid('OFERTADO', 'NAO_OFERTADO')
         .insensitive()
         .required(),
       discipline_type: Joi.string()
@@ -64,7 +64,7 @@ module.exports = {
       discipline_is_isolated: Joi.boolean(),
       discipline_iso_approved: Joi.boolean(),
       discipline_semester: Joi.string()
-        .valid('PRIMEIRO', 'SEGUNDO', 'PRIMEIRO_SEGUNDO', 'NAO_OFERTADO')
+        .valid('OFERTADO', 'NAO_OFERTADO')
         .insensitive(),
       discipline_type: Joi.string()
         .valid('MESTRADO', 'DOUTORADO')
