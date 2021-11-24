@@ -5,6 +5,7 @@ exports.up = function (knex) {
     table.string('process_name').notNullable();
     table.datetime('process_date_begin').notNullable();
     table.datetime('process_date_end').notNullable();
+    table.string('process_semester').notNullable();
     table.integer('candidate_quantity').defaultTo('0').notNullable();
   });
 };

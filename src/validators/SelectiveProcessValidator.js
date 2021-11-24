@@ -15,6 +15,7 @@ module.exports = {
       process_name: Joi.string().required(),
       process_date_begin: Joi.date().required(),
       process_date_end: Joi.date().required(),
+      process_semester: Joi.string().required(),
     }),
   }),
 
