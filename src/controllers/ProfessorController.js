@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
 const ProfessorModel = require('../models/ProfessorModel');
@@ -16,16 +17,16 @@ async function updateFirebase(professor, prof_id) {
   const oldEmail = profInfos.prof_email;
   const update = professor.prof_defaultPassword
     ? await firebase.changeUserPassword(
-        firebase_id,
-        professor.prof_defaultPassword,
-        name
-      )
+      firebase_id,
+      professor.prof_defaultPassword,
+      name
+    )
     : await firebase.changeUserEmail(
-        firebase_id,
-        professor.prof_email,
-        name,
-        oldEmail
-      );
+      firebase_id,
+      professor.prof_email,
+      name,
+      oldEmail
+    );
   const result = update.uid;
   delete professor.prof_defaultPassword;
   return result;
@@ -48,7 +49,7 @@ module.exports = {
     } catch (err) {
       console.error(`Professor creation failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to create professor',
+        notification: 'Internal server error',
       });
     }
   },
@@ -65,7 +66,7 @@ module.exports = {
     } catch (err) {
       console.error(`Professor getAll failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get professor',
+        notification: 'Internal server error',
       });
     }
   },
@@ -78,7 +79,7 @@ module.exports = {
     } catch (err) {
       console.error(`Professor getById failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get professor',
+        notification: 'Internal server error',
       });
     }
   },
@@ -101,7 +102,7 @@ module.exports = {
     } catch (err) {
       console.error(`Professor update failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to update professor',
+        notification: 'Internal server error',
       });
     }
   },
@@ -117,7 +118,7 @@ module.exports = {
     } catch (err) {
       console.error(`Professor delete failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to delete Professor',
+        notification: 'Internal server error',
       });
     }
   },

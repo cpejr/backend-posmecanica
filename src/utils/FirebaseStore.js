@@ -144,6 +144,29 @@ async function uploadThesis(file, prefix = '', thesis_name) {
   });
 }
 
+async function getThesis(user_id, file_name) {
+  const options = {
+    version: 'v4',
+    action: 'read',
+    expires: Date.now() + 15 * 60 * 1000, // 15 minutes
+  };
+  const [files] = await storage.bucket(bucketName).getFiles({
+    prefix: file_name ? `Thesis/${user_id}/${file_name}` : `Thesis/${user_id}`,
+  });
+  const result = [];
+  await Promise.all(
+    files.map(async (file) => {
+      const [url] = await storage
+        .bucket(bucketName)
+        .file(`${file.name}`)
+        .getSignedUrl(options);
+      const name = file.name.split('/');
+      result.push({ url, name: name[2] });
+    })
+  );
+  return result;
+}
+
 module.exports = {
   config,
   uploadFile,
@@ -151,4 +174,5 @@ module.exports = {
   getUrlFIle,
   getUserFiles,
   uploadThesis,
+  getThesis
 };

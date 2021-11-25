@@ -17,8 +17,7 @@ module.exports = {
     } catch (err) {
       console.error(`Qualification creation failed: ${err}`);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to create Qualification',
+        notification: 'Internal server error',
       });
     }
   },
@@ -34,7 +33,7 @@ module.exports = {
     } catch (err) {
       console.error(`Qualification getAll failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get Qualification',
+        notification: 'Internal server error',
       });
     }
   },
@@ -47,7 +46,7 @@ module.exports = {
     } catch (err) {
       console.error(`Qualification getById failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get Qualification',
+        notification: 'Internal server error',
       });
     }
   },
@@ -60,7 +59,7 @@ module.exports = {
     } catch (err) {
       console.error(`Qualification getByStudent failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error while trying to get Qualification',
+        notification: 'Internal server error',
       });
     }
   },
@@ -78,8 +77,7 @@ module.exports = {
     } catch (err) {
       console.error(`Qualification update failed: ${err}`);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to update Qualification',
+        notification: 'Internal server error',
       });
     }
   },
@@ -92,8 +90,7 @@ module.exports = {
     } catch (err) {
       console.error(`Qualification delete failed: ${err}`);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to delete Qualification',
+        notification: 'Internal server error',
       });
     }
   },

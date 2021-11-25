@@ -1,6 +1,5 @@
 const firebase = require('firebase/app');
 const admin = require('firebase-admin');
-const Mail = require('../mail/mail');
 
 require('firebase/auth');
 
@@ -41,9 +40,6 @@ module.exports = {
       password,
       displayName: type,
     });
-    if (result.uid) {
-      Mail.ConfirmateCreateUser(email, name, password);
-    }
     return result.uid;
   },
 
@@ -54,23 +50,17 @@ module.exports = {
     return result.user;
   },
 
-  async changeUserPassword(uid, newPassword, name) {
+  async changeUserPassword(uid, newPassword) {
     const result = await admin.auth().updateUser(uid, {
       password: newPassword,
     });
-    if (result.uid) {
-      Mail.ConfirmateAccessAndChangePassword(result.email, name, newPassword);
-    }
     return result;
   },
 
-  async changeUserEmail(uid, newEmail, name, oldEmail) {
+  async changeUserEmail(uid, newEmail) {
     const result = await admin.auth().updateUser(uid, {
       email: newEmail,
     });
-    if (result.uid) {
-      Mail.ChangeEmail(oldEmail, name, newEmail);
-    }
     return result;
   },
 
@@ -78,11 +68,24 @@ module.exports = {
     const result = await admin.auth().deleteUser(uid);
     return result;
   },
+
   async firebaseChangeUserPassword(email) {
     return new Promise((resolve, reject) => {
       firebase
         .auth()
         .sendPasswordResetEmail(email)
+        .then((res) => {
+          resolve(res);
+        })
+        .catch((error) => reject(error));
+    });
+  },
+
+  async getUserByEmail(email) {
+    return new Promise((resolve, reject) => {
+      admin
+        .auth()
+        .getUserByEmail(email)
         .then((res) => {
           resolve(res);
         })

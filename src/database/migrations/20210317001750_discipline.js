@@ -7,12 +7,7 @@ exports.up = function (knex) {
     table.boolean('discipline_is_isolated').defaultTo(false).notNullable();
     table.boolean('discipline_iso_approved').defaultTo(false);
     table
-      .enu('discipline_semester', [
-        'PRIMEIRO',
-        'SEGUNDO',
-        'PRIMEIRO_SEGUNDO',
-        'NAO_OFERTADO',
-      ])
+      .enu('discipline_semester', ['OFERTADO', 'NAO_OFERTADO'])
       .notNullable();
     table.enu('discipline_type', ['MESTRADO', 'DOUTORADO']).notNullable();
   });

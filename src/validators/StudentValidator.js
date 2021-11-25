@@ -70,7 +70,7 @@ module.exports = {
         .insensitive(),
       stud_scholarship: Joi.boolean(),
       stud_prof_advisor: Joi.string(),
-      stud_prof_coAdvisor: Joi.string(),
+      stud_prof_coAdvisor: Joi.string().allow(null, ''),
       stud_bank: Joi.string(),
       stud_workplane: Joi.boolean(),
       stud_workplane_date: Joi.date(),
@@ -94,8 +94,28 @@ module.exports = {
 
   upload: celebrate({
     [Segments.PARAMS]: Joi.object().keys({
-      candidate_name: Joi.string().required(),
+      candidate_id: Joi.string()
+      .guid({
+        version: ['uuidv4'],
+      })
+      .required(),
       thesis_name: Joi.string().required(),
+    }),
+  }),
+
+  getThesis: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
+    [Segments.PARAMS]: Joi.object().keys({
+      candidate_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
+        thesis_name: Joi.string()
     }),
   }),
 };

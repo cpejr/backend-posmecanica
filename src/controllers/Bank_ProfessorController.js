@@ -13,8 +13,7 @@ module.exports = {
     } catch (err) {
       console.error(`Bank_Professor creation failed: ${err}`);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to connect bank and professor',
+        notification: 'Internal server error',
       });
     }
   },
@@ -34,8 +33,7 @@ module.exports = {
     } catch (err) {
       console.error(`Bank_Professor delete failed: ${err}`);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to disconnect bank and professor',
+        notification: 'Internal server error',
       });
     }
   },
@@ -50,8 +48,7 @@ module.exports = {
     } catch (err) {
       console.error(`Bank_Professor getAll failed: ${err}`);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to GET bank and professor',
+        notification: 'Internal server error',
       });
     }
   },

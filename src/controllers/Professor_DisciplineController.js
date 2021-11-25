@@ -13,8 +13,7 @@ module.exports = {
     } catch (err) {
       console.error(`Professor_Discipline creation failed: ${err}`);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to connect professor and discipline',
+        notification: 'Internal server error',
       });
     }
   },
@@ -34,8 +33,7 @@ module.exports = {
     } catch (err) {
       console.error(`Professor_Discipline delete failed: ${err}`);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to disconnect professor area and discipline',
+        notification: 'Internal server error',
       });
     }
   },
@@ -54,8 +52,7 @@ module.exports = {
     } catch (err) {
       console.error(`Professor_discipline getAll failed: ${err}`);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to GET professor and discipline',
+        notification: 'Internal server error ',
       });
     }
   },

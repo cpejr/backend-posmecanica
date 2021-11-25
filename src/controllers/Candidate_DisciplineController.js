@@ -13,8 +13,7 @@ module.exports = {
     } catch (err) {
       console.error(`Candidate_Discipline creation failed: ${err}`);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to connect candidate and discipline',
+        notification: 'Internal server error',
       });
     }
   },
@@ -34,8 +33,7 @@ module.exports = {
     } catch (err) {
       console.error(`Candidate_Discipline delete failed: ${err}`);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to disconnect candidate and discipline',
+        notification: 'Internal server error',
       });
     }
   },
@@ -54,8 +52,7 @@ module.exports = {
     } catch (err) {
       console.error(`Candidate_Discipline getAll failed: ${err}`);
       return response.status(500).json({
-        notification:
-          'Internal server error while trying to GET candidate and discipline',
+        notification: 'Internal server error',
       });
     }
   },
