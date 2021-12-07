@@ -20,7 +20,9 @@ module.exports = {
       message_body: Joi.string().required(),
       message_parent_id: Joi.string().allow(''),
       message_status: Joi.string().valid('new', 'answered').insensitive(),
-      message_type: Joi.string().valid('message', 'notification').insensitive(),
+      message_type: Joi.string()
+        .valid('message', 'notification', 'answer')
+        .insensitive(),
     }),
   }),
 
@@ -95,7 +97,9 @@ module.exports = {
       message_body: Joi.string(),
       message_parent_id: Joi.string().allow(''),
       message_status: Joi.string().valid('new', 'answered').insensitive(),
-      message_type: Joi.string().valid('message', 'notification').insensitive(),
+      message_type: Joi.string()
+        .valid('message', 'notification', 'answer')
+        .insensitive(),
     }),
   }),
 };
