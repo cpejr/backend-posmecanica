@@ -15,12 +15,8 @@ module.exports = {
       candidate_birth: Joi.date().required(),
       candidate_gender: Joi.string()
         .valid(
-          'mulher cis',
-          'mulher trans',
-          'homem cis',
-          'homem trans',
-          'nao-binario',
-          'agenero',
+          'feminino',
+          'masculino',
           'outro'
         )
         .insensitive()
