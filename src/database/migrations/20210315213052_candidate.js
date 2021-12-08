@@ -4,12 +4,8 @@ exports.up = function (knex) {
     table.string('candidate_name').notNullable();
     table.date('candidate_birth').notNullable();
     table.enu('candidate_gender', [
-      'mulher cis',
-      'mulher trans',
-      'homem cis',
-      'homem trans',
-      'nao-binario',
-      'agenero',
+      'masculino',
+      'feminino',
       'outro',
     ]);
     table.string('candidate_race').notNullable();
