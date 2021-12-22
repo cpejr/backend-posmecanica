@@ -6,15 +6,7 @@ exports.up = function (knex) {
     table.text('prof_description', 'longtext').notNullable();
     table.string('prof_curriculum').notNullable();
     table.string('prof_firebase').notNullable();
-    table.enu('prof_gender', [
-      'mulher cis',
-      'mulher trans',
-      'homem cis',
-      'homem trans',
-      'nao-binario',
-      'agenero',
-      'outro',
-    ]);
+    table.enu('prof_gender', ['feminino', 'masculino', 'outro']);
     table.boolean('prof_active').defaultTo(false).notNullable();
     table.date('prof_birth').notNullable();
     table.string('prof_cpf').notNullable();
