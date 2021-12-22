@@ -14,15 +14,7 @@ module.exports = {
       prof_curriculum: Joi.string().required(),
       prof_birth: Joi.date().required(),
       prof_gender: Joi.string()
-        .valid(
-          'mulher cis',
-          'mulher trans',
-          'homem cis',
-          'homem trans',
-          'nao-binario',
-          'agenero',
-          'outro'
-        )
+        .valid('feminino', 'masculino', 'outro')
         .insensitive()
         .required(),
       prof_active: Joi.boolean().required(),
@@ -94,15 +86,7 @@ module.exports = {
       prof_defaultPassword: Joi.string().min(8).max(20),
       prof_birth: Joi.date(),
       prof_gender: Joi.string()
-        .valid(
-          'mulher cis',
-          'mulher trans',
-          'homem cis',
-          'homem trans',
-          'nao-binario',
-          'agenero',
-          'outro'
-        )
+        .valid('feminino', 'masculino', 'outro')
         .insensitive(),
       prof_active: Joi.boolean(),
       prof_cpf: Joi.string(),

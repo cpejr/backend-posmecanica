@@ -35,7 +35,7 @@ module.exports = {
           delete user.prof_email;
           break;
         }
-        default: {
+        case 'aluno': {
           user = await StudentModel.getByFields({
             stud_firebase: firebase.uid,
           });
@@ -43,6 +43,10 @@ module.exports = {
           user.name = user.stud_candidate_name;
           delete user.stud_candidate_name;
           delete user.stud_candidate_email;
+          break;
+        }
+        default: {
+          break;
         }
       }
       user.type = firebase.displayName;
@@ -132,12 +136,16 @@ module.exports = {
           delete user.adm_email;
           break;
         }
-        default: {
+        case 'aluno': {
           user = await StudentModel.getByFields({
             stud_firebase: firebase.uid,
           });
           user.email = candidate.candidate_email;
           user.name = candidate.candidate_name;
+          break;
+        }
+        default: {
+          break;
         }
       }
       user.type = firebase.displayName;

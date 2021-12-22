@@ -9,7 +9,7 @@ exports.up = function (knex) {
     table.text('message_body').notNullable();
     table.string('message_parent_id');
     table.enu('message_status', ['new', 'answered']).defaultTo('new');
-    table.enu('message_type', ['message', 'notification']);
+    table.enu('message_type', ['message', 'notification', 'answer']);
   });
 };
 
