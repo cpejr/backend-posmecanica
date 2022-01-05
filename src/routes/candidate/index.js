@@ -35,11 +35,7 @@ candidateRouter.get(
   authenticateToken,
   CandidateController.getById
 );
-candidateRouter.post(
-  '/:candidate_process_id',
-  CandidateValidator.create,
-  CandidateController.create
-);
+candidateRouter.post('/:candidate_process_id', CandidateController.create);
 candidateRouter.post(
   '/upload/:candidate_id/:fileName',
   CandidateValidator.upload,

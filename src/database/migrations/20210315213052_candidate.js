@@ -40,21 +40,21 @@ exports.up = function (knex) {
     table.date('candidate_grade_date_begin');
     table.date('candidate_grade_date_end');
     table.string('candidate_pGraduate_university');
-    table.boolean('candidate_ufmg_active_serv');
-    table.boolean('candidate_ufmg_retired_serv');
+    table.tinyint('candidate_ufmg_active_serv');
+    table.tinyint('candidate_ufmg_retired_serv');
     table.date('candidate_date_inscrition').notNullable();
     table.uuid('candidate_process_id').notNullable();
     table.string('candidate_protocol').notNullable();
-    table.boolean('candidate_form_approval');
-    table.boolean('candidate_approval');
-    table.boolean('candidate_curriculum_approval');
-    table.boolean('candidate_deferment').defaultTo(false).notNullable();
+    table.tinyint('candidate_form_approval');
+    table.tinyint('candidate_approval');
+    table.tinyint('candidate_curriculum_approval');
+    table.tinyint('candidate_deferment').defaultTo(0).notNullable();
     table.string('candidate_grade_obtained');
     table.text('candidate_justify');
     table.string('candidate_study_regimen');
-    table.boolean('candidate_scholarship');
+    table.tinyint('candidate_scholarship');
     table.string('candidate_concentration_area');
-    table.boolean('candidate_PcD');
+    table.tinyint('candidate_PcD');
 
     table
       .foreign('candidate_process_id')
