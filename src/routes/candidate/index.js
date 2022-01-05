@@ -4,52 +4,52 @@ const candidateRouter = express.Router();
 const fileUploader = require('../../middlewares/fileUploader');
 
 const CandidateController = require('../../controllers/CandidateController');
-const CandidateValidator = require('../../validators/CandidateValidator');
+// const CandidateValidator = require('../../validators/CandidateValidator');
 
 const { authenticateToken } = require('../../middlewares/authentication');
 
 candidateRouter.get(
   '/',
-  CandidateValidator.getAll,
+  // CandidateValidator.getAll,
   authenticateToken,
   CandidateController.getAll
 );
 
 candidateRouter.get(
   '/view_document/:candidate_id/:file_name',
-  CandidateValidator.getUrl,
+  // CandidateValidator.getUrl,
   authenticateToken,
   CandidateController.getUrl
 );
 
 candidateRouter.get(
   '/documents/:candidate_id/:file_name?',
-  CandidateValidator.getFiles,
+  // CandidateValidator.getFiles,
   authenticateToken,
   CandidateController.getUserFiles
 );
 
 candidateRouter.get(
   '/:candidate_id',
-  CandidateValidator.getById,
+  // CandidateValidator.getById,
   authenticateToken,
   CandidateController.getById
 );
 candidateRouter.post('/:candidate_process_id', CandidateController.create);
 candidateRouter.post(
   '/upload/:candidate_id/:fileName',
-  CandidateValidator.upload,
+  // CandidateValidator.upload,
   fileUploader('file'),
   CandidateController.upload
 );
 candidateRouter.put(
   '/:candidate_id',
-  CandidateValidator.update,
+  // CandidateValidator.update,
   CandidateController.update
 );
 candidateRouter.delete(
   '/:candidate_id',
-  CandidateValidator.delete,
+  // CandidateValidator.delete,
   authenticateToken,
   CandidateController.delete
 );
