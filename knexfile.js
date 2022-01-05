@@ -39,6 +39,13 @@ module.exports = {
     client: 'pg',
     connection: {
       connectionString: process.env.DATABASE_URL,
+      typeCast: (field, next) => {
+        if (field.type?.toUpperCase().includes('TINY') && field.length === 1) {
+          const value = field.toString();
+          return value ? value === '1' : null; // 1 = true, 0 = false, else return null
+        }
+        return next();
+      },
       ssl: {
         require: true,
         rejectUnauthorized: false,
