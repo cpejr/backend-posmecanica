@@ -2,23 +2,12 @@
 const { Storage } = require('@google-cloud/storage');
 const { v4: uuidv4 } = require('uuid');
 
-const serviceAccount = {
-  type: process.env.FIREBASE_TYPE,
-  project_id: process.env.FIREBASE_PROJECT_ID,
-  private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
-  private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-  client_email: process.env.FIREBASE_CLIENT_EMAIL,
-  client_id: process.env.FIREBASE_CLIENT_ID,
-  auth_uri: process.env.FIREBASE_AUTH_URI,
-  token_uri: process.env.FIREBASE_TOKEN_URI,
-  auth_provider_x509_cert_url: process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
-  client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
-};
-
 const storage = new Storage({
   projectId: process.env.FIREBASE_PROJECTID,
-  credentials:
-    process.env.NODE_ENV === 'test' ? serviceAccount : 'serviceAccountKey.json',
+  keyFilename:
+    process.env.NODE_ENV === 'production'
+      ? 'posmecanica-ufmg-firebase-adminsdk-jv8h4-68ca69e8ed.json'
+      : 'serviceAccountKey.json',
 });
 
 const bucketName = process.env.FIREBASE_STORAGEBUCKET;
@@ -174,5 +163,5 @@ module.exports = {
   getUrlFIle,
   getUserFiles,
   uploadThesis,
-  getThesis
+  getThesis,
 };

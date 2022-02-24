@@ -46,6 +46,24 @@ const makeSearchAreaRelation = (
   discipline.searchAreas = relation;
 };
 
+const convertBoolean = (disciplineRelation) => {
+  const fixObject = (item) => {
+    if (item?.discipline_is_isolated !== null)
+      item.discipline_is_isolated = !!item.discipline_is_isolated;
+    if (item?.discipline_iso_approved !== null)
+      item.discipline_iso_approved = !!item.discipline_iso_approved;
+  };
+  if (disciplineRelation[1]) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const item of disciplineRelation) {
+      fixObject(item);
+    }
+  } else {
+    fixObject(disciplineRelation);
+  }
+  return disciplineRelation;
+};
+
 module.exports = {
   async create(discipline) {
     const result = await connection('discipline').insert(discipline);
@@ -93,8 +111,8 @@ module.exports = {
       makeStudentRelation(discipline, studentTable, stud_discTable);
       makeSearchAreaRelation(discipline, searchAreaTable, searchArea_discTable);
     });
-    const result = disciplineTable;
-    return result;
+
+    return convertBoolean(disciplineTable);
   },
 
   async getById(discipline_id) {
@@ -119,8 +137,7 @@ module.exports = {
       searchArea_discTable
     );
 
-    const result = disciplineObject;
-    return result;
+    return convertBoolean(disciplineObject);
   },
 
   async updateById(discipline_id, discipline) {

@@ -14,11 +14,7 @@ module.exports = {
       candidate_name: Joi.string().required(),
       candidate_birth: Joi.date().required(),
       candidate_gender: Joi.string()
-        .valid(
-          'feminino',
-          'masculino',
-          'outro'
-        )
+        .valid('feminino', 'masculino', 'outro')
         .insensitive()
         .required(),
       candidate_race: Joi.string().required(),
@@ -140,6 +136,17 @@ module.exports = {
           version: ['uuidv4'],
         })
         .required(),
+    }),
+  }),
+
+  verifyCandidateExistence: celebrate({
+    [Segments.PARAMS]: Joi.object().keys({
+      candidate_process_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
+      candidate_cpf: Joi.string().required(),
     }),
   }),
 

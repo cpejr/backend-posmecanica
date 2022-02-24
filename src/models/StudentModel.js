@@ -26,6 +26,24 @@ const makeDisciplinesRelation = (student, disciplineTable, stud_discTable) => {
   student.disciplines = relation;
 };
 
+const convertBoolean = (student) => {
+  const fixObject = (item) => {
+    if (item?.stud_scholarschip !== null)
+      item.stud_scholarschip = !!item.stud_scholarschip;
+    if (item?.stud_workplane !== null)
+      item.stud_workplane = !!item.stud_workplane;
+  };
+  if (student[1]) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const item of student) {
+      fixObject(item);
+    }
+  } else {
+    fixObject(student);
+  }
+  return student;
+};
+
 module.exports = {
   async create(student) {
     const result = await connection('student').insert(student);
@@ -79,7 +97,7 @@ module.exports = {
       makeDisciplinesRelation(item, disciplineTable, stud_discTable);
       delete item.stud_candidate_id;
     });
-    return students;
+    return convertBoolean(students);
   },
 
   async getById(stud_id) {
@@ -92,8 +110,8 @@ module.exports = {
     const stud_discTable = await connection('student_dis').select('*');
     recoverCandidateInfos(student, candidateTable);
     makeDisciplinesRelation(student, disciplineTable, stud_discTable);
-    const result = student;
-    return result;
+
+    return convertBoolean(student);
   },
 
   async updateById(stud_id, student) {
@@ -118,7 +136,7 @@ module.exports = {
     const stud_discTable = await connection('student_dis').select('*');
     recoverCandidateInfos(student, candidateTable);
     makeDisciplinesRelation(student, disciplineTable, stud_discTable);
-    const result = student;
-    return result;
+
+    return convertBoolean(student);
   },
 };

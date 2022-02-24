@@ -8,7 +8,6 @@ const {
   getUrlFIle,
   getUserFiles,
 } = require('../utils/FirebaseStore');
-const Mail = require('../mail/mail');
 
 const buildCandidateObject = (candidate, candidate_process_id) => {
   const protocol = parseInt(Math.random() * 1000000000, 10);
@@ -33,13 +32,6 @@ async function updateFirebase(candidate, candidate_id) {
   const result = update.uid;
   delete candidate.candidate_email;
   return result;
-}
-
-async function SelectiveProcessResult(candidate, candidate_id) {
-  const candidateInfos = await CandidateModel.getById(candidate_id);
-  const name = candidateInfos.candidate_name;
-  const email = candidateInfos.candidate_email;
-  Mail.SelectiveProcessResult(email, name, candidate.candidate_approval);
 }
 
 module.exports = {
@@ -89,6 +81,23 @@ module.exports = {
     }
   },
 
+  async verifyCandidateExistence(request, response) {
+    try {
+      const { candidate_process_id, candidate_cpf } = request.params;
+      const result = await CandidateModel.verifyCandidateExistence(
+        candidate_process_id,
+        candidate_cpf
+      );
+
+      return response.status(200).json(result);
+    } catch (err) {
+      console.error(`Candidate verify failed: ${err}`);
+      return response.status(500).json({
+        notification: 'Internal server error',
+      });
+    }
+  },
+
   async update(request, response) {
     try {
       const { candidate_id } = request.params;
@@ -96,9 +105,6 @@ module.exports = {
       let result;
       if (candidate.candidate_email) {
         result = await updateFirebase(candidate, candidate_id);
-      }
-      if (candidate.candidate_approval) {
-        await SelectiveProcessResult(candidate, candidate_id);
       }
       const stillExistFieldsToUpdate = Object.values(candidate).length > 0;
       if (stillExistFieldsToUpdate) {
