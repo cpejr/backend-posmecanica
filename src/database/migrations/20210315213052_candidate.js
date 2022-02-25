@@ -3,11 +3,7 @@ exports.up = function (knex) {
     table.uuid('candidate_id').primary().notNullable();
     table.string('candidate_name').notNullable();
     table.date('candidate_birth').notNullable();
-    table.enu('candidate_gender', [
-      'masculino',
-      'feminino',
-      'outro',
-    ]);
+    table.enu('candidate_gender', ['masculino', 'feminino', 'outro']);
     table.string('candidate_race').notNullable();
     table.string('candidate_nationality').notNullable();
     table.string('candidate_cpf').notNullable();
@@ -54,8 +50,12 @@ exports.up = function (knex) {
     table.string('candidate_study_regimen');
     table.tinyint('candidate_scholarship');
     table.string('candidate_concentration_area');
+<<<<<<< Updated upstream
     table.tinyint('candidate_PcD');
 
+=======
+    table.boolean('candidate_PcD');
+>>>>>>> Stashed changes
     table
       .foreign('candidate_process_id')
       .references('process_id')

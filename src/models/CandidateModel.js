@@ -149,4 +149,14 @@ module.exports = {
       .delete();
     return result;
   },
+
+  async verifyProtocolNumber(candidate_protocol_number) {
+    const candidateObject = await connection('candidate')
+      .where({ candidate_protocol_number })
+      .select('*')
+      .first();
+
+    if (candidateObject) return true;
+    return false;
+  },
 };

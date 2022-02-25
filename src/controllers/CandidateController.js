@@ -9,6 +9,7 @@ const {
   getUserFiles,
 } = require('../utils/FirebaseStore');
 const Mail = require('../mail/mail');
+const SelectiveProcessModel = require('../models/SelectiveProcessModel');
 
 const buildCandidateObject = (candidate, candidate_process_id) => {
   const protocol = parseInt(Math.random() * 1000000000, 10);
@@ -48,7 +49,29 @@ module.exports = {
       const candidate = request.body;
       const { candidate_process_id } = request.params;
       buildCandidateObject(candidate, candidate_process_id);
+      let verify = true;
+
+      while (verify === true) {
+        candidate.candidate_protocol_number = Math.floor(
+          Math.random() * (999999 - 100000 + 1) + 100000
+        );
+        // eslint-disable-next-line no-await-in-loop
+        verify = await CandidateModel.verifyProtocolNumber(
+          candidate.candidate_protocol_number
+        );
+      }
+
       await CandidateModel.create(candidate);
+      const selectiveProcess = await SelectiveProcessModel.getById(
+        candidate.candidate_process_id
+      );
+
+      Mail.enrollmentProof(
+        candidate.candidate_email,
+        selectiveProcess.process_name,
+        candidate.candidate_protocol_number
+      );
+
       return response.status(200).json({ id: candidate.candidate_id });
     } catch (err) {
       console.error(`Candidate creation failed: ${err}`);

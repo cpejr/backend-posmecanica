@@ -31,50 +31,6 @@ class Email {
 }
 
 module.exports = {
-  ConfirmateAccessAndChangePassword(to, firstname, password) {
-    const content = `Prezado ${firstname}, sua inscrição foi feita. Sua senha foi atualizada para: ${password}.`;
-    const subject = 'Pós-Mecânica: Inscrição no sistema realizada';
-
-    const emailContent = {
-      to,
-      subject,
-      text: content,
-    };
-    return Email.sendEmail(emailContent);
-  },
-  ChangeEmail(to, firstname, newEmail) {
-    const content = `Prezado ${firstname}, seu email foi atualizado para: ${newEmail}.`;
-    const subject = 'Pós-Mecânica: Email Atualizado';
-
-    const emailContent = {
-      to,
-      subject,
-      text: content,
-    };
-    return Email.sendEmail(emailContent);
-  },
-
-  ConfirmateCreateUser(to, firstname, password) {
-    const content = `Olá ${firstname}! Sua conta foi criada com sucesso. A sua senha é ${password}`;
-    const subject = 'Pós-Mecânica: Inscrição no sistema realizada';
-    const emailContent = {
-      to,
-      subject,
-      text: content,
-    };
-    return Email.sendEmail(emailContent);
-  },
-  SelectiveProcessResult(to, firstname, result, position) {
-    const confirmation = result ? 'Aprovado' : 'Reprovado';
-    const content = `Olá ${firstname}, você foi ${confirmation} no processo seletivo. Sua colocação na prova foi ${position}° lugar`;
-    const subject = 'Pós-Mecânica: Resultado Inscrição';
-    const emailContent = {
-      to,
-      subject,
-      text: content,
-    };
-    return Email.sendEmail(emailContent);
-  },
   DemandProcess(to, name, disciplines) {
     const content = `Olá ${name}, você possui candidatos a serem deferidos no processo seletivo respectivos ${disciplines.length === 1 ? 'à disciplina' : 'às disciplinas'
       }${disciplines.map((item) => {
@@ -89,6 +45,19 @@ module.exports = {
       
 Atenciosamente, Administração do Programa de Pós Graduação em Mecânica.`;
     const subject = 'Pós-Mecânica: Demanda de candidatos.';
+    const emailContent = {
+      to,
+      subject,
+      text: content,
+    };
+    return Email.sendEmail(emailContent);
+  },
+
+  enrollmentProof(to, nameSelectiveProcessName, protocolNumber) {
+    const content = `Prezado(a), confirmamos sua inscrição no ${nameSelectiveProcessName} com o o seguinte número de protocolo: ${protocolNumber}.
+      
+    Atenciosamente, Administração do Programa de Pós Graduação em Mecânica.`;
+    const subject = 'Inscrição no Processo Seletivo.';
     const emailContent = {
       to,
       subject,

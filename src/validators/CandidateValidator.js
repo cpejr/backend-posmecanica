@@ -14,11 +14,7 @@ module.exports = {
       candidate_name: Joi.string().required(),
       candidate_birth: Joi.date().required(),
       candidate_gender: Joi.string()
-        .valid(
-          'feminino',
-          'masculino',
-          'outro'
-        )
+        .valid('feminino', 'masculino', 'outro')
         .insensitive()
         .required(),
       candidate_race: Joi.string().required(),
@@ -68,6 +64,7 @@ module.exports = {
       candidate_scholarship: Joi.boolean(),
       candidate_concentration_area: Joi.string(),
       candidate_PcD: Joi.boolean(),
+      candidate_protocol_number: Joi.string().required(),
     }),
   }),
   delete: celebrate({
@@ -198,6 +195,7 @@ module.exports = {
       candidate_scholarship: Joi.boolean(),
       candidate_concentration_area: Joi.string(),
       candidate_PcD: Joi.boolean(),
+      candidate_protocol_number: Joi.string().required(),
     }),
   }),
   upload: celebrate({
