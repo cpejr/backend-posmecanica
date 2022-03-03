@@ -66,13 +66,18 @@ module.exports = {
         candidate.candidate_process_id
       );
 
-      Mail.enrollmentProof(
+      Mail.EnrollmentProof(
         candidate.candidate_email,
         selectiveProcess.process_name,
         candidate.candidate_protocol_number
       );
 
-      return response.status(200).json({ id: candidate.candidate_id });
+      return response.status(200).json({
+        id: candidate.candidate_id,
+        candidate_email: candidate.candidate_email,
+        process_name: selectiveProcess.process_name,
+        candidate_protocol_number: candidate.candidate_protocol_number,
+      });
     } catch (err) {
       console.error(`Candidate creation failed: ${err}`);
       return response.status(500).json({

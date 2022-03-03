@@ -53,8 +53,8 @@ Atenciosamente, Administração do Programa de Pós Graduação em Mecânica.`;
     return Email.sendEmail(emailContent);
   },
 
-  enrollmentProof(to, nameSelectiveProcessName, protocolNumber) {
-    const content = `Prezado(a), confirmamos sua inscrição no ${nameSelectiveProcessName} com o o seguinte número de protocolo: ${protocolNumber}.
+  EnrollmentProof(to, nameSelectiveProcessName, protocolNumber) {
+    const content = `Prezado(a), confirmamos sua inscrição no ${nameSelectiveProcessName} com o seguinte número de protocolo: ${protocolNumber}.
       
     Atenciosamente, Administração do Programa de Pós Graduação em Mecânica.`;
     const subject = 'Inscrição no Processo Seletivo.';
