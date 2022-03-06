@@ -50,12 +50,7 @@ exports.up = function (knex) {
     table.string('candidate_study_regimen');
     table.tinyint('candidate_scholarship');
     table.string('candidate_concentration_area');
-<<<<<<< Updated upstream
-    table.tinyint('candidate_PcD');
-
-=======
     table.boolean('candidate_PcD');
->>>>>>> Stashed changes
     table
       .foreign('candidate_process_id')
       .references('process_id')
