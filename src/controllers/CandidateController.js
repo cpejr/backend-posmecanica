@@ -74,9 +74,6 @@ module.exports = {
 
       return response.status(200).json({
         id: candidate.candidate_id,
-        candidate_email: candidate.candidate_email,
-        process_name: selectiveProcess.process_name,
-        candidate_protocol_number: candidate.candidate_protocol_number,
       });
     } catch (err) {
       console.error(`Candidate creation failed: ${err}`);
