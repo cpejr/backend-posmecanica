@@ -9,9 +9,6 @@ module.exports = {
     try {
       const selective_process = request.body;
       const process_id = uuidv4();
-      const endDate = moment(selective_process.process_date_end);
-      endDate.set({ hour: 23, minute: 59, second: 59, millisecond: 59 });
-      selective_process.process_date_end = endDate;
       selective_process.process_id = process_id;
       await SelectiveProcessModel.create(selective_process);
       let currentDate;
