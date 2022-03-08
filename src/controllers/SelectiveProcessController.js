@@ -9,6 +9,7 @@ module.exports = {
     try {
       const selective_process = request.body;
       const process_id = uuidv4();
+
       selective_process.process_id = process_id;
       await SelectiveProcessModel.create(selective_process);
       let currentDate;

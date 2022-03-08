@@ -86,11 +86,7 @@ module.exports = {
         candidate_disciplineTable
       );
     });
-    candidateTable.candidate_PcD = !!candidateTable.candidate_PcD;
-    console.log(
-      '🚀 ~ file: CandidateModel.js ~ line 90 ~ getAll ~ candidateTable.candidate_PcD',
-      candidateTable.candidate_PcD
-    );
+
     const result = candidateTable;
     return result;
   },
