@@ -1,3 +1,4 @@
+// Update with your config settings.
 require('dotenv').config();
 
 module.exports = {
@@ -9,13 +10,6 @@ module.exports = {
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
       port: process.env.DB_PORT,
-      typeCast: (field, next) => {
-        if (field.type?.toUpperCase().includes('TINY') && field.length === 1) {
-          const value = field.toString();
-          return value ? value === '1' : null; // 1 = true, 0 = false, else return null
-        }
-        return next();
-      },
       ssl: {
         require: true,
         rejectUnauthorized: false,
@@ -39,13 +33,6 @@ module.exports = {
     client: 'pg',
     connection: {
       connectionString: process.env.DATABASE_URL,
-      typeCast: (field, next) => {
-        if (field.type?.toUpperCase().includes('TINY') && field.length === 1) {
-          const value = field.toString();
-          return value ? value === '1' : null; // 1 = true, 0 = false, else return null
-        }
-        return next();
-      },
       ssl: {
         require: true,
         rejectUnauthorized: false,
@@ -65,20 +52,13 @@ module.exports = {
   },
 
   production: {
-    client: 'mysql',
+    client: 'pg',
     connection: {
       host: process.env.DB_HOST,
       port: process.env.DB_PORT,
       user: process.env.DB_USER,
       database: process.env.DB_NAME,
       password: process.env.DB_PASS,
-      typeCast: (field, next) => {
-        if (field.type?.toUpperCase().includes('TINY') && field.length === 1) {
-          const value = field.toString();
-          return value ? value === '1' : null; // 1 = true, 0 = false, else return null
-        }
-        return next();
-      },
     },
     useNullAsDefault: true,
     pool: {
@@ -86,7 +66,7 @@ module.exports = {
       max: 10,
     },
     migrations: {
-      directory: './src/database/migrations',
+      tableName: 'knex_migrations',
     },
     seeds: {
       directory: './src/database/seeds',
