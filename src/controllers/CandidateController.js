@@ -114,6 +114,23 @@ module.exports = {
     }
   },
 
+  async verifyCandidateExistence(request, response) {
+    try {
+      const { candidate_process_id, candidate_cpf } = request.params;
+      const result = await CandidateModel.verifyCandidateExistence(
+        candidate_process_id,
+        candidate_cpf
+      );
+
+      return response.status(200).json(result);
+    } catch (err) {
+      console.error(`Candidate verify failed: ${err}`);
+      return response.status(500).json({
+        notification: 'Internal server error',
+      });
+    }
+  },
+
   async update(request, response) {
     try {
       const { candidate_id } = request.params;

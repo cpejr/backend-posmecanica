@@ -28,6 +28,36 @@ const makeCandidatesDisciplinesRelation = (
   candidate.candidate_disciplines = disciplineRelation;
 };
 
+const convertBoolean = (candidate) => {
+  const fixObject = async (item) => {
+    if (item?.candidate_ufmg_active_serv !== null)
+      item.candidate_ufmg_active_serv = !!item.candidate_ufmg_active_serv;
+    if (item?.candidate_ufmg_retired_serv !== null)
+      item.candidate_ufmg_retired_serv = !!item.candidate_ufmg_retired_serv;
+    if (item?.candidate_form_approval !== null)
+      item.candidate_form_approval = !!item.candidate_form_approval;
+    if (item?.candidate_approval !== null)
+      item.candidate_approval = !!item.candidate_approval;
+    if (item?.candidate_curriculum_approval !== null)
+      item.candidate_curriculum_approval = !!item.candidate_curriculum_approval;
+    if (item?.candidate_deferment !== null)
+      item.candidate_deferment = !!item.candidate_deferment;
+    if (item?.candidate_scholarship !== null)
+      item.candidate_scholarship = !!item.candidate_scholarship;
+    if (item?.candidate_PcD !== null) item.candidate_PcD = !!item.candidate_PcD;
+  };
+
+  if (candidate[1]) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const item of candidate) {
+      fixObject(item);
+    }
+  } else {
+    fixObject(candidate);
+  }
+  return candidate;
+};
+
 module.exports = {
   async create(candidate) {
     const result = await connection('candidate').insert(candidate);
@@ -87,8 +117,7 @@ module.exports = {
       );
     });
 
-    const result = candidateTable;
-    return result;
+    return convertBoolean(candidateTable);
   },
 
   async getById(candidate_id) {
@@ -111,7 +140,7 @@ module.exports = {
       candidate_disciplineTable
     );
     candidateObject.selective_process = processTable;
-    return candidateObject;
+    return convertBoolean(candidateObject);
   },
 
   async getBySelectiveProcessId(candidate_process_id) {
@@ -127,8 +156,22 @@ module.exports = {
     candidateTable?.forEach((candidate) => {
       makeCandidatesDisciplinesRelation(candidate, candidate_disciplineTable);
     });
-    const result = candidateTable;
-    return result;
+
+    return convertBoolean(candidateTable);
+  },
+
+  async verifyCandidateExistence(candidate_process_id, candidate_cpf) {
+    let verify;
+    const candidateTable = await connection('candidate')
+      .where({ candidate_process_id })
+      .where({ candidate_cpf })
+      .select('candidate_id')
+      .first();
+
+    // eslint-disable-next-line no-unused-expressions
+    candidateTable ? (verify = true) : (verify = false);
+
+    return verify;
   },
 
   async updateById(candidate_id, candidate) {

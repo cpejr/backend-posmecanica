@@ -140,6 +140,17 @@ module.exports = {
     }),
   }),
 
+  verifyCandidateExistence: celebrate({
+    [Segments.PARAMS]: Joi.object().keys({
+      candidate_process_id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
+      candidate_cpf: Joi.string().required(),
+    }),
+  }),
+
   update: celebrate({
     [Segments.PARAMS]: Joi.object().keys({
       candidate_id: Joi.string()
