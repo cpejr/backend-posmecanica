@@ -56,4 +56,20 @@ module.exports = {
       });
     }
   },
+  async update(request, response) {
+    try {
+      const { pd_dis_id } = request.params;
+      const data = request.body;
+      const result = await RelationsModel.updateByIdDisciplineProfessor(
+        pd_dis_id,
+        data
+      );
+      return response.status(200).json(result);
+    } catch (err) {
+      console.error(err);
+      return response.status(500).json({
+        notification: 'Internal server error',
+      });
+    }
+  },
 };

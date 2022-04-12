@@ -76,4 +76,10 @@ module.exports = {
       .update(data);
     return result;
   },
+  async updateByIdDisciplineProfessor(pd_dis_id, data) {
+    const result = await connection('professor_discipline')
+      .where({ pd_dis_id })
+      .update(data);
+    return result;
+  },
 };

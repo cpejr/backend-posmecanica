@@ -175,7 +175,6 @@ module.exports = {
   },
 
   async updateById(candidate_id, candidate) {
-    candidate.candidate_id = candidate_id;
     const result = await connection('candidate')
       .where({ candidate_id })
       .update(candidate);

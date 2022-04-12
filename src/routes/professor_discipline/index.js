@@ -1,4 +1,6 @@
+/* eslint-disable prettier/prettier */
 const express = require('express');
+
 const professor_disciplineRouter = express.Router();
 
 const Professor_DisciplineController = require('../../controllers/Professor_DisciplineController');
@@ -23,6 +25,12 @@ professor_disciplineRouter.get(
     Professor_DisciplineValidator.getAll,
     authenticateToken,
     Professor_DisciplineController.getAll
+);
+professor_disciplineRouter.put(
+    '/update/professor_discipline/:pd_dis_id',
+    Professor_DisciplineValidator.update,
+    authenticateToken,
+    Professor_DisciplineController.update
 );
 
 module.exports = professor_disciplineRouter;
