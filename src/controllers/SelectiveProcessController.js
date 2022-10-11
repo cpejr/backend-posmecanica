@@ -9,17 +9,7 @@ module.exports = {
     try {
       const selective_process = request.body;
       const process_id = uuidv4();
-      const localFormat = 'YYYY-MM-DD[T]HH:mm:ss';
-      selective_process.process_date_begin = moment(
-        selective_process.process_date_begin
-      )
-        .subtract(3, 'hours')
-        .format(localFormat);
-      selective_process.process_date_end = moment(
-        selective_process.process_date_end
-      )
-        .subtract(3, 'hours')
-        .format(localFormat);
+
       selective_process.process_id = process_id;
       await SelectiveProcessModel.create(selective_process);
       let currentDate;
@@ -27,7 +17,7 @@ module.exports = {
       let data = moment(response.process_date_end).add(1, 'days');
       data = new Date(data);
       const day = data.getDate().toString();
-      const month = (data.getMonth() + 1).toString(); // +1 pois no getMonth Janeiro começa com zero.
+      const month = (data.getMonth() + 1).toString(); // +1 pois no getMonth Janeiro comeÃ§a com zero.
       const year = data.getFullYear();
 
       cron.schedule(`0 0 ${day} ${month} *`, () => {

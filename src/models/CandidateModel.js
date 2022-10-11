@@ -175,6 +175,7 @@ module.exports = {
   },
 
   async updateById(candidate_id, candidate) {
+    candidate.candidate_id = candidate_id;
     const result = await connection('candidate')
       .where({ candidate_id })
       .update(candidate);
@@ -186,5 +187,15 @@ module.exports = {
       .where({ candidate_id })
       .delete();
     return result;
+  },
+
+  async verifyProtocolNumber(candidate_protocol_number) {
+    const candidateObject = await connection('candidate')
+      .where({ candidate_protocol_number })
+      .select('*')
+      .first();
+
+    if (candidateObject) return true;
+    return false;
   },
 };

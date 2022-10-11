@@ -8,6 +8,8 @@ const {
   getUrlFIle,
   getUserFiles,
 } = require('../utils/FirebaseStore');
+const Mail = require('../mail/mail');
+const SelectiveProcessModel = require('../models/SelectiveProcessModel');
 
 const buildCandidateObject = (candidate, candidate_process_id) => {
   const protocol = parseInt(Math.random() * 1000000000, 10);
@@ -34,14 +36,45 @@ async function updateFirebase(candidate, candidate_id) {
   return result;
 }
 
+async function SelectiveProcessResult(candidate, candidate_id) {
+  const candidateInfos = await CandidateModel.getById(candidate_id);
+  const name = candidateInfos.candidate_name;
+  const email = candidateInfos.candidate_email;
+  Mail.SelectiveProcessResult(email, name, candidate.candidate_approval);
+}
+
 module.exports = {
   async create(request, response) {
     try {
       const candidate = request.body;
       const { candidate_process_id } = request.params;
       buildCandidateObject(candidate, candidate_process_id);
+      let verify = true;
+
+      while (verify === true) {
+        candidate.candidate_protocol_number = Math.floor(
+          Math.random() * (999999 - 100000 + 1) + 100000
+        );
+        // eslint-disable-next-line no-await-in-loop
+        verify = await CandidateModel.verifyProtocolNumber(
+          candidate.candidate_protocol_number
+        );
+      }
+
       await CandidateModel.create(candidate);
-      return response.status(200).json({ id: candidate.candidate_id });
+      const selectiveProcess = await SelectiveProcessModel.getById(
+        candidate.candidate_process_id
+      );
+
+      Mail.EnrollmentProof(
+        candidate.candidate_email,
+        selectiveProcess.process_name,
+        candidate.candidate_protocol_number
+      );
+
+      return response.status(200).json({
+        id: candidate.candidate_id,
+      });
     } catch (err) {
       console.error(`Candidate creation failed: ${err}`);
       return response.status(500).json({
@@ -105,6 +138,20 @@ module.exports = {
       let result;
       if (candidate.candidate_email) {
         result = await updateFirebase(candidate, candidate_id);
+      }
+      if (
+        candidate.candidate_approval &&
+        candidate.candidate_approval === true
+      ) {
+        candidate.candidate_approval = 1;
+      } else if (
+        candidate.candidate_approval &&
+        candidate.candidate_approval === false
+      ) {
+        candidate.candidate_approval = 0;
+      }
+      if (candidate.candidate_approval) {
+        await SelectiveProcessResult(candidate, candidate_id);
       }
       const stillExistFieldsToUpdate = Object.values(candidate).length > 0;
       if (stillExistFieldsToUpdate) {
