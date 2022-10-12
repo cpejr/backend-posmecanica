@@ -206,7 +206,7 @@ module.exports = {
       candidate_scholarship: Joi.boolean(),
       candidate_concentration_area: Joi.string(),
       candidate_PcD: Joi.boolean(),
-      candidate_protocol_number: Joi.string().required(),
+      candidate_protocol_number: Joi.string(),
     }),
   }),
   upload: celebrate({

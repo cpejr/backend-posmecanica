@@ -35,22 +35,32 @@ candidateRouter.get(
   authenticateToken,
   CandidateController.getById
 );
+
+candidateRouter.get(
+  '/verifyExistence/:candidate_process_id/:candidate_cpf',
+  CandidateValidator.verifyCandidateExistence,
+  CandidateController.verifyCandidateExistence
+);
+
 candidateRouter.post(
   '/:candidate_process_id',
   CandidateValidator.create,
   CandidateController.create
 );
+
 candidateRouter.post(
   '/upload/:candidate_id/:fileName',
   CandidateValidator.upload,
   fileUploader('file'),
   CandidateController.upload
 );
+
 candidateRouter.put(
   '/:candidate_id',
   CandidateValidator.update,
   CandidateController.update
 );
+
 candidateRouter.delete(
   '/:candidate_id',
   CandidateValidator.delete,

@@ -51,7 +51,7 @@ module.exports = {
       }
       user.type = firebase.displayName;
       const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: '1h',
+        expiresIn: '5h',
       });
 
       return response.status(200).json({ user, accessToken });
@@ -81,7 +81,7 @@ module.exports = {
       user.type = firebase.displayName;
 
       const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: '1h',
+        expiresIn: '5h',
       });
 
       return response.status(200).json({ user, accessToken });

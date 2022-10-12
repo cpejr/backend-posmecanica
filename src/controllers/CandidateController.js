@@ -139,6 +139,17 @@ module.exports = {
       if (candidate.candidate_email) {
         result = await updateFirebase(candidate, candidate_id);
       }
+      if (
+        candidate.candidate_approval &&
+        candidate.candidate_approval === true
+      ) {
+        candidate.candidate_approval = 1;
+      } else if (
+        candidate.candidate_approval &&
+        candidate.candidate_approval === false
+      ) {
+        candidate.candidate_approval = 0;
+      }
       if (candidate.candidate_approval) {
         await SelectiveProcessResult(candidate, candidate_id);
       }

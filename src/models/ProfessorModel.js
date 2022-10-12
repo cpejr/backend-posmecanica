@@ -46,6 +46,23 @@ const makeSearchAreaRelation = (
   professor.searchAreas = relation;
 };
 
+const convertBoolean = (professorRelation) => {
+  const fixObject = (item) => {
+    if (item?.prof_active !== null) item.prof_active = !!item.prof_active;
+    if (item?.prof_credential !== null)
+      item.prof_credential = !!item.prof_credential;
+  };
+  if (professorRelation[1]) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const item of professorRelation) {
+      fixObject(item);
+    }
+  } else {
+    fixObject(professorRelation);
+  }
+  return professorRelation;
+};
+
 module.exports = {
   async create(professor) {
     const result = await connection('professor').insert(professor);
@@ -89,8 +106,8 @@ module.exports = {
       makeDisciplineRelation(professor, disciplineTable, prof_discTable);
       makeSearchAreaRelation(professor, search_areaTable, searchArea_profTable);
     });
-    const result = profTable;
-    return result;
+
+    return convertBoolean(profTable);
   },
 
   async getById(prof_id) {
@@ -111,8 +128,7 @@ module.exports = {
     makeDisciplineRelation(profObject, disciplineTable, prof_discTable);
     makeSearchAreaRelation(profObject, search_areaTable, searchArea_profTable);
 
-    const result = profObject;
-    return result;
+    return convertBoolean(profObject);
   },
 
   async updateById(prof_id, professor) {
@@ -132,7 +148,7 @@ module.exports = {
       .where(fields)
       .select('*')
       .first();
-    return result;
+    return convertBoolean(result);
   },
 
   async getProfByDisciplineId(discipline_id) {
@@ -160,6 +176,6 @@ module.exports = {
     }
 
     result.disciplines = disciplines;
-    return result;
+    return convertBoolean(result);
   },
 };
