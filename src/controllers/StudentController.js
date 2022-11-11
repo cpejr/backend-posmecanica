@@ -62,7 +62,7 @@ module.exports = {
     } catch (err) {
       console.error(`Student creation failed: ${err}`);
       return response.status(500).json({
-        notification: 'Internal server error',
+        notification: `Student creation failed: ${err}`,
       });
     }
   },
