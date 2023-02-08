@@ -7,7 +7,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 const cron = require('node-cron');
 const moment = require('moment');
-const shell = require('shelljs');
+// const shell = require('shelljs');
 const SelectiveProcessModel = require('./models/SelectiveProcessModel');
 
 const sendEmail = require('./utils/CronJobSelectiveProcess');
@@ -59,9 +59,9 @@ app.listen(port, () => {
   console.log(`Listening on port: ${port}`);
 });
 
-shell.exec('yarn');
+// shell.exec('yarn');
 
-shell.exec('npx knex migrate:latest');
+// shell.exec('npx knex migrate:latest');
 
 const selective_processes = async () => {
   const teste = await SelectiveProcessModel.getUnfinishedSelectiveProcesses();

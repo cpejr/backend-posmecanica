@@ -2,3 +2,4 @@ node_modules
 .env
 serviceAccountKey.json
 posmecanica-ufmg-firebase-adminsdk-jv8h4-68ca69e8ed.json
+yarn.lock
